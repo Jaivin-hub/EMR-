@@ -10,6 +10,9 @@ import Datepicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BasicTable from './Table'
 import Header from './Header'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
 // import TimePicker from 'react-time-picker';
 
 
@@ -23,6 +26,19 @@ function DoctorView() {
     const [doctorList, setDoctorList] = useState([])
     const [reload, setReload] = useState(false)
     const [hospitalName, setHospitalName] = useState('')
+    const [availableDay, setAvailableDay] = useState('')
+
+    const options = [
+        'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+    ];
+    const defaultOption = options[0];
+
+    const dropDownHandler = (e) => {
+        console.log(e.value)
+        setAvailableDay(e.value)
+    }
+
+    console.log('availableDay', availableDay)
 
 
 
@@ -125,56 +141,56 @@ function DoctorView() {
 
         <div className="viewPage" >
 
-        <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-            <div className="row pt-4" >
-                <div className="col-md-1" style={{ marginLeft: '5%' }} >
-                    Add Doctor
-                </div>
-            </div>
-            <div className="row text-center">
-                <div className="col-md-2">
-                    <div className="uploadDiv mt-4" style={{ width: '60%', height: "12em", marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
-                        <img width="80%" height="" src={uploadImg} alt="" />
-                        <label className="mt-3" style={{ color: '#0298D5' }}>Upload Image</label>
+            <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                <div className="row pt-4" >
+                    <div className="col-md-1" style={{ marginLeft: '5%' }} >
+                        Add Doctor
                     </div>
                 </div>
-                <div className="col-md-10">
-                    <div className="row">
-                        <div className="col-md-2">
-                            Doctor details
-                        </div>
-                        <div className="col-md-10">
-                            <hr />
+                <div className="row text-center">
+                    <div className="col-md-2">
+                        <div className="uploadDiv mt-4" style={{ width: '60%', height: "12em", marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
+                            <img width="80%" height="" src={uploadImg} alt="" />
+                            <label className="mt-3" style={{ color: '#0298D5' }}>Upload Image</label>
                         </div>
                     </div>
-                    <div className="row mt-3">
-                        <div className="col-md-3">
-                            <TextField id="doc_name" onChange={(e) => { inputHandler(e) }} label="Doctor Name" />
+                    <div className="col-md-10">
+                        <div className="row">
+                            <div className="col-md-2">
+                                Doctor details
+                            </div>
+                            <div className="col-md-10">
+                                <hr />
+                            </div>
                         </div>
-                        <div className="col-md-3">
-                            <TextField id="doc_qualification" onChange={(e) => { inputHandler(e) }} label="Qualification" />
+                        <div className="row mt-3">
+                            <div className="col-md-3">
+                                <TextField id="doc_name" onChange={(e) => { inputHandler(e) }} label="Doctor Name" />
+                            </div>
+                            <div className="col-md-3">
+                                <TextField id="doc_qualification" onChange={(e) => { inputHandler(e) }} label="Qualification" />
+                            </div>
+                            <div className="col-md-3">
+                                <TextField id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
+                            </div>
+                            <div className="col-md-3">
+                                <TextField id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" />
+                            </div>
                         </div>
-                        <div className="col-md-3">
-                            <TextField id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
-                        </div>
-                        <div className="col-md-3">
-                            <TextField id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" />
-                        </div>
-                    </div>
-                    <div className="row mt-5">
+                        <div className="row mt-5">
 
-                        <div className="col-md-3">
-                            <TextField id="doc_contact" onChange={(e) => { inputHandler(e) }} label="Contact No" />
+                            <div className="col-md-3">
+                                <TextField id="doc_contact" onChange={(e) => { inputHandler(e) }} label="Contact No" />
+                            </div>
+                            <div className="col-md-3">
+                                <TextField id="doc_email" onChange={(e) => { inputHandler(e) }} label="Email ID" />
+                            </div>
+                            <div className="col-md-3">
+                                <TextField id="doc_password" type='password' onChange={(e) => { inputHandler(e) }} label="Password" />
+                            </div>
                         </div>
-                        <div className="col-md-3">
-                            <TextField id="doc_email" onChange={(e) => { inputHandler(e) }} label="Email ID" />
-                        </div>
-                        <div className="col-md-3">
-                            <TextField id="doc_password" onChange={(e) => { inputHandler(e) }} label="Password" />
-                        </div>
-                    </div>
-                    <div className="row ">
-                        {/* {(addMembersList.length - 1 === index) ?brassimmutreje-2771@yopmail.com
+                        <div className="row ">
+                            {/* {(addMembersList.length - 1 === index) ?brassimmutreje-2771@yopmail.com
                                 (<button type="button" className="add-btn text-light mt-2" onClick={handleMemberAdd}>
                                     <span>+</span>
                                 </button>)
@@ -182,13 +198,18 @@ function DoctorView() {
                                 (<button type="button" className="add-btn text-light mt-2" onClick={() => { handleMemberRemove(index) }}>
                                     <span>-</span>
                                 </button>)} */}
-                        <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '4em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
-                            <div className="row mt-3">
-                                <div className="col-md-3 " >
-                                    <input id='doc_avail_day' onChange={(e) => { handleTimeSchedule(e) }} type="date" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Date" />
-                                    {/* <img src={datePickerImg} alt="" /> */}
+                            <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
+                                <div className="row mt-2">
+                                    <div className="col-md-3 " >
+                                        <div className="row" style={{ marginLeft: "1%" }}>
+                                            Date
+                                        </div>
+                                        {/* <input id='doc_avail_day' onChange={(e) => { handleTimeSchedule(e) }} type="date" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Date" /> */}
+                                        <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" />
 
-                                    {/* <DatePicker
+                                        {/* <img src={datePickerImg} alt="" /> */}
+
+                                        {/* <DatePicker
                         // key={task._id}
                         // ref={(el) => addToRefs(el, idx)}
                         // onCalendarClose={() =>
@@ -208,20 +229,27 @@ function DoctorView() {
                             <CustomInput />
                         }
                     /> */}
-                                </div>
-                                <div className="col-md-3">
-                                    <input id="doc_from_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
-                                    {/* <AiOutlineClockCircle /> */}
+                                    </div>
 
-                                </div>
-                                <div className="col-md-3">
-                                    <input id="doc_to_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
-                                    {/* <AiOutlineClockCircle /> */}
-                                </div>
-                                <div className="col-md-3">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            {/* <div className="row">
+                                    <div className="col-md-3">
+                                        <div className="row" style={{ marginLeft: "5%" }}>
+                                            Time From
+                                        </div>
+                                        <input id="doc_from_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%",height:"3em", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
+                                        {/* <AiOutlineClockCircle /> */}
+
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="row" style={{ marginLeft: "5%" }}>
+                                            Time To
+                                        </div>
+                                        <input id="doc_to_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%",height:"3em", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
+                                        {/* <AiOutlineClockCircle /> */}
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                {/* <div className="row">
                                 <div className="col-md-4">
                                     <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0F9D58', opacity: '0.3' }}>
                                         <label className="" >+</label>
@@ -232,45 +260,45 @@ function DoctorView() {
                                 </div>
                             </div> */}
 
-                                            {/* <label>Add More</label> */}
-                                        </div>
-                                        <div className="col-md-6">
+                                                {/* <label>Add More</label> */}
+                                            </div>
+                                            <div className="col-md-6">
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row mt-1 d-flex justify-content-end">
-                        <div className="col-md-3 mt-4" >
-                            <Button variant="contained" style={{ marginLeft: '30%' }} onClick={submitHandler}>Add Doctor</Button>
+                        <div className="row mt-1 d-flex justify-content-end">
+                            <div className="col-md-3 mt-4" >
+                                <Button variant="contained" style={{ marginLeft: '30%' }} onClick={submitHandler}>Add Doctor</Button>
+                            </div>
+                        </div>
+                        <div className="col-md-12 mt-5 d-flex justify-content-center">
+                            {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
                         </div>
                     </div>
-                    <div className="col-md-12 mt-5 d-flex justify-content-center">
-                        {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
-                    </div>
-                </div>
 
+                </div>
             </div>
-        </div>
-        {doctorList.length >= 1 ?
-            <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                <div className="row pt-4" >
-                    {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
+            {doctorList.length >= 1 ?
+                <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                    <div className="row pt-4" >
+                        {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
         Doctor List
     </div> */}
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <BasicTable List={doctorList} />
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <BasicTable List={doctorList} />
+                        </div>
+
                     </div>
 
                 </div>
-
-            </div>
-            : null}
-    </div>
+                : null}
+        </div>
 
     )
 }

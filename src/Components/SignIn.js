@@ -89,7 +89,7 @@ function SignIn() {
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center">
                                     {/* <TextField onChange={(e) => { inputHandler(e) }} id='password' label="password" /> */}
-                                    <input className="form-control" id='password' type="text" onChange={(e) => { inputHandler(e) }} placeholder="  password" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                    <input className="form-control" id='password' type="password" onChange={(e) => { inputHandler(e) }} placeholder="  password" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
                                 </div>
                                 <div className="col-md-12">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>

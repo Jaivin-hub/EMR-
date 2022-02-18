@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import instance from '../config/api';
 import { Button } from '@mui/material'
 import { useLocation } from 'react-router-dom';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 
 function TakeAppoiment() {
@@ -21,6 +23,10 @@ function TakeAppoiment() {
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
 
+    const options = [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+    ];
+    const defaultOption = options[0];
 
     useEffect(() => {
         console.log('first mounting')
@@ -40,6 +46,10 @@ function TakeAppoiment() {
         })
     }, [])
 
+    const dropDownHandler = (e) => {
+        console.log(e.value)
+    }
+
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
     const appointmentsHandler = (id) => {
@@ -48,7 +58,7 @@ function TakeAppoiment() {
             _hos_id: HospitalId,
             _doc_id: id,
             _pat_id: state.patientId,
-            app_date: appoinmentDate,
+            app_date: 'Monday',
             app_time: appointmentTime
         }
         instance.post('/patient_appointment', obj).then((response) => {
@@ -118,7 +128,10 @@ function TakeAppoiment() {
                                                     <TableCell >{value.doc_spec}</TableCell>
                                                     <TableCell >{value.doc_contact}</TableCell>
                                                     <TableCell >{value.doc_email}</TableCell>
-                                                    <TableCell ><input onChange={(e) => { dateChangeHandler(e) }} id='app_date' type="date" /></TableCell>
+
+                                                    <TableCell ><Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /></TableCell>
+
+                                                    {/* <TableCell ><input onChange={(e) => { dateChangeHandler(e) }} id='app_date' type="date" /></TableCell> */}
                                                     <TableCell ><input onChange={(e) => timeChangeHandler(e)} id="app_time" type="time" /></TableCell>
                                                     <TableCell ><Button variant="outlined" onClick={() => { appointmentsHandler(value._id) }}>Appointment</Button></TableCell>
                                                 </TableRow>

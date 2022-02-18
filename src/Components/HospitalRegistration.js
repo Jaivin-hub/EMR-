@@ -219,7 +219,7 @@ function HospitalRegistration() {
                                     </div>
                                     <div className="row">
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Password' onChange={(e) => { inputChangeHandler(e) }} label="Password" />
+                                            <TextField id='Password' type='password' onChange={(e) => { inputChangeHandler(e) }} label="Password" />
                                         </div>
 
                                     </div>
