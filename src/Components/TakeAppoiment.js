@@ -9,13 +9,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import instance from '../config/api';
 import { Button } from '@mui/material'
+import { useLocation } from 'react-router-dom';
 
 
 function TakeAppoiment() {
     const [hospitalName, setHospitalName] = useState('')
     const [doctorList, setDoctorList] = useState([])
+    const [appoinmentDate, setAppoinmentDate] = useState('')
+    const [appointmentTime, setAppointmentTime] = useState('')
 
     const HospitalId = localStorage.getItem('HospitalId')
+    const { state } = useLocation();
 
 
     useEffect(() => {
@@ -36,51 +40,32 @@ function TakeAppoiment() {
         })
     }, [])
 
+    console.log('appoinmentDate', appoinmentDate, appointmentTime)
+
     const appointmentsHandler = (id) => {
         console.log('id', id)
         const obj = {
             _hos_id: HospitalId,
             _doc_id: id,
-            _pat_id: "614ce34cfe3edcd0e3c6413t",
-            app_date: "22-02-2022",
-            app_time: "!0:30AM"
+            _pat_id: state.patientId,
+            app_date: appoinmentDate,
+            app_time: appointmentTime
         }
         instance.post('/patient_appointment', obj).then((response) => {
             console.log('appoinment response---', response);
             if (response.data.msg == 'Patient Appointment created successfully') {
-
+                alert(response.data.msg)
             }
         })
     }
 
-    //     Add Patient Appointment API
-    // http://13.234.177.61/api3/patient_appointment
+    const dateChangeHandler = (e) => {
+        setAppoinmentDate(e.target.value)
+    }
 
-    // Sample Post JSON Value
-    // {
-    //     "_hos_id":"6209fbb3d5d002960f67796a",
-    //     "_doc_id":"570ce34cfe3edcd0e3c6409h",
-    //     "_pat_id":"614ce34cfe3edcd0e3c6413t",
-    //     "app_date":"22-02-2022",
-    //     "app_time":"!0:30AM"
-    // }
-
-    // Result - Response
-    // {
-    //     "status": 200,
-    //     "msg": "Patient Appointment created successfully",
-    //     "appointment": {
-    //         "_hos_id": "6209fbb3d5d002960f67796a",
-    //         "_doc_id": "570ce34cfe3edcd0e3c6409h",
-    //         "_pat_id": "614ce34cfe3edcd0e3c6413t",
-    //         "app_date": "22-02-2022",
-    //         "app_time": "!0:30AM",
-    //         "_id": "620cefb7835997ecfaf036bf",
-    //         "__v": 0
-    //     }
-    // }
-
-
+    const timeChangeHandler = (e) => {
+        setAppointmentTime(e.target.value)
+    }
 
 
     return (
@@ -94,7 +79,7 @@ function TakeAppoiment() {
                 </div>
                 <div className="mainContainer " style={{ margin: '2%' }}>
                     <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
-                    <div className="addPatient navbar-light mt-5" style={{ height: "20em", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                    <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                         <div className="row pt-4" >
                             {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
                             Doctor List
@@ -114,6 +99,8 @@ function TakeAppoiment() {
                                                 <TableCell >Specialization</TableCell>
                                                 <TableCell >Contact No</TableCell>
                                                 <TableCell >Email ID</TableCell>
+                                                <TableCell >Date</TableCell>
+                                                <TableCell >Time</TableCell>
                                                 <TableCell >Appointments</TableCell>
                                             </TableRow>
                                         </TableHead>
@@ -131,6 +118,8 @@ function TakeAppoiment() {
                                                     <TableCell >{value.doc_spec}</TableCell>
                                                     <TableCell >{value.doc_contact}</TableCell>
                                                     <TableCell >{value.doc_email}</TableCell>
+                                                    <TableCell ><input onChange={(e) => { dateChangeHandler(e) }} id='app_date' type="date" /></TableCell>
+                                                    <TableCell ><input onChange={(e) => timeChangeHandler(e)} id="app_time" type="time" /></TableCell>
                                                     <TableCell ><Button variant="outlined" onClick={() => { appointmentsHandler(value._id) }}>Appointment</Button></TableCell>
                                                 </TableRow>
                                             ))}

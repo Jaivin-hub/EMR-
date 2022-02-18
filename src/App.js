@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import HospitalRegistration from "./Components/HospitalRegistration";
 import SignIn from './Components/SignIn'
 import TakeAppoiment from "./Components/TakeAppoiment";
+import RegisterSuccess from "./Components/RegisterSuccess";
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
         <Route  path='/login' element={<Login />} />
         <Route  path='/hospitalregistration' element={<HospitalRegistration />} />
         <Route  path='/takeAppointment' element={<TakeAppoiment/>} />
+        <Route  path='/registerSuccess' element={<RegisterSuccess/>} />
       </Routes>
     </Router>
   );

@@ -39,7 +39,23 @@ function PatientView() {
         console.log('success')
         console.log('result', result)
         if (result) {
-            setScanResultWebCam(result)
+            var xml = new XMLParser().parseFromString(result);
+            const adharData = xml.attributes
+            console.log(adharData)
+            const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
+            setAdharNo(uid)
+            setPatientName(name)
+            setPatientDOB(yob)
+            setAddress(house)
+            // var x2js = new X2JS();
+            // x2js.xml_str2json()
+            // let parser = new DOMParser()
+            // let xml = parser.parseFromString(result,'application/xml');
+            // document.getElementById()
+            // setScanResultFile(result)
+        }
+        if (result) {
+            // setScanResultWebCam(result)
             setOpenScanner(false)
         }
     }
@@ -268,19 +284,24 @@ function PatientView() {
                                 <Button variant="contained" onClick={addPatientHandler}>Add Patient</Button>
                             </div>
                         </div>
+                        <div className="col-md-12 mt-5 d-flex justify-content-center">
+                {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
+              </div>
                     </div>
 
                 </div>
             </div>
-            <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                {/* <label htmlFor="" style={{marginLeft:'4%'}}></label> */}
-                <div className="row pt-4 " >
-                    {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
+            {patientList.length >= 1 ?
+
+                <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                    {/* <label htmlFor="" style={{marginLeft:'4%'}}></label> */}
+                    <div className="row pt-4 " >
+                        {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
                         Patient List
 
                     </div> */}
-                    <div className="col-md-3" style={{ marginLeft: '3%' }}>
-                        {/* <Button variant="contained" onClick={onScanFile}>upload file</Button>
+                        <div className="col-md-3" style={{ marginLeft: '3%' }}>
+                            {/* <Button variant="contained" onClick={onScanFile}>upload file</Button>
 
                         <QrReader
                             ref={qrRef}
@@ -290,15 +311,15 @@ function PatientView() {
                             onScan={handleScanFile}
                             legacyMode
                         /> */}
-                    </div>
-                    {/* <div className="col-md-2">
+                        </div>
+                        {/* <div className="col-md-2">
                     <Button variant="contained" onClick={onScanFile}>upload file</Button>
                 </div> */}
-                </div>
-                <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}>
+                    </div>
+                    {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
-                    <BasicTable List={patientList} />
-                    {/* <Table size="sm">
+                        <BasicTable List={patientList} />
+                        {/* <Table size="sm">
                         <>
                             <tr>
                                 <th>Patient ID</th>
@@ -325,8 +346,9 @@ function PatientView() {
 
                         </tbody>
                     </Table> */}
+                    {/* </div> */}
                 </div>
-            </div>
+                : null}
         </div>
     )
 }

@@ -32,10 +32,13 @@ export default function BasicTable({ List }) {
     const HospitalId = localStorage.getItem('HospitalId')
 
 
-  
 
-    const AppointmentsHandler = () => {
-        navigate('/takeAppointment');
+
+    const AppointmentsHandler = (id) => {
+        navigate('/takeAppointment', { state: { patientId: id } });
+        // navigate('/Players', {
+        //     userId: id,
+        //   });
 
     }
 
@@ -68,7 +71,7 @@ export default function BasicTable({ List }) {
                             <TableCell >{patient.p_phoneno}</TableCell>
                             <TableCell >{patient.p_bloodgroup}</TableCell>
                             <TableCell >{patient.p_address}</TableCell>
-                            <TableCell ><Button variant="contained" onClick={AppointmentsHandler}>Take Appointment</Button></TableCell>
+                            <TableCell ><Button variant="outlined" onClick={() => { AppointmentsHandler(patient._id) }}>Take Appointment</Button></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

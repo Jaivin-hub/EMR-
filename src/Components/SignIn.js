@@ -61,8 +61,8 @@ function SignIn() {
 
     }
     return (
-        <div className='centered loginWrapper d-flex justify-content-center' style={{ backgroundImage: { backGroundImage }, height: '60em', background: " linear-gradient(180deg, #02BCB1 0%, #028FBC 100%);" }}>
-            <div className="login_container" style={{ marginTop: "15em", width: '30%' }}>
+        <div className='centered loginWrapper d-flex justify-content-center' style={{ backgroundImage: { backGroundImage }, height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+            <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
                 <div className="card">
                     <div className="d-flex loginBoxs">
                         <div className="col-md-12">
@@ -76,14 +76,20 @@ function SignIn() {
                             <div className="row ">
                                 <div className="col-md-12 mt-5 d-flex justify-content-center">
                                     {/* <TextField onChange={(e) => { inputHandler(e) }} id='email_id' label="email id" /> */}
-                                    <input id='email_id' type="text" onChange={(e) => { inputHandler(e) }} placeholder=" email id" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                    {/* <FormControl
+                                        disabled
+                                        type="text"
+                                        placeholder="Enter text"
+                                        onChange={this.handleChange}
+                                    /> */}
+                                    <input className="form-control" id='email_id' type="text" onChange={(e) => { inputHandler(e) }} placeholder=" email id" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
                                 </div>
                                 <div className="col-md-12">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{emailErr}</p>
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center">
                                     {/* <TextField onChange={(e) => { inputHandler(e) }} id='password' label="password" /> */}
-                                    <input id='password' type="text" onChange={(e) => { inputHandler(e) }} placeholder="  password" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                    <input className="form-control" id='password' type="text" onChange={(e) => { inputHandler(e) }} placeholder="  password" style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
                                 </div>
                                 <div className="col-md-12">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
@@ -96,7 +102,7 @@ function SignIn() {
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
                                     {/* <div className="row"> */}
-                                    <label htmlFor="">Not a member? <a href="/hospitalregistration">Sign up</a></label>
+                                    <label htmlFor="">Not a member? <a href="/login">Sign up</a></label>
                                     {/* </div> */}
                                 </div>
                             </div>
