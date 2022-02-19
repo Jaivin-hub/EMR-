@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path='/' element={<SignIn />} />
+        <Route exact path='/project/emr/' element={<SignIn />} />
         <Route path="/taskDashboard" element={<TaskDashboard />} />
         <Route path='/addDoctor' element={<DoctorView />} />
         <Route path='/login' element={<Login />} />
