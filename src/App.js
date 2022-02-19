@@ -10,7 +10,7 @@ import TakeAppoiment from "./Components/TakeAppoiment";
 import RegisterSuccess from "./Components/RegisterSuccess";
 function App() {
   return (
-    <Router>
+    <Router basename={"/project/emr"}>
       <Routes>
         <Route exact path='/' element={<SignIn />} />
         <Route path="/taskDashboard" element={<TaskDashboard />} />
