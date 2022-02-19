@@ -13,7 +13,7 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
-                        <Nav.Link href="/taskDashboard" className="navMenu1">Appointments</Nav.Link>
+                        <Nav.Link href="/project/emr/taskDashboard" className="navMenu1">Appointments</Nav.Link>
                         <Nav.Link href="/addDoctor" className="navMenu2">Doctors</Nav.Link>
                         <Nav.Link href="/taskDashboard" className="navMenu3">Patients</Nav.Link>
                         <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>

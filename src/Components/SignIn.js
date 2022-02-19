@@ -102,7 +102,7 @@ function SignIn() {
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
                                     {/* <div className="row"> */}
-                                    <label htmlFor="">Not a member? <a href="/login">Sign up</a></label>
+                                    <label htmlFor="">Not a member? <a href="/project/emr/login">Sign up</a></label>
                                     {/* </div> */}
                                 </div>
                             </div>
