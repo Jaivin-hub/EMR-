@@ -17,6 +17,7 @@ function HospitalRegistration() {
     const [pickedFile, setPickedFile] = useState(null)
     const [preview, setPreview] = useState('');
     const [size, setSize] = useState(null)
+    const [validateErr, setValidateErr] = useState('')
 
     const inputChangeHandler = (e) => {
         const id = e.target.id
@@ -70,6 +71,7 @@ function HospitalRegistration() {
 
     const addHospitalSubmitHandler = () => {
         console.log('add hospital function')
+
         const { Hospital_Name, Email_ID, Hospital_Address_1, Hospital_Address_2, Country, State, City, Pin_Code, Contact_No_1, Contact_No_2, Password } = hospitalData
         const obj = {
             name: Hospital_Name,
@@ -85,25 +87,288 @@ function HospitalRegistration() {
             contact_2: Contact_No_2,
             logo: "logo.png"
         }
+        console.log('objects---', obj)
+        if (!Hospital_Name == "" && !Email_ID == "" && !Hospital_Address_1 == "" && !Hospital_Address_2 == "" && !Country == "" && !State == "" && !City == "" && !Pin_Code == "" && !Contact_No_1 == "" && !Contact_No_2 == "" && !Password == "") {
+            instance.post("/add_hospital", obj).then((response) => {
+                setValidateErr('')
+                console.log('response of hospital', response)
+                if (response) {
+                    navigate('/registerSuccess');
+                }
+            }).catch((err) => {
+                console.log('error', err)
+            })
+        } else {
+            setValidateErr('All fields are required')
+            console.log('else')
+        }
 
-        instance.post("/add_hospital", obj).then((response) => {
-            console.log('response of hospital', response)
-            if (response) {
-                navigate('/registerSuccess');
-            }
-        }).catch((err) => {
-            console.log('error', err)
-        })
     }
 
+    // #################### Validating Name! ###########################
+
+    const [firstName, setFirstName] = useState('')
+    const [firstNameErr, setFirstNameErr] = useState('')
+
+
+    const nameInputBlurHandler = (firstName, setFirstNameErr) => {
+        if (firstName === '') {
+            setFirstNameErr('This field cannot be empty!')
+            return false
+        } else if (firstName.length < 4) {
+            setFirstNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (firstName.slice(-1) === ' ') {
+            setFirstNameErr('should not end with space.')
+            return false
+        } else {
+            setFirstNameErr('')
+            return true
+        }
+    }
+
+
+    const nameInputChangeHandler = (firstName, setFirstNameErr) => {
+        if (firstName.length === 0) {
+            setFirstNameErr('This field cannot be empty!')
+            return false
+        } else if (firstName.charAt(0) === ' ') {
+            setFirstNameErr('should not start with space.')
+            return false
+        } else if (firstName.includes('  ')) {
+            setFirstNameErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(firstName)) {
+            setFirstNameErr('should not contain numbers.')
+            return false
+        } else if (!firstName.match(/^[a-zA-Z ]+$/)) {
+            setFirstNameErr('Invalid charecter!')
+            return false
+        } else if (firstName === '') {
+            setFirstNameErr('This field cannot be empty!')
+            return false
+        } else if (firstName.length < 4) {
+            setFirstNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (firstName.slice(-1) === ' ') {
+            setFirstNameErr('should not end with space.')
+            return false
+        } else {
+            setFirstNameErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Name! ###########################
+
+    // #################### Validating Email! ###########################
+
+    const [email, setEmail] = useState('')
+    const [emailError, setEmailError] = useState('')
+    console.log(email)
+
+    const emailInputBlurHandler = (email, setError) => {
+        if (email === '') {
+            setError('This field cannot be empty!')
+            return false
+        } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+            setError('This email id is not valid.')
+            return false
+        } else {
+            setError('')
+            return true
+        }
+    }
+    const emailInputChangeHandler = (email, setError) => {
+        if (email.includes(' ')) {
+            setError('Email id should not contain space.')
+            return false
+        }
+        else {
+            setError('')
+            return true
+        }
+    }
+
+    // #################### Validating Email! ###########################
+
+    //######################### Validating Password! ###########################
+
+    const [password, setPassword] = useState('')
+    const [passwordErr, setPasswordErr] = useState('')
+
+
+    const passwordInputBlurHandler = (password, setPasswordErr) => {
+        if (password === '') {
+            setPasswordErr('This field cannot be empty!')
+            return false
+        } else if (password.length < 5) {
+            setPasswordErr('password should have atleast 5 charecters')
+            return false
+        } else if (password.length > 20) {
+            setPasswordErr('password should not exceed 20 characters')
+            return false
+        } else {
+            setPasswordErr('')
+            return true
+        }
+    }
+
+    const passwordInputChangeHandler = (password, setPasswordErr) => {
+        if (password.length > 20) {
+            setPasswordErr('password should not exceed 20 characters')
+            return false
+        } else {
+            setPasswordErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Password! ###########################
+
+    //######################### Validating phone number! ###########################
+
+    const [phone, setPhone] = useState('')
+    const [phoneErr, setPhoneErr] = useState('')
+
+    const phoneInputBlurHandler = (phone, setPhoneErr) => {
+        if (phone === '') {
+            setPhoneErr('This field cannot be empty!')
+            return false
+        } else if (phone.length < 10) {
+            setPhoneErr('Phone number does not have 10 digits')
+            return false
+        } else if (phone.length > 10) {
+            setPhoneErr('Phone number has more than 10 digits')
+            return false
+        } else {
+            setPhoneErr('')
+            return true
+        }
+    }
+
+    const phoneInputChangeHandler = (phone, setPhoneErr) => {
+        if (!phone.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setPhoneErr("Enter numbers only!");
+            return false
+        } else if (phone.length > 10) {
+            setPhoneErr('Phone number has more than 10 digits')
+            return false
+        }
+        else {
+            setPhoneErr('')
+            return true
+        }
+    }
+
+    //######################### Validating phone number! ###########################
+
+    //######################### Validating Postal Code! ###########################
+
+    const [postalCode, setPostalCode] = useState('')
+    const [postalErr, setPostalErr] = useState('')
+
+
+    // const postalCodeInputBlurHandler = (postalCode, setPostalErr) => {
+    //     if (postalCode === '') {
+    //         setPostalErr('This field cannot be empty!')
+    //     } else if (postalCode.length !== 6) {
+    //         setPostalErr('Postal Code should have 6 digits')
+    //     } else {
+    //         setPostalErr('')
+    //     }
+    // },
+
+
+
+    // const postalCodeInputChangeHandler = (postalCode, setPostalErr) => {
+    //     if (postalCode === '') {
+    //         setPostalErr('This field cannot be empty!')
+    //     } else if (!postalCode.match(/^[0-9]*$/g) && postalCode !== '') {
+    //         setPostalErr('Enter numbers only!')
+    //     } else if (postalCode.length > 6) {
+    //         setPostalErr('postalCode should not have more than 6 digits')
+    //     } else {
+    //         setPostalErr('')
+    //     }
+    // },
+
+    const postalCodeInputChangeHandler = (postalCode, setPostalErr) => {
+        if (postalCode === '') {
+            setPostalErr('This field cannot be empty!')
+        } else if (!postalCode.match(/^[0-9]*$/g) && postalCode !== '') {
+            setPostalErr('Enter numbers only!')
+        } else if (postalCode.length > 6) {
+            setPostalErr('postalCode should not have more than 6 digits')
+        } else {
+            setPostalErr('')
+        }
+    }
+
+    const postalCodeInputBlurHandler = (postalCode, setPostalErr) => {
+        if (postalCode === '') {
+            setPostalErr('This field cannot be empty!')
+        } else if (postalCode.length !== 6) {
+            setPostalErr('Postal Code should have 6 digits')
+        } else {
+            setPostalErr('')
+        }
+    }
+
+    //######################### Validating Postal Code! ###########################
+
+    //######################### Validating secondary number! ###########################
+
+    const [secondaryPhone, setSecondaryPhone] = useState('')
+    const [secondaryPhoneErr, setSecondaryPhoneErr] = useState('')
+
+    const secondaryPhoneInputBlurHandler = (secondaryPhone, setSecondaryPhoneErr) => {
+        if (secondaryPhone === '') {
+            setSecondaryPhoneErr('This field cannot be empty!')
+            return false
+        } else if (secondaryPhone.length < 10) {
+            setSecondaryPhoneErr('Phone number does not have 10 digits')
+            return false
+        } else if (secondaryPhone.length > 10) {
+            setSecondaryPhoneErr('Phone number has more than 10 digits')
+            return false
+        } else {
+            setSecondaryPhoneErr('')
+            return true
+        }
+    }
+
+    const secondaryPhoneInputChangeHandler = (secondaryPhone, setSecondaryPhoneErr) => {
+        if (!secondaryPhone.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setSecondaryPhoneErr("Enter numbers only!");
+            return false
+        } else if (secondaryPhone.length > 10) {
+            setSecondaryPhoneErr('Phone number has more than 10 digits')
+            return false
+        }
+        else {
+            setSecondaryPhoneErr('')
+            return true
+        }
+    }
+
+    //######################### Validating secondary number! ###########################
+
+
+
+
+
     return (
-        <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em' ,background:'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)'}}>
+        <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
             <div className="login_container" style={{ marginTop: "8em", width: '60%' }}>
                 <div className="card">
                     <div className="d-flex loginBoxs">
                         <div className="col-md-12">
                             <div className="row d-flex justify-content-center">
                                 <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Register Here</strong></h4>
+                            </div>
+                            <div className="row d-flex justify-content-center">
+                                <p className="text-danger">{validateErr}</p>
                             </div>
                             <div className="row">
                                 {/* ========== */}
@@ -122,7 +387,7 @@ function HospitalRegistration() {
                                         hbvUX0iMM1bs/1wy+BvofA4Hqf2ppH45uPPvwbcc3LOpzMENIjorcVkOA0Bg2fab+dggcnMUz8jGhXbIshC1ftHmsaqnDdXTV7hyi8/65cuqEJt7WLiyQk4fZ2cYFDEF46WS2ZHlzVvWYp5OClZiPDNNTg6m5FSyEG1+lWtBNa8K1Wt6KVkIJvHa5xSQl+crnzAiG4201l6MBVw5uWQwbetVvRNFTg3bsVDUME7n5
                                         3NBpw1G5FcUjAcbsVxaEAP/vYHI0AvDlb0U38w7G7U4F4h3952gTQN3zna/PD+nQv5/DlZeopl9pcd9/tcW9J8ARP8ATXSYIneIInOKkkOB6c5iZQDjZsHZOMxB3IRm8ISfAET/AET/AEjyA
                                         JnuAJnuCDhx+HCj/HBOcduhDgZbMDTJel3aE1lENMt/WPJZsChBbeacEYaG+fANNxhxZpL1ZIKTp2CzuekosWDizPDecchVy1RGCkcsZ1FgJtZZ6FfYdj/K3nmr3lfszdvV1jNYzlxcpktGu2X04DvMFfVh+LHtsX/AORLan2u2WZTwAAAABJRU5ErkJggg==' alt="" />
-                                        
+
                                         {/* <h6 style={{ fontFamily: 'serif', marginBottom: '10px' }}>
                                             Upload Files
                                         </h6> */}
@@ -168,7 +433,7 @@ function HospitalRegistration() {
               Upload
             </button> */}
                                         </div>
-                                        <label htmlFor="" style={{marginLeft:"25%"}} className="mt-3">Upload logo</label>
+                                        <label htmlFor="" style={{ marginLeft: "25%" }} className="mt-3">Upload logo</label>
                                         {/* <label style={{ color: 'grey', fontSize: '10px' }}>
                                             Upload files upto size 50mb
                                         </label> */}
@@ -177,49 +442,155 @@ function HospitalRegistration() {
                                 <div className="col-md-8">
                                     <div className="row">
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Hospital_Name' onChange={(e) => { inputChangeHandler(e) }} label="Hospital Name" />
+                                            <TextField
+                                                variant="standard"
+                                                id='Hospital_Name'
+                                                onChange={(e) => {
+                                                    setFirstName(e.target.value)
+                                                    nameInputChangeHandler(e.target.value, setFirstNameErr)
+                                                }}
+                                                onBlur={(e) => {
+                                                    nameInputBlurHandler(e.target.value, setFirstNameErr)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Hospital Name"
+                                            />
+                                            <p style={{ color: "red" }}>{firstNameErr}</p>
                                         </div>
                                         <div className="col-md-6 mt-3">
-                                            {/* <TextField id='Hospital_Name' onChange={(e) => { inputChangeHandler(e) }} label="Hospital Name" /> */}
-                                            <TextField id='Email_ID' onChange={(e) => { inputChangeHandler(e) }} label="Email ID" />
+                                            <TextField
+                                                variant="standard"
+                                                id='Email_ID'
+                                                onChange={(e) => {
+                                                    setEmail(e.target.value)
+                                                    emailInputChangeHandler(e.target.value, setEmailError)
+                                                }}
+                                                onBlur={(e) => {
+                                                    emailInputBlurHandler(e.target.value, setEmailError)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Email ID"
+                                            />
+                                            <p style={{ color: "red" }}>{emailError}</p>
                                         </div>
-
                                     </div>
                                     <div className="row ">
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Hospital_Address_1' onChange={(e) => { inputChangeHandler(e) }} label="Hospital Address 1" />
+                                            <TextField
+                                                variant="standard"
+                                                id='Hospital_Address_1'
+                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Hospital Address 1"
+                                            />
                                         </div>
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Hospital_Address_2' onChange={(e) => { inputChangeHandler(e) }} label="Hospital Address 2" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6 mt-3">
-                                            <TextField id='Country' onChange={(e) => { inputChangeHandler(e) }} label="Country" />
-                                        </div>
-                                        <div className="col-md-6 mt-3">
-                                            <TextField id='State' onChange={(e) => { inputChangeHandler(e) }} label="State" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6 mt-3">
-                                            <TextField id='City' onChange={(e) => { inputChangeHandler(e) }} label="City" />
-                                        </div>
-                                        <div className="col-md-6 mt-3">
-                                            <TextField id='Pin_Code' onChange={(e) => { inputChangeHandler(e) }} label="Pin Code" />
+                                            <TextField
+                                                variant="standard"
+                                                id='Hospital_Address_2'
+                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Hospital Address 2"
+                                            />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Contact_No_1' onChange={(e) => { inputChangeHandler(e) }} label="Contact No 1" />
+                                            <TextField
+                                                variant="standard"
+                                                id='Country'
+                                                value="India"
+                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Country"
+                                            />
                                         </div>
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Contact_No_2' onChange={(e) => { inputChangeHandler(e) }} label="Contact No 2" />
+                                            <TextField
+                                                variant="standard"
+                                                id='State'
+                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                label="State"
+                                            />
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-6 mt-3">
-                                            <TextField id='Password' type='password' onChange={(e) => { inputChangeHandler(e) }} label="Password" />
+                                            <TextField
+                                                variant="standard"
+                                                id='City'
+                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                label="City"
+                                            />
+                                        </div>
+                                        <div className="col-md-6 mt-3">
+                                            <TextField
+                                                variant="standard"
+                                                id='Pin_Code'
+                                                onChange={(e) => {
+                                                    setPostalCode(e.target.value)
+                                                    postalCodeInputChangeHandler(e.target.value, setPostalErr)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    postalCodeInputBlurHandler(e.target.value, setPostalErr)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Pin Code"
+                                            />
+                                            <p style={{ color: "red" }}>{postalErr}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6 mt-3">
+                                            <TextField
+                                                variant="standard"
+                                                id='Contact_No_1'
+                                                onChange={(e) => {
+                                                    setPhone(e.target.value)
+                                                    phoneInputChangeHandler(e.target.value, setPhoneErr)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    phoneInputBlurHandler(e.target.value, setPhoneErr)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Contact No 1"
+                                            />
+                                            <p style={{ color: "red" }}>{phoneErr}</p>
+                                        </div>
+                                        <div className="col-md-6 mt-3">
+                                            <TextField
+                                                variant="standard"
+                                                id='Contact_No_2'
+                                                onChange={(e) => {
+                                                    setSecondaryPhone(e.target.value)
+                                                    secondaryPhoneInputChangeHandler(e.target.value, setSecondaryPhoneErr)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    secondaryPhoneInputBlurHandler(e.target.value, setSecondaryPhoneErr)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Contact No 2"
+                                            />
+                                            <p style={{ color: "red" }}>{secondaryPhoneErr}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6 mt-3">
+                                            <TextField
+                                                variant="standard"
+                                                id='Password'
+                                                type='password'
+                                                onChange={(e) => {
+                                                    setPassword(e.target.value)
+                                                    passwordInputChangeHandler(e.target.value, setPasswordErr)
+                                                }}
+                                                onBlur={(e) => {
+                                                    passwordInputBlurHandler(e.target.value, setPasswordErr)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
+                                                label="Password"
+                                            />
+                                            <p style={{ color: "red" }}>{passwordErr}</p>
                                         </div>
 
                                     </div>
@@ -227,7 +598,7 @@ function HospitalRegistration() {
                                         <div className="button">
                                             {/* <Button variant="outlined" onClick={addHospitalSubmitHandler}>Cancel</Button> */}
                                         </div>
-                                        <div className="button" style={{width: '40%', height: ''}}>
+                                        <div className="button" style={{ width: '40%', height: '' }}>
                                             <Button variant="contained" onClick={addHospitalSubmitHandler}>Register</Button>
                                         </div>
                                         <div className="col-md-12 mt-5 d-flex justify-content-center">

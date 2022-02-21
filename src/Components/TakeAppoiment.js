@@ -17,7 +17,7 @@ import 'react-dropdown/style.css';
 function TakeAppoiment() {
     const [hospitalName, setHospitalName] = useState('')
     const [doctorList, setDoctorList] = useState([])
-    const [appoinmentDate, setAppoinmentDate] = useState('')
+    const [appoinmentDate, setAppoinmentDate] = useState('Monday')
     const [appointmentTime, setAppointmentTime] = useState('')
 
     const HospitalId = localStorage.getItem('HospitalId')
@@ -48,6 +48,8 @@ function TakeAppoiment() {
 
     const dropDownHandler = (e) => {
         console.log(e.value)
+        setAppoinmentDate(e.value)
+
     }
 
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
@@ -58,7 +60,7 @@ function TakeAppoiment() {
             _hos_id: HospitalId,
             _doc_id: id,
             _pat_id: state.patientId,
-            app_date: 'Monday',
+            app_date: appoinmentDate,
             app_time: appointmentTime
         }
         instance.post('/patient_appointment', obj).then((response) => {

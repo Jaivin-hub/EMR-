@@ -1,5 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, IconButton, Remove } from '@mui/material'
 import uploadImg from '../assets/imgs/image 7.png'
 import datePickerImg from '../assets/imgs/image 8.png'
 import { AiOutlineClockCircle } from 'react-icons/ai'
@@ -27,18 +27,33 @@ function DoctorView() {
     const [reload, setReload] = useState(false)
     const [hospitalName, setHospitalName] = useState('')
     const [availableDay, setAvailableDay] = useState('')
+    const [inputDateFields, setInputDateFields] = useState([
+        { doc_avail_day: '', doc_from_time: '', doc_to_time: '' },
+    ])
+   
+    const handleAddFields = () => {
+        setInputDateFields([...inputDateFields, { doc_avail_day: '' }])
+    }
 
     const options = [
         'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     ];
     const defaultOption = options[0];
 
-    const dropDownHandler = (e) => {
-        console.log(e.value)
-        setAvailableDay(e.value)
+    const dropDownHandler = (e, index) => {
+        if(e.value){
+            const newData = [...inputDateFields]
+            newData[index]['doc_avail_day'] = e.value 
+            setInputDateFields(newData)
+        }else{
+            const newData = [...inputDateFields]
+            newData[index][e.target.id] = e.target.value 
+            setInputDateFields(newData)
+        }
     }
 
-    console.log('availableDay', availableDay)
+
+    console.log('inputDateFields', inputDateFields)
 
 
 
@@ -48,11 +63,13 @@ function DoctorView() {
         setDoctorDetails(newData)
     }
 
-    const handleTimeSchedule = (e) => {
-        console.log(e.target.value)
-        const newData = { ...date }
-        newData[e.target.id] = e.target.value
-        setDate(newData)
+    const handleTimeSchedule = (e, index) => {
+        console.log(e.target.id)
+        console.log(index)
+        const newData = { ...inputDateFields }
+        newData[index][e.target.id] = e.target.value
+        console.log(newData)
+        setInputDateFields(newData)
     }
 
 
@@ -86,9 +103,17 @@ function DoctorView() {
 
 
     const submitHandler = () => {
+        // const availability = []
+        // for (let i = 0; i < inputDateFields.length; i++) {
+        //     const obj = { doc_avail_day: '', doc_from_time: '', doc_to_time: '' }
+        //     obj.doc_avail_day = inputDateFields[i].doc_avail_day
+        //     obj.doc_from_time = inputFromTime[i].doc_from_time
+        //     obj.doc_to_time = inputToTime[i].doc_to_time
+        //     availability.push(obj)
+        // }
+        // console.log('availability', availability)
 
         const { doc_name, doc_qualification, doc_address, doc_spec, doc_contact, doc_email, doc_password } = doctorDetails
-        const { doc_avail_day, doc_from_time, doc_to_time } = date
 
         const obj = {
             doc_name: doc_name,
@@ -99,13 +124,7 @@ function DoctorView() {
             doc_email: doc_email,
             doc_password: doc_password,
             _hos_id: HospitalId,
-            availability: [
-                {
-                    doc_avail_day: doc_avail_day,
-                    doc_from_time: doc_from_time,
-                    doc_to_time: doc_to_time
-                }
-            ]
+            availability: inputDateFields
         }
         instance.post('/add_doctor', obj).then((response) => {
             console.log('response from backend doctor', response)
@@ -136,6 +155,14 @@ function DoctorView() {
         console.log(date)
     }
 
+    const handleRemoveFields = (index) => {
+        const newData = [...inputDateFields]
+        newData.splice(index, 1)
+        setInputDateFields(newData)
+    }
+
+
+
 
     return (
 
@@ -165,111 +192,92 @@ function DoctorView() {
                         </div>
                         <div className="row mt-3">
                             <div className="col-md-3">
-                                <TextField id="doc_name" onChange={(e) => { inputHandler(e) }} label="Doctor Name" />
+                                <TextField variant="standard" id="doc_name" onChange={(e) => { inputHandler(e) }} label="Doctor Name" />
                             </div>
                             <div className="col-md-3">
-                                <TextField id="doc_qualification" onChange={(e) => { inputHandler(e) }} label="Qualification" />
+                                <TextField variant="standard" id="doc_qualification" onChange={(e) => { inputHandler(e) }} label="Qualification" />
                             </div>
                             <div className="col-md-3">
-                                <TextField id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
+                                <TextField variant="standard" id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
                             </div>
                             <div className="col-md-3">
-                                <TextField id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" />
+                                <TextField variant="standard" id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" />
                             </div>
                         </div>
                         <div className="row mt-5">
 
                             <div className="col-md-3">
-                                <TextField id="doc_contact" onChange={(e) => { inputHandler(e) }} label="Contact No" />
+                                <TextField variant="standard" id="doc_contact" onChange={(e) => { inputHandler(e) }} label="Contact No" />
                             </div>
                             <div className="col-md-3">
-                                <TextField id="doc_email" onChange={(e) => { inputHandler(e) }} label="Email ID" />
+                                <TextField variant="standard" id="doc_email" onChange={(e) => { inputHandler(e) }} label="Email ID" />
                             </div>
                             <div className="col-md-3">
-                                <TextField id="doc_password" type='password' onChange={(e) => { inputHandler(e) }} label="Password" />
+                                <TextField variant="standard" id="doc_password" type='password' onChange={(e) => { inputHandler(e) }} label="Password" />
                             </div>
                         </div>
-                        <div className="row ">
-                            {/* {(addMembersList.length - 1 === index) ?brassimmutreje-2771@yopmail.com
-                                (<button type="button" className="add-btn text-light mt-2" onClick={handleMemberAdd}>
-                                    <span>+</span>
-                                </button>)
-                                :
-                                (<button type="button" className="add-btn text-light mt-2" onClick={() => { handleMemberRemove(index) }}>
-                                    <span>-</span>
-                                </button>)} */}
-                            <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
-                                <div className="row mt-2">
-                                    <div className="col-md-3 " >
-                                        <div className="row" style={{ marginLeft: "1%" }}>
-                                            Date
-                                        </div>
-                                        {/* <input id='doc_avail_day' onChange={(e) => { handleTimeSchedule(e) }} type="date" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Date" /> */}
-                                        <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" />
-
-                                        {/* <img src={datePickerImg} alt="" /> */}
-
-                                        {/* <DatePicker
-                        // key={task._id}
-                        // ref={(el) => addToRefs(el, idx)}
-                        // onCalendarClose={() =>
-                        //     handleCalendarClose(idx)
-                        // }
-                        onChange={(date) => {
-                            handleChangeDate(date)
-                            // updateTaskFields(
-                            //     'duedate',
-                            //     moment(date).format('MM-DD-YYYY'),
-                            //     '',
-                            //     task._id,
-                            //     task?.duedate
-                            // );
-                        }}
-                        customInput={
-                            <CustomInput />
-                        }
-                    /> */}
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <div className="row" style={{ marginLeft: "5%" }}>
-                                            Time From
-                                        </div>
-                                        <input id="doc_from_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%",height:"3em", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
-                                        {/* <AiOutlineClockCircle /> */}
-
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="row" style={{ marginLeft: "5%" }}>
-                                            Time To
-                                        </div>
-                                        <input id="doc_to_time" onChange={(e) => { handleTimeSchedule(e) }} type="time" style={{ width: "90%",height:"3em", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
-                                        {/* <AiOutlineClockCircle /> */}
-                                    </div>
-                                    <div className="col-md-3">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                {/* <div className="row">
-                                <div className="col-md-4">
-                                    <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0F9D58', opacity: '0.3' }}>
-                                        <label className="" >+</label>
-                                    </div>
-                                </div>
-                                <div className="col-md-8 pt-2">
-                                    <label htmlFor="">Add More</label>
-                                </div>
-                            </div> */}
-
-                                                {/* <label>Add More</label> */}
+                        {inputDateFields.map((inputDateFields, index) => {
+                            return (
+                                <div key={index} className="row">
+                                    <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
+                                        <div className="row mt-2">
+                                            <div className="col-md-3 " >
+                                                <div className="row" style={{ marginLeft: "5%" }}>
+                                                    Day
+                                                </div>
+                                                {/* <input id='doc_avail_day' className="mt-2" onChange={(e) => { dropDownHandler(e,index) }} type="text" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Day" /> */}
+                                                <Dropdown id='doc_avail_day' options={options} onChange={(e) => { dropDownHandler(e, index) }} value={defaultOption} placeholder="Select an option" />
                                             </div>
-                                            <div className="col-md-6">
+                                            <div className="col-md-3">
+                                                <div className="row" style={{ marginLeft: "5%" }}>
+                                                    Time From
+                                                </div>
+                                                <input id="doc_from_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%",height:'3em',  position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
+                                            </div>
+                                            <div className="col-md-3">
+                                                <div className="row" style={{ marginLeft: "5%" }}>
+                                                    Time To
+                                                </div>
+                                                <input id="doc_to_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%",height:'3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
+                                            </div>
+                                            <div className="col-md-3">
 
+
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="row mt-4">
+                                                            <div className="col-md-4 mt-2">
+                                                                <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0F9D58', opacity: '0.3' }}>
+                                                                    <label className="" >+</label>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-8 pt-2 mt-2">
+                                                                <h6 htmlFor="" style={{ cursor: 'pointer' }} onClick={handleAddFields}>Add More</h6>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* <label>Add More</label> */}
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="row mt-4">
+                                                            <div className="col-md-4 mt-2">
+                                                                <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0298D5', opacity: '0.3' }}>
+                                                                    <label className="" >-</label>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-8 pt-2 mt-2">
+                                                                <h6 htmlFor="" style={{ cursor: 'pointer' }} onClick={() => { handleRemoveFields(index) }}>Clear All</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            )
+                        })}
+
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
                                 <Button variant="contained" style={{ marginLeft: '30%' }} onClick={submitHandler}>Add Doctor</Button>

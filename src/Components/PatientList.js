@@ -11,6 +11,7 @@ import instance, { API } from '../config/api';
 import { useHistory } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import Modal from './Modal'
 
 
 
@@ -30,52 +31,59 @@ export default function BasicTable({ List }) {
     const navigate = useNavigate();
     // const [patientList, setPatientList] = useState([])
     const HospitalId = localStorage.getItem('HospitalId')
+    const [openModal, setOpenModal] = useState(false)
+    const [patientId, setPatientId] = useState('')
 
 
 
 
     const AppointmentsHandler = (id) => {
-        navigate('/takeAppointment', { state: { patientId: id } });
-        // navigate('/Players', {
-        //     userId: id,
-        //   });
+        setPatientId(id)
+        setOpenModal(true);
+        // navigate('/takeAppointment', { state: { patientId: id } });
 
     }
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        {/* <TableCell>Patient ID</TableCell> */}
-                        <TableCell >Patient name</TableCell>
-                        <TableCell >Adhar No</TableCell>
-                        <TableCell >Patient DOB</TableCell>
-                        <TableCell >Patient Phone No</TableCell>
-                        <TableCell >Patient Blood Group</TableCell>
-                        <TableCell >Address</TableCell>
-                        <TableCell >Appointments</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {List.map((patient, index) => (
-                        <TableRow
-                            key={index}
-                        // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {patient.p_name}
-                            </TableCell>
-                            <TableCell >{patient.aadhar_card_no}</TableCell>
-                            <TableCell >{patient.p_dob}</TableCell>
-                            <TableCell >{patient.p_phoneno}</TableCell>
-                            <TableCell >{patient.p_bloodgroup}</TableCell>
-                            <TableCell >{patient.p_address}</TableCell>
-                            <TableCell ><Button variant="outlined" onClick={() => { AppointmentsHandler(patient._id) }}>Take Appointment</Button></TableCell>
+        <>
+            {openModal ?
+                <Modal closeModal={setOpenModal} patientId={patientId} />
+                : null}
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            {/* <TableCell>Patient ID</TableCell> */}
+                            <TableCell >Patient name</TableCell>
+                            <TableCell >Adhar No</TableCell>
+                            <TableCell >Patient DOB</TableCell>
+                            <TableCell >Patient Phone No</TableCell>
+                            <TableCell >Patient Blood Group</TableCell>
+                            <TableCell >Address</TableCell>
+                            <TableCell >Appointments</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {List.map((patient, index) => (
+                            <TableRow
+                                key={index}
+                            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {patient.p_name}
+                                </TableCell>
+                                <TableCell >{patient.aadhar_card_no}</TableCell>
+                                <TableCell >{patient.p_dob}</TableCell>
+                                <TableCell >{patient.p_phoneno}</TableCell>
+                                <TableCell >{patient.p_bloodgroup}</TableCell>
+                                <TableCell >{patient.p_address}</TableCell>
+                                <TableCell ><Button variant="outlined" onClick={() => { AppointmentsHandler(patient._id) }}>Take Appointment</Button></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+        </>
     );
 }

@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, IconButton, RemoveButton } from '@mui/material'
 import QrReader from 'react-qr-reader'
 import { Table } from 'react-bootstrap'
 import XMLParser from 'react-xml-parser';
 import instance, { API } from '../config/api';
 import { ApiHelper } from '../Helper/Apihelper';
 import BasicTable from './PatientList'
+import Modal from './Modal'
 
 function PatientView() {
     const [scanResultWebCam, setScanResultWebCam] = useState('')
@@ -22,6 +23,7 @@ function PatientView() {
     const [reload, setReload] = useState(false)
     const [patientList, setPatientList] = useState([])
     const [showUploadFile, setShowUploadFile] = useState(false)
+
 
 
     const qrRef = useRef(null)
@@ -252,30 +254,30 @@ function PatientView() {
                         </div>
                         <div className="row">
                             <div className="col-md-3 mt-3">
-                                <TextField id='adharCardNo' onChange={(e) => { inputHandler(e) }} value={AdharNo} label="Adharcard No" />
+                                <TextField variant="standard" id='adharCardNo' onChange={(e) => { inputHandler(e) }} value={AdharNo} label="Adharcard No" />
                                 {/* <input type="text" placeholder="Adharcard No" /> */}
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField id='patientName' onChange={(e) => { inputHandler(e) }} value={patientName} label="Patient Name" />
+                                <TextField variant="standard" id='patientName' onChange={(e) => { inputHandler(e) }} value={patientName} label="Patient Name" />
                                 {/* <input type="text" placeholder="Patient Name" /> */}
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField id='patiantDOB' onChange={(e) => { inputHandler(e) }} value={patientDOB} label="Patient DOB" />
+                                <TextField variant="standard" id='patiantDOB' onChange={(e) => { inputHandler(e) }} value={patientDOB} label="Patient DOB" />
                                 {/* <input type="text" placeholder="Patient DOB" /> */}
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField id='bloodBloodGroup' onChange={(e) => { inputHandler(e) }} label="Patient Blood Group" />
+                                <TextField variant="standard" id='bloodBloodGroup' onChange={(e) => { inputHandler(e) }} label="Patient Blood Group" />
                                 {/* <input type="text" placeholder="Patient Blood Group" /> */}
                             </div>
                         </div>
                         <div className="row">
 
                             <div className="col-md-3 mt-3">
-                                <TextField id='patientAddress' onChange={(e) => { inputHandler(e) }} value={address} label="Patient Address" />
+                                <TextField variant="standard" id='patientAddress' onChange={(e) => { inputHandler(e) }} value={address} label="Patient Address" />
                                 {/* <input type="text" placeholder="Patient Address" /> */}
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField id='patientPhoneNo' onChange={(e) => { inputHandler(e) }} label="Patient Phone Number" />
+                                <TextField variant="standard" id='patientPhoneNo' onChange={(e) => { inputHandler(e) }} label="Patient Phone Number" />
                                 {/* <input type="text" placeholder="Patient Phone Number" /> */}
                             </div>
                         </div>
@@ -285,8 +287,8 @@ function PatientView() {
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
-                {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
-              </div>
+                            {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
+                        </div>
                     </div>
 
                 </div>
@@ -318,8 +320,9 @@ function PatientView() {
                     </div>
                     {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
-                        <BasicTable List={patientList} />
-                        {/* <Table size="sm">
+                    <BasicTable List={patientList} />
+
+                    {/* <Table size="sm">
                         <>
                             <tr>
                                 <th>Patient ID</th>
