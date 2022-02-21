@@ -3,9 +3,18 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import MainLogo from '../assets/imgs/logo-img 1.png'
 import '../assets/css/dashboard.css'
 import Notification from '../assets/imgs/Vector (1).png'
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Header() {
+    const navigate = useNavigate();
+
+    const navigateHandler = (value) => {
+        if (value == 'doctor') {
+            navigate('/takeAppointment')
+        }
+    }
     return (
         <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
             <Navbar sticky expand="lg">
@@ -14,7 +23,7 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
                         <Nav.Link href="/project/emr/taskDashboard" className="navMenu1">Appointments</Nav.Link>
-                        <Nav.Link href="/addDoctor" className="navMenu2">Doctors</Nav.Link>
+                        <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                         <Nav.Link href="/taskDashboard" className="navMenu3">Patients</Nav.Link>
                         <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
                     </Nav>

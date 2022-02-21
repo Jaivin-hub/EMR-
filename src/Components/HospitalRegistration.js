@@ -5,13 +5,28 @@ import instance, { API } from '../config/api'
 import { ApiHelper } from '../Helper/Apihelper'
 import Upload from '../assets/imgs/upload.png';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 
-
+const useStyles = makeStyles(theme => ({
+    formControl: {
+        minWidth: 205
+    }
+}))
 
 function HospitalRegistration() {
+    const classes = useStyles()
     const navigate = useNavigate();
     const [hospitalData, setHospitalData] = useState({})
+    const [country, setCountry] = useState('India')
+    const [mainErr, setMainErr] = useState('')
     const upLoadRef = useRef();
+    const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
+        'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
+        'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+        'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim',
+        'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal']
 
     // file upload 
     const [pickedFile, setPickedFile] = useState(null)
@@ -68,42 +83,6 @@ function HospitalRegistration() {
     }, [pickedFile]);
 
     console.log('pickedFile', pickedFile)
-
-    const addHospitalSubmitHandler = () => {
-        console.log('add hospital function')
-
-        const { Hospital_Name, Email_ID, Hospital_Address_1, Hospital_Address_2, Country, State, City, Pin_Code, Contact_No_1, Contact_No_2, Password } = hospitalData
-        const obj = {
-            name: Hospital_Name,
-            email_id: Email_ID,
-            password: Password,
-            address_1: Hospital_Address_1,
-            address_2: Hospital_Address_2,
-            city: City,
-            state: State,
-            country: Country,
-            pincode: Pin_Code,
-            contact_1: Contact_No_1,
-            contact_2: Contact_No_2,
-            logo: "logo.png"
-        }
-        console.log('objects---', obj)
-        if (!Hospital_Name == "" && !Email_ID == "" && !Hospital_Address_1 == "" && !Hospital_Address_2 == "" && !Country == "" && !State == "" && !City == "" && !Pin_Code == "" && !Contact_No_1 == "" && !Contact_No_2 == "" && !Password == "") {
-            instance.post("/add_hospital", obj).then((response) => {
-                setValidateErr('')
-                console.log('response of hospital', response)
-                if (response) {
-                    navigate('/registerSuccess');
-                }
-            }).catch((err) => {
-                console.log('error', err)
-            })
-        } else {
-            setValidateErr('All fields are required')
-            console.log('else')
-        }
-
-    }
 
     // #################### Validating Name! ###########################
 
@@ -268,31 +247,6 @@ function HospitalRegistration() {
     const [postalCode, setPostalCode] = useState('')
     const [postalErr, setPostalErr] = useState('')
 
-
-    // const postalCodeInputBlurHandler = (postalCode, setPostalErr) => {
-    //     if (postalCode === '') {
-    //         setPostalErr('This field cannot be empty!')
-    //     } else if (postalCode.length !== 6) {
-    //         setPostalErr('Postal Code should have 6 digits')
-    //     } else {
-    //         setPostalErr('')
-    //     }
-    // },
-
-
-
-    // const postalCodeInputChangeHandler = (postalCode, setPostalErr) => {
-    //     if (postalCode === '') {
-    //         setPostalErr('This field cannot be empty!')
-    //     } else if (!postalCode.match(/^[0-9]*$/g) && postalCode !== '') {
-    //         setPostalErr('Enter numbers only!')
-    //     } else if (postalCode.length > 6) {
-    //         setPostalErr('postalCode should not have more than 6 digits')
-    //     } else {
-    //         setPostalErr('')
-    //     }
-    // },
-
     const postalCodeInputChangeHandler = (postalCode, setPostalErr) => {
         if (postalCode === '') {
             setPostalErr('This field cannot be empty!')
@@ -354,6 +308,236 @@ function HospitalRegistration() {
 
     //######################### Validating secondary number! ###########################
 
+    // #################### Validating City! ###########################
+
+    const [city, setCity] = useState('')
+    const [cityErr, setCityErr] = useState('')
+
+
+    const cityInputBlurHandler = (city, setCityErr) => {
+        if (city === '') {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (city.length < 4) {
+            setCityErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (city.slice(-1) === ' ') {
+            setCityErr('should not end with space.')
+            return false
+        } else {
+            setCityErr('')
+            return true
+        }
+    }
+
+
+    const cityInputChangeHandler = (city, setCityErr) => {
+        if (city.length === 0) {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (city.charAt(0) === ' ') {
+            setCityErr('should not start with space.')
+            return false
+        } else if (city.includes('  ')) {
+            setCityErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(city)) {
+            setCityErr('should not contain numbers.')
+            return false
+        } else if (!city.match(/^[a-zA-Z ]+$/)) {
+            setCityErr('Invalid charecter!')
+            return false
+        } else if (city === '') {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (city.length < 4) {
+            setCityErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (city.slice(-1) === ' ') {
+            setCityErr('should not end with space.')
+            return false
+        } else {
+            setCityErr('')
+            return true
+        }
+    }
+
+    // #################### Validating City! ###########################
+
+    // #################### Validating Address1! ###########################
+
+    const [address1, setAddress1] = useState('')
+    const [address1Err, setAddress1Err] = useState('')
+
+
+    const address1InputBlurHandler = (address1, setAddress1Err) => {
+        if (address1 === '') {
+            setAddress1Err('This field cannot be empty!')
+            return false
+        } else if (address1.length < 4) {
+            setAddress1Err('This field should have atleast 4 charecters.')
+            return false
+        } else if (address1.slice(-1) === ' ') {
+            setAddress1Err('should not end with space.')
+            return false
+        } else {
+            setAddress1Err('')
+            return true
+        }
+    }
+
+
+    const address1InputChangeHandler = (address1, setAddress1Err) => {
+        if (address1.length === 0) {
+            setAddress1Err('This field cannot be empty!')
+            return false
+        } else if (address1.charAt(0) === ' ') {
+            setAddress1Err('should not start with space.')
+            return false
+        } else if (address1.includes('  ')) {
+            setAddress1Err('should not contain consecutive spaces.')
+            return false
+        } else if (address1 === '') {
+            setAddress1Err('This field cannot be empty!')
+            return false
+        } else if (address1.length < 4) {
+            setAddress1Err('This field should have atleast 4 charecters.')
+            return false
+        } else if (address1.slice(-1) === ' ') {
+            setAddress1Err('should not end with space.')
+            return false
+        } else {
+            setAddress1Err('')
+            return true
+        }
+    }
+
+    // #################### Validating Address1! ###########################
+
+    // #################### Validating Address1! ###########################
+
+    const [address2, setAddress2] = useState('')
+    const [address2Err, setAddress2Err] = useState('')
+
+
+    const address2InputBlurHandler = (address2, setAddress2Err) => {
+        if (address2 === '') {
+            setAddress2Err('This field cannot be empty!')
+            return false
+        } else if (address2.length < 4) {
+            setAddress2Err('This field should have atleast 4 charecters.')
+            return false
+        } else if (address2.slice(-1) === ' ') {
+            setAddress2Err('should not end with space.')
+            return false
+        } else {
+            setAddress2Err('')
+            return true
+        }
+    }
+
+
+    const address2InputChangeHandler = (address2, setAddress2Err) => {
+        if (address2.length === 0) {
+            setAddress2Err('This field cannot be empty!')
+            return false
+        } else if (address2.charAt(0) === ' ') {
+            setAddress2Err('should not start with space.')
+            return false
+        } else if (address2.includes('  ')) {
+            setAddress2Err('should not contain consecutive spaces.')
+            return false
+        } else if (address2 === '') {
+            setAddress2Err('This field cannot be empty!')
+            return false
+        } else if (address2.length < 4) {
+            setAddress2Err('This field should have atleast 4 charecters.')
+            return false
+        } else if (address2.slice(-1) === ' ') {
+            setAddress2Err('should not end with space.')
+            return false
+        } else {
+            setAddress2Err('')
+            return true
+        }
+    }
+
+    // #################### Validating Address1! ###########################
+
+    const [state, setState] = useState('')
+
+    const dropDownHandler = (e) => {
+        console.log('function called')
+        console.log('inside function', e.target.value)
+        setState(e.target.value)
+    }
+
+    const addHospitalSubmitHandler = () => {
+        if (!firstName == "" && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "" && !address2 == "") {
+            console.log('everything working fine')
+            setMainErr('')
+            const obj = {
+                name: firstName,
+                email_id: email,
+                password: password,
+                address_1: address1,
+                address_2: address2,
+                city: city,
+                state: state,
+                country: country,
+                pincode: postalCode,
+                contact_1: phone,
+                contact_2: secondaryPhone,
+                logo: "logo.png"
+            }
+
+            instance.post("/add_hospital", obj).then((response) => {
+                console.log('response', response);
+                // setValidateErr('')
+                // console.log('response of hospital', response)
+                if (response) {
+                    navigate('/registerSuccess');
+                }
+            }).catch((err) => {
+                console.log('error', err)
+            })
+        } else {
+            console.log('something missing')
+            setMainErr('Check all the fields that you entered!')
+        }
+        // const { Hospital_Name, Email_ID, Hospital_Address_1, Hospital_Address_2, Country, State, City, Pin_Code, Contact_No_1, Contact_No_2, Password } = hospitalData
+        // const obj = {
+        //     name: Hospital_Name,
+        //     email_id: Email_ID,
+        //     password: Password,
+        //     address_1: Hospital_Address_1,
+        //     address_2: Hospital_Address_2,
+        //     city: City,
+        //     state: State,
+        //     country: Country,
+        //     pincode: Pin_Code,
+        //     contact_1: Contact_No_1,
+        //     contact_2: Contact_No_2,
+        //     logo: "logo.png"
+        // }
+        // console.log('objects---', obj)
+        // if (!Hospital_Name == "" && !Email_ID == "" && !Hospital_Address_1 == "" && !Hospital_Address_2 == "" && !Country == "" && !State == "" && !City == "" && !Pin_Code == "" && !Contact_No_1 == "" && !Contact_No_2 == "" && !Password == "") {
+        //     instance.post("/add_hospital", obj).then((response) => {
+        //         setValidateErr('')
+        //         console.log('response of hospital', response)
+        //         if (response) {
+        //             navigate('/registerSuccess');
+        //         }
+        //     }).catch((err) => {
+        //         console.log('error', err)
+        //     })
+        // } else {
+        //     setValidateErr('All fields are required')
+        //     console.log('else')
+        // }
+
+    }
+
 
 
 
@@ -368,7 +552,7 @@ function HospitalRegistration() {
                                 <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Register Here</strong></h4>
                             </div>
                             <div className="row d-flex justify-content-center">
-                                <p className="text-danger">{validateErr}</p>
+                                <p className="text-danger">{mainErr}</p>
                             </div>
                             <div className="row">
                                 {/* ========== */}
@@ -479,17 +663,37 @@ function HospitalRegistration() {
                                             <TextField
                                                 variant="standard"
                                                 id='Hospital_Address_1'
-                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                onChange={(e) => {
+                                                    setAddress1(e.target.value)
+                                                    address1InputChangeHandler(e.target.value, setAddress1Err)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    address1InputBlurHandler(e.target.value, setAddress1Err)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
                                                 label="Hospital Address 1"
                                             />
+                                            <p style={{ color: "red" }}>{address1Err}</p>
                                         </div>
                                         <div className="col-md-6 mt-3">
                                             <TextField
                                                 variant="standard"
                                                 id='Hospital_Address_2'
-                                                onChange={(e) => { inputChangeHandler(e) }}
+                                                onChange={(e) => {
+                                                    setAddress2(e.target.value)
+                                                    address2InputChangeHandler(e.target.value, setAddress2Err)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    address2InputBlurHandler(e.target.value, setAddress2Err)
+                                                }}
+                                                // onChange={(e) => { inputChangeHandler(e) }}
                                                 label="Hospital Address 2"
                                             />
+
+                                            <p style={{ color: "red" }}>{address2Err}</p>
+
                                         </div>
                                     </div>
                                     <div className="row">
@@ -497,18 +701,28 @@ function HospitalRegistration() {
                                             <TextField
                                                 variant="standard"
                                                 id='Country'
-                                                value="India"
+                                                value={country}
                                                 onChange={(e) => { inputChangeHandler(e) }}
                                                 label="Country"
                                             />
                                         </div>
                                         <div className="col-md-6 mt-3">
-                                            <TextField
+                                            {/* <TextField
                                                 variant="standard"
-                                                id='State'
+                                                id='state'
                                                 onChange={(e) => { inputChangeHandler(e) }}
                                                 label="State"
-                                            />
+                                            /> */}
+                                            <FormControl className={classes.formControl}>
+                                                <InputLabel>State</InputLabel>
+                                                <Select onChange={dropDownHandler}>
+                                                    {states.map((item, index) => {
+                                                        return (
+                                                            <MenuItem value={item} key={index}>{item}</MenuItem>
+                                                        )
+                                                    })}
+                                                </Select>
+                                            </FormControl>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -518,7 +732,16 @@ function HospitalRegistration() {
                                                 id='City'
                                                 onChange={(e) => { inputChangeHandler(e) }}
                                                 label="City"
+                                                onChange={(e) => {
+                                                    setCity(e.target.value)
+                                                    cityInputChangeHandler(e.target.value, setCityErr)
+                                                }}
+
+                                                onBlur={(e) => {
+                                                    cityInputBlurHandler(e.target.value, setCityErr)
+                                                }}
                                             />
+                                            <p style={{ color: "red" }}>{cityErr}</p>
                                         </div>
                                         <div className="col-md-6 mt-3">
                                             <TextField

@@ -111,9 +111,9 @@ function TakeAppoiment() {
                                                 <TableCell >Specialization</TableCell>
                                                 <TableCell >Contact No</TableCell>
                                                 <TableCell >Email ID</TableCell>
-                                                <TableCell >Date</TableCell>
-                                                <TableCell >Time</TableCell>
-                                                <TableCell >Appointments</TableCell>
+                                                {/* <TableCell >Date</TableCell> */}
+                                                {/* <TableCell >Time</TableCell> */}
+                                                {/* <TableCell >Appointments</TableCell> */}
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -131,11 +131,11 @@ function TakeAppoiment() {
                                                     <TableCell >{value.doc_contact}</TableCell>
                                                     <TableCell >{value.doc_email}</TableCell>
 
-                                                    <TableCell ><Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /></TableCell>
+                                                    {/* <TableCell ><Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /></TableCell> */}
 
                                                     {/* <TableCell ><input onChange={(e) => { dateChangeHandler(e) }} id='app_date' type="date" /></TableCell> */}
-                                                    <TableCell ><input onChange={(e) => timeChangeHandler(e)} id="app_time" type="time" /></TableCell>
-                                                    <TableCell ><Button variant="outlined" onClick={() => { appointmentsHandler(value._id) }}>Appointment</Button></TableCell>
+                                                    {/* <TableCell ><input onChange={(e) => timeChangeHandler(e)} id="app_time" type="time" /></TableCell> */}
+                                                    {/* <TableCell ><Button variant="outlined" onClick={() => { appointmentsHandler(value._id) }}>Appointment</Button></TableCell> */}
                                                 </TableRow>
                                             ))}
                                         </TableBody>
