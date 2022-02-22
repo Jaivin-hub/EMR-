@@ -25,7 +25,7 @@ function TaskDashboard() {
     const [showHospitalView, setShowHospitalView] = useState(false)
 
     const options = [
-        'Appointments', 'Add Patient', 'Add Doctor', 'Add Hospital'
+        'Appointments', 'Add Patient', 'Add Doctor'
     ];
     const defaultOption = options[0];
 
