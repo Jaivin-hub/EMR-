@@ -128,8 +128,8 @@ function DoctorView() {
         if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        } else if (doctorName.length < 4) {
-            setDoctorNameErr('This field should have atleast 4 charecters.')
+        } else if (doctorName.length < 3) {
+            setDoctorNameErr('This field should have atleast 3 characters.')
             return false
         } else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
@@ -160,8 +160,8 @@ function DoctorView() {
         } else if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        } else if (doctorName.length < 4) {
-            setDoctorNameErr('This field should have atleast 4 charecters.')
+        } else if (doctorName.length < 3) {
+            setDoctorNameErr('This field should have atleast 3 characters.')
             return false
         } else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
