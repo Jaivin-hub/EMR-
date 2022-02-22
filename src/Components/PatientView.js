@@ -177,16 +177,22 @@ function PatientView() {
 
     //######################### Validating phone number! ###########################
 
-    //######################### Validating phone number! ###########################
+    //######################### Validating adhar number! ###########################
 
-    // const [adhar, setPhone] = useState('')
     const [adharErr, setAdharErr] = useState('')
 
     const adharInputBlurHandler = (AdharNo, setAdharErr) => {
         if (AdharNo === '') {
             setAdharErr('This field cannot be empty!')
             return false
-        } else {
+        } else if (AdharNo.length < 12) {
+            setAdharErr('Enter valid adhar no!')
+            return false
+        } else if (AdharNo.length > 12) {
+            setAdharErr('Enter valid adhar no!')
+            return false
+        }
+        else {
             setAdharErr('')
             return true
         }
@@ -196,6 +202,9 @@ function PatientView() {
         if (!AdharNo.match(/^[0-9][-\s\./0-9]*$/g)) {
             setAdharErr("Enter numbers only!");
             return false
+        } else if (AdharNo.length > 12) {
+            setAdharErr('Enter valid adhar no!')
+            return false
         }
         else {
             setAdharErr('')
@@ -203,12 +212,28 @@ function PatientView() {
         }
     }
 
-    //######################### Validating phone number! ###########################
+    //######################### Validating adhar number! ###########################
 
     const [patientBloodGroup, setPatientBloodGroup] = useState('')
     const bloodGroupHandler = (e) => {
         setPatientBloodGroup(e.target.value)
     }
+
+
+    // {
+    //     "aadhar_card_no":"558909843",
+    //     "p_name":"Karthik",
+    //     "p_dob":"01-12-1983",
+    //     "p_bloodgroup":"AB-",
+    //     "p_address_1":"C1, First floor, Carnival Technopark",
+    //     "p_address_2":"Kazhakoottam",
+    //     "p_city":"Trivandrum",
+    //     "p_state":"kerala",
+    //     "p_pincode":"695081",
+    //     "p_phoneno":"9947832736",
+    //     "_hos_id":"620a4845db8b9874e8e7466c"
+    // }
+
 
     const addPatientHandler = () => {
         const { bloodBloodGroup, patientPhoneNo } = patientData
@@ -225,13 +250,17 @@ function PatientView() {
                 p_name: patientName,
                 p_dob: patientDOB,
                 p_bloodgroup: patientBloodGroup,
-                p_address: address,
+                p_address_1: address,
+                p_address_2: "Kazhakoottam",
+                p_city: district,
+                p_state: state,
+                p_pincode: '691541',
                 p_phoneno: Phone,
                 _hos_id: HospitalId
             }
 
             instance.post('/add_patient', obj).then((response) => {
-            setMainErr('')
+                setMainErr('')
                 console.log('response from backend', response)
                 if (response) {
                     setReload(true)

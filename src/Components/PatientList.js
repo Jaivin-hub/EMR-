@@ -34,6 +34,8 @@ export default function BasicTable({ List }) {
     const [openModal, setOpenModal] = useState(false)
     const [patientId, setPatientId] = useState('')
 
+    console.log('List', List)
+
 
 
 
@@ -57,6 +59,8 @@ export default function BasicTable({ List }) {
                             <TableCell >Patient name</TableCell>
                             <TableCell >Adhar No</TableCell>
                             <TableCell >Patient DOB</TableCell>
+                            <TableCell >City</TableCell>
+                            <TableCell >State</TableCell>
                             <TableCell >Patient Phone No</TableCell>
                             <TableCell >Patient Blood Group</TableCell>
                             <TableCell >Address</TableCell>
@@ -74,9 +78,11 @@ export default function BasicTable({ List }) {
                                 </TableCell>
                                 <TableCell >{patient.aadhar_card_no}</TableCell>
                                 <TableCell >{patient.p_dob}</TableCell>
+                                <TableCell >{patient.p_city}</TableCell>
+                                <TableCell >{patient.p_state}</TableCell>
                                 <TableCell >{patient.p_phoneno}</TableCell>
                                 <TableCell >{patient.p_bloodgroup}</TableCell>
-                                <TableCell >{patient.p_address}</TableCell>
+                                <TableCell >{patient.p_address_1}</TableCell>
                                 <TableCell ><Button variant="outlined" onClick={() => { AppointmentsHandler(patient._id) }}>Take Appointment</Button></TableCell>
                             </TableRow>
                         ))}
