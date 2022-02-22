@@ -123,7 +123,6 @@ function TaskDashboard() {
                                                     <TableRow>
                                                         {/* <TableCell>Patient ID</TableCell> */}
                                                         <TableCell >Patient name</TableCell>
-                                                        <TableCell >Adhar No</TableCell>
                                                         <TableCell >Age</TableCell>
                                                         <TableCell >Gender</TableCell>
                                                         <TableCell >Time</TableCell>

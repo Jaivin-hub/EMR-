@@ -32,14 +32,25 @@ function Modal({ closeModal, patientId }) {
         })
     }, [])
 
+    const [appoinmentDate, setAppoinmentDate] = useState('')
+    const [appointmentTime, setAppointmentTime] = useState('')
+
+    const dateChangeHandler = (e) => {
+        setAppoinmentDate(e.target.value)
+    }
+
+    const timeChangeHandler = (e) => {
+        setAppointmentTime(e.target.value)
+    }
+
     const appointmentHandler = (id) => {
         console.log('clicked')
         const obj = {
             _hos_id: HospitalId,
             _doc_id: id,
             _pat_id: patientId,
-            app_date: 'Monday',
-            app_time: '10:20PM'
+            app_date: appoinmentDate,
+            app_time: appointmentTime
         }
         instance.post('/patient_appointment', obj).then((response) => {
             console.log('appoinment response---', response);
@@ -48,6 +59,9 @@ function Modal({ closeModal, patientId }) {
             }
         })
     }
+
+
+    console.log('appoinmentDate', appoinmentDate + 'appointmentTime', appointmentTime)
 
     return (
         <div className="">
@@ -60,6 +74,8 @@ function Modal({ closeModal, patientId }) {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell >Doctor Name</TableCell>
+                                        <TableCell >Date</TableCell>
+                                        <TableCell >Time</TableCell>
                                         <TableCell >Appointment</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -71,6 +87,12 @@ function Modal({ closeModal, patientId }) {
                                         >
                                             <TableCell component="th" scope="row">
                                                 {value.doc_name}
+                                            </TableCell>
+                                            <TableCell>
+                                                <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
+                                            </TableCell>
+                                            <TableCell>
+                                                <input type="time" onChange={(e) => timeChangeHandler(e)} />
                                             </TableCell>
                                             <TableCell >
                                                 <SiAddthis onClick={() => { appointmentHandler(value._id) }} style={{ cursor: 'pointer' }} />

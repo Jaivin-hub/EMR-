@@ -13,6 +13,8 @@ function Header() {
     const navigateHandler = (value) => {
         if (value == 'doctor') {
             navigate('/takeAppointment')
+        } else if (value == 'appointments') {
+            navigate('/taskDashboard');
         }
     }
     return (
@@ -22,7 +24,7 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
-                        <Nav.Link href="/project/emr/taskDashboard" className="navMenu1">Appointments</Nav.Link>
+                        <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>
                         <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                         <Nav.Link href="/taskDashboard" className="navMenu3">Patients</Nav.Link>
                         <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>

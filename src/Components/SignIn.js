@@ -21,25 +21,25 @@ function SignIn() {
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
 
-    const emailInputBlurHandler = (email, setError) => {
+    const emailInputBlurHandler = (email, setEmailError) => {
         if (email === '') {
-            setError('This field cannot be empty!')
+            setEmailError('This field cannot be empty!')
             return false
         } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-            setError('This email id is not valid.')
+            setEmailError('This email id is not valid.')
             return false
         } else {
-            setError('')
+            setEmailError('')
             return true
         }
     }
-    const emailInputChangeHandler = (email, setError) => {
+    const emailInputChangeHandler = (email, setEmailError) => {
         if (email.includes(' ')) {
-            setError('Email id should not contain space.')
+            setEmailError('Email id should not contain space.')
             return false
         }
         else {
-            setError('')
+            setEmailError('')
             return true
         }
     }

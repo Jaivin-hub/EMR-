@@ -7,8 +7,17 @@ import instance, { API } from '../config/api';
 import { ApiHelper } from '../Helper/Apihelper';
 import BasicTable from './PatientList'
 import Modal from './Modal'
+import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+
+
+const useStyles = makeStyles(theme => ({
+    formControl: {
+        minWidth: 205
+    }
+}))
 
 function PatientView() {
+    const classes = useStyles()
     const [scanResultWebCam, setScanResultWebCam] = useState('')
     const [openScanner, setOpenScanner] = useState(false)
     const [scanResultFile, setScanResultFile] = useState('')
@@ -23,6 +32,8 @@ function PatientView() {
     const [reload, setReload] = useState(false)
     const [patientList, setPatientList] = useState([])
     const [showUploadFile, setShowUploadFile] = useState(false)
+
+    const bloodGroups = ['A-positive (A+)', 'A-negative (A-)', 'B-positive (B+)', 'B-negative (B-)', 'AB-positive (AB+)', 'AB-negative (AB-)', 'O-positive (O+)', 'O-negative (O-)']
 
 
 
@@ -93,32 +104,7 @@ function PatientView() {
         qrRef.current.openImageDialog()
     }
 
-    const addPatientHandler = () => {
-        const { bloodBloodGroup, patientPhoneNo } = patientData
-        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !bloodBloodGroup == "" && !address == "" && !patientPhoneNo == "") {
-            const obj = {
-                aadhar_card_no: AdharNo,
-                p_name: patientName,
-                p_dob: patientDOB,
-                p_bloodgroup: bloodBloodGroup,
-                p_address: address,
-                p_phoneno: patientPhoneNo,
-                _hos_id: HospitalId
-            }
 
-            instance.post('/add_patient', obj).then((response) => {
-                console.log('response from backend', response)
-                if (response) {
-                    setReload(true)
-                }
-            }).catch((err) => {
-                console.log('error', err)
-            })
-        } else {
-            console.log('all fields are required')
-        }
-
-    }
 
     const inputHandler = (e) => {
         const id = e.target.id
@@ -168,6 +154,103 @@ function PatientView() {
 
     const connectionScanHandler = () => {
         setShowUploadFile(false)
+
+    }
+
+    //######################### Validating phone number! ###########################
+
+    const [Phone, setPhone] = useState('')
+    const [patientPhoneErr, setPatientPhoneErr] = useState('')
+
+    const phoneInputBlurHandler = (phone, setPatientPhoneErr) => {
+        if (phone === '') {
+            setPatientPhoneErr('This field cannot be empty!')
+            return false
+        } else if (phone.length < 10) {
+            setPatientPhoneErr('Phone number does not have 10 digits')
+            return false
+        } else if (phone.length > 10) {
+            setPatientPhoneErr('Phone number has more than 10 digits')
+            return false
+        } else {
+            setPatientPhoneErr('')
+            return true
+        }
+    }
+
+    const phoneInputChangeHandler = (phone, setPatientPhoneErr) => {
+        if (!phone.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setPatientPhoneErr("Enter numbers only!");
+            return false
+        } else if (phone.length > 10) {
+            setPatientPhoneErr('Phone number has more than 10 digits')
+            return false
+        }
+        else {
+            setPatientPhoneErr('')
+            return true
+        }
+    }
+
+    //######################### Validating phone number! ###########################
+
+    //######################### Validating phone number! ###########################
+
+    // const [adhar, setPhone] = useState('')
+    const [adharErr, setAdharErr] = useState('')
+
+    const adharInputBlurHandler = (AdharNo, setAdharErr) => {
+        if (AdharNo === '') {
+            setAdharErr('This field cannot be empty!')
+            return false
+        } else {
+            setAdharErr('')
+            return true
+        }
+    }
+
+    const adharInputChangeHandler = (AdharNo, setAdharErr) => {
+        if (!AdharNo.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setAdharErr("Enter numbers only!");
+            return false
+        }
+        else {
+            setAdharErr('')
+            return true
+        }
+    }
+
+    //######################### Validating phone number! ###########################
+
+    const [patientBloodGroup, setPatientBloodGroup] = useState('')
+    const bloodGroupHandler = (e) => {
+        setPatientBloodGroup(e.target.value)
+    }
+
+    const addPatientHandler = () => {
+        const { bloodBloodGroup, patientPhoneNo } = patientData
+        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "") {
+            const obj = {
+                aadhar_card_no: AdharNo,
+                p_name: patientName,
+                p_dob: patientDOB,
+                p_bloodgroup: patientBloodGroup,
+                p_address: address,
+                p_phoneno: Phone,
+                _hos_id: HospitalId
+            }
+
+            instance.post('/add_patient', obj).then((response) => {
+                console.log('response from backend', response)
+                if (response) {
+                    setReload(true)
+                }
+            }).catch((err) => {
+                console.log('error', err)
+            })
+        } else {
+            console.log('all fields are required')
+        }
 
     }
 
@@ -238,9 +321,6 @@ function PatientView() {
                                 :
                                 <img onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', marginTop: '5%' }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
                         }
-
-
-
                         <h4>{scanResultWebCam}</h4>
                     </div>
                     <div className="col-md-10">
@@ -254,31 +334,84 @@ function PatientView() {
                         </div>
                         <div className="row">
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='adharCardNo' onChange={(e) => { inputHandler(e) }} value={AdharNo} label="Adharcard No" />
-                                {/* <input type="text" placeholder="Adharcard No" /> */}
+                                <TextField
+                                    variant="standard"
+                                    id='adharCardNo'
+                                    onChange={(e) => {
+                                        setAdharNo(e.target.value)
+                                        adharInputChangeHandler(e.target.value, setAdharErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        adharInputBlurHandler(e.target.value, setAdharErr)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    value={AdharNo}
+                                    label="Adharcard No"
+                                />
+                                <p style={{ color: "red" }}>{adharErr}</p>
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='patientName' onChange={(e) => { inputHandler(e) }} value={patientName} label="Patient Name" />
-                                {/* <input type="text" placeholder="Patient Name" /> */}
+                                <TextField
+                                    variant="standard"
+                                    id='patientName'
+                                    onChange={(e) => { inputHandler(e) }}
+                                    value={patientName}
+                                    label="Patient Name"
+                                />
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='patiantDOB' onChange={(e) => { inputHandler(e) }} value={patientDOB} label="Patient DOB" />
-                                {/* <input type="text" placeholder="Patient DOB" /> */}
+                                <TextField
+                                    variant="standard"
+                                    id='patiantDOB'
+                                    onChange={(e) => { inputHandler(e) }}
+                                    value={patientDOB}
+                                    label="Patient DOB" />
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='bloodBloodGroup' onChange={(e) => { inputHandler(e) }} label="Patient Blood Group" />
-                                {/* <input type="text" placeholder="Patient Blood Group" /> */}
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>Patient Blood Group</InputLabel>
+                                    <Select onChange={bloodGroupHandler}>
+                                        {bloodGroups.map((item, index) => {
+                                            return (
+                                                <MenuItem value={item} key={index}>{item}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                {/* <TextField variant="standard" id='bloodBloodGroup' onChange={(e) => { inputHandler(e) }} label="Patient Blood Group" /> */}
                             </div>
                         </div>
                         <div className="row">
 
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='patientAddress' onChange={(e) => { inputHandler(e) }} value={address} label="Patient Address" />
-                                {/* <input type="text" placeholder="Patient Address" /> */}
+                                <TextField
+                                    variant="standard"
+                                    id='patientAddress'
+                                    onChange={(e) => { inputHandler(e) }}
+                                    value={address}
+                                    label="Patient Address"
+                                />
                             </div>
                             <div className="col-md-3 mt-3">
-                                <TextField variant="standard" id='patientPhoneNo' onChange={(e) => { inputHandler(e) }} label="Patient Phone Number" />
-                                {/* <input type="text" placeholder="Patient Phone Number" /> */}
+                                <TextField
+                                    variant="standard"
+                                    id='patientPhoneNo'
+                                    onChange={(e) => {
+                                        setPhone(e.target.value)
+                                        phoneInputChangeHandler(e.target.value, setPatientPhoneErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        phoneInputBlurHandler(e.target.value, setPatientPhoneErr)
+                                    }}
+
+                                    // value={phone}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    label="Patient Phone Number"
+                                />
+                                <p style={{ color: "red" }}>{patientPhoneErr}</p>
+
                             </div>
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">

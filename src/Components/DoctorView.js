@@ -12,14 +12,20 @@ import BasicTable from './Table'
 import Header from './Header'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+    formControl: {
+        minWidth: 205
+    }
+}))
 
 // import TimePicker from 'react-time-picker';
-
 
 function DoctorView() {
 
     const HospitalId = localStorage.getItem('HospitalId')
-
+    const classes = useStyles()
     const [doctorDetails, setDoctorDetails] = useState({})
     const [date, setDate] = useState({})
     const [value, onChange] = useState('10:00');
@@ -30,7 +36,7 @@ function DoctorView() {
     const [inputDateFields, setInputDateFields] = useState([
         { doc_avail_day: '', doc_from_time: '', doc_to_time: '' },
     ])
-   
+
     const handleAddFields = () => {
         setInputDateFields([...inputDateFields, { doc_avail_day: '' }])
     }
@@ -38,24 +44,21 @@ function DoctorView() {
     const options = [
         'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     ];
+
+    const Specialization = ['Ortho', 'Pediatrician', 'Nephrology', 'Gastrology', 'Gynecologist', 'Neurology', 'Dermatology', 'Ophthalmologist']
     const defaultOption = options[0];
 
     const dropDownHandler = (e, index) => {
-        if(e.value){
+        if (e.value) {
             const newData = [...inputDateFields]
-            newData[index]['doc_avail_day'] = e.value 
+            newData[index]['doc_avail_day'] = e.value
             setInputDateFields(newData)
-        }else{
+        } else {
             const newData = [...inputDateFields]
-            newData[index][e.target.id] = e.target.value 
+            newData[index][e.target.id] = e.target.value
             setInputDateFields(newData)
         }
     }
-
-
-    console.log('inputDateFields', inputDateFields)
-
-
 
     const inputHandler = (e) => {
         const newData = { ...doctorDetails }
@@ -72,8 +75,6 @@ function DoctorView() {
         setInputDateFields(newData)
     }
 
-
-
     useEffect(() => {
         const obj = {
             _hos_id: HospitalId
@@ -88,8 +89,6 @@ function DoctorView() {
         })
     }, [reload])
 
-
-
     useEffect(() => {
         console.log('first mounting')
         const Data = localStorage.getItem('HospitalName')
@@ -97,42 +96,6 @@ function DoctorView() {
     }, [])
 
 
-
-
-
-
-
-    const submitHandler = () => {
-        // const availability = []
-        // for (let i = 0; i < inputDateFields.length; i++) {
-        //     const obj = { doc_avail_day: '', doc_from_time: '', doc_to_time: '' }
-        //     obj.doc_avail_day = inputDateFields[i].doc_avail_day
-        //     obj.doc_from_time = inputFromTime[i].doc_from_time
-        //     obj.doc_to_time = inputToTime[i].doc_to_time
-        //     availability.push(obj)
-        // }
-        // console.log('availability', availability)
-
-        const { doc_name, doc_qualification, doc_address, doc_spec, doc_contact, doc_email, doc_password } = doctorDetails
-
-        const obj = {
-            doc_name: doc_name,
-            doc_qualification: doc_qualification,
-            doc_address: doc_address,
-            doc_spec: doc_spec,
-            doc_contact: doc_contact,
-            doc_email: doc_email,
-            doc_password: doc_password,
-            _hos_id: HospitalId,
-            availability: inputDateFields
-        }
-        instance.post('/add_doctor', obj).then((response) => {
-            console.log('response from backend doctor', response)
-            if (response) {
-                setReload(true)
-            }
-        })
-    }
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <img
@@ -143,13 +106,6 @@ function DoctorView() {
         />
     ));
 
-    // const handleCalendarClose = (index) => {
-    //     if (tableData[index].duedate) {
-    //         const tableDataCopy = Object.assign([], tableData);
-    //         tableDataCopy[index].showDate = !tableDataCopy[index].showDate;
-    //         setTableData(tableDataCopy);
-    //     }
-    // };
 
     const handleChangeDate = (date) => {
         console.log(date)
@@ -159,6 +115,247 @@ function DoctorView() {
         const newData = [...inputDateFields]
         newData.splice(index, 1)
         setInputDateFields(newData)
+    }
+
+    // #################### Validating Name! ###########################
+
+    const [doctorName, setDoctorName] = useState('')
+    const [doctorNameErr, setDoctorNameErr] = useState('')
+
+
+    const nameInputBlurHandler = (doctorName, setDoctorNameErr) => {
+        if (doctorName === '') {
+            setDoctorNameErr('This field cannot be empty!')
+            return false
+        } else if (doctorName.length < 4) {
+            setDoctorNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (doctorName.slice(-1) === ' ') {
+            setDoctorNameErr('should not end with space.')
+            return false
+        } else {
+            setDoctorNameErr('')
+            return true
+        }
+    }
+
+
+    const nameInputChangeHandler = (doctorName, setDoctorNameErr) => {
+        if (doctorName.length === 0) {
+            setDoctorNameErr('This field cannot be empty!')
+            return false
+        } else if (doctorName.charAt(0) === ' ') {
+            setDoctorNameErr('should not start with space.')
+            return false
+        } else if (doctorName.includes('  ')) {
+            setDoctorNameErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(doctorName)) {
+            setDoctorNameErr('should not contain numbers.')
+            return false
+        } else if (!doctorName.match(/^[a-zA-Z ]+$/)) {
+            setDoctorNameErr('Invalid charecter!')
+            return false
+        } else if (doctorName === '') {
+            setDoctorNameErr('This field cannot be empty!')
+            return false
+        } else if (doctorName.length < 4) {
+            setDoctorNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (doctorName.slice(-1) === ' ') {
+            setDoctorNameErr('should not end with space.')
+            return false
+        } else {
+            setDoctorNameErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Name! ###########################
+
+    // #################### Validating Qualification! ###########################
+
+    const [qualification, setQualification] = useState('')
+    const [qualificationErr, setQualificationErr] = useState('')
+
+
+    const qualificationInputBlurHandler = (qualification, setQualificationErr) => {
+        if (qualification === '') {
+            setQualificationErr('This field cannot be empty!')
+            return false
+        } else if (qualification.length < 4) {
+            setQualificationErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (qualification.slice(-1) === ' ') {
+            setQualificationErr('should not end with space.')
+            return false
+        } else {
+            setQualificationErr('')
+            return true
+        }
+    }
+
+
+    const qualificationInputChangeHandler = (qualification, setQualificationErr) => {
+        if (qualification.length === 0) {
+            setQualificationErr('This field cannot be empty!')
+            return false
+        } else if (qualification.charAt(0) === ' ') {
+            setQualificationErr('should not start with space.')
+            return false
+        } else if (qualification.includes('  ')) {
+            setQualificationErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(qualification)) {
+            setQualificationErr('should not contain numbers.')
+            return false
+        } else if (!qualification.match(/^[a-zA-Z ]+$/)) {
+            setQualificationErr('Invalid charecter!')
+            return false
+        } else if (qualification === '') {
+            setQualificationErr('This field cannot be empty!')
+            return false
+        } else if (qualification.length < 4) {
+            setQualificationErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (qualification.slice(-1) === ' ') {
+            setQualificationErr('should not end with space.')
+            return false
+        } else {
+            setQualificationErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Name! ###########################
+
+    //######################### Validating phone number! ###########################
+
+    const [phone, setPhone] = useState('')
+    const [phoneErr, setPhoneErr] = useState('')
+
+    const phoneInputBlurHandler = (phone, setPhoneErr) => {
+        if (phone === '') {
+            setPhoneErr('This field cannot be empty!')
+            return false
+        } else if (phone.length < 10) {
+            setPhoneErr('Phone number does not have 10 digits')
+            return false
+        } else if (phone.length > 10) {
+            setPhoneErr('Phone number has more than 10 digits')
+            return false
+        } else {
+            setPhoneErr('')
+            return true
+        }
+    }
+
+    const phoneInputChangeHandler = (phone, setPhoneErr) => {
+        if (!phone.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setPhoneErr("Enter numbers only!");
+            return false
+        } else if (phone.length > 10) {
+            setPhoneErr('Phone number has more than 10 digits')
+            return false
+        }
+        else {
+            setPhoneErr('')
+            return true
+        }
+    }
+
+    //######################### Validating phone number! ###########################
+
+    // #################### Validating Email! ###########################
+
+    const [email, setEmail] = useState('')
+    const [emailError, setEmailError] = useState('')
+
+    const emailInputBlurHandler = (email, setEmailError) => {
+        if (email === '') {
+            setEmailError('This field cannot be empty!')
+            return false
+        } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+            setEmailError('This email id is not valid.')
+            return false
+        } else {
+            setEmailError('')
+            return true
+        }
+    }
+    const emailInputChangeHandler = (email, setEmailError) => {
+        if (email.includes(' ')) {
+            setEmailError('Email id should not contain space.')
+            return false
+        }
+        else {
+            setEmailError('')
+            return true
+        }
+    }
+
+    // #################### Validating Email! ###########################
+
+    //######################### Validating Password! ###########################
+
+    const [password, setPassword] = useState('')
+    const [passwordErr, setPasswordErr] = useState('')
+
+
+    const passwordInputBlurHandler = (password, setPasswordErr) => {
+        if (password === '') {
+            setPasswordErr('This field cannot be empty!')
+            return false
+        } else if (password.length < 5) {
+            setPasswordErr('password should have atleast 5 charecters')
+            return false
+        } else if (password.length > 20) {
+            setPasswordErr('password should not exceed 20 characters')
+            return false
+        } else {
+            setPasswordErr('')
+            return true
+        }
+    }
+
+    const passwordInputChangeHandler = (password, setPasswordErr) => {
+        if (password.length > 20) {
+            setPasswordErr('password should not exceed 20 characters')
+            return false
+        } else {
+            setPasswordErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Password! ###########################
+
+    const [specialization, setSpecialization] = useState('')
+    const SpecializationHandler = (e) => {
+        setSpecialization(e.target.value)
+    }
+
+    const submitHandler = () => {
+
+        const { doc_name, doc_qualification, doc_address, doc_spec, doc_contact, doc_email, doc_password } = doctorDetails
+
+        const obj = {
+            doc_name: doctorName,
+            doc_qualification: qualification,
+            doc_address: doc_address,
+            doc_spec: specialization,
+            doc_contact: phone,
+            doc_email: email,
+            doc_password: password,
+            _hos_id: HospitalId,
+            availability: inputDateFields
+        }
+        instance.post('/add_doctor', obj).then((response) => {
+            console.log('response from backend doctor', response)
+            if (response) {
+                setReload(true)
+            }
+        })
     }
 
 
@@ -192,31 +389,107 @@ function DoctorView() {
                         </div>
                         <div className="row mt-3">
                             <div className="col-md-3">
-                                <TextField variant="standard" id="doc_name" onChange={(e) => { inputHandler(e) }} label="Doctor Name" />
+                                <TextField
+                                    variant="standard"
+                                    id="doc_name"
+                                    onChange={(e) => {
+                                        setDoctorName(e.target.value)
+                                        nameInputChangeHandler(e.target.value, setDoctorNameErr)
+                                    }}
+                                    onBlur={(e) => {
+                                        nameInputBlurHandler(e.target.value, setDoctorNameErr)
+                                    }}
+                                    label="Doctor Name"
+                                />
+                                <p className="" style={{ color: "red" }}>{doctorNameErr}</p>
                             </div>
                             <div className="col-md-3">
-                                <TextField variant="standard" id="doc_qualification" onChange={(e) => { inputHandler(e) }} label="Qualification" />
+                                <TextField
+                                    variant="standard"
+                                    id="doc_qualification"
+                                    onChange={(e) => {
+                                        setQualification(e.target.value)
+                                        qualificationInputChangeHandler(e.target.value, setQualificationErr)
+                                    }}
+                                    onBlur={(e) => {
+                                        qualificationInputBlurHandler(e.target.value, setQualificationErr)
+                                    }}
+                                    label="Qualification"
+                                />
+                                <p className="" style={{ color: "red" }}>{qualificationErr}</p>
                             </div>
-                            <div className="col-md-3">
+                            {/* <div className="col-md-3">
                                 <TextField variant="standard" id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
+                            </div> */}
+                            <div className="col-md-3">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>Specialization</InputLabel>
+                                    <Select onChange={SpecializationHandler}>
+                                        {Specialization.map((item, index) => {
+                                            return (
+                                                <MenuItem value={item} key={index}>{item}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                {/* <TextField variant="standard" id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" /> */}
                             </div>
                             <div className="col-md-3">
-                                <TextField variant="standard" id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" />
+                                <TextField
+                                    variant="standard"
+                                    id="doc_contact"
+                                    onChange={(e) => {
+                                        setPhone(e.target.value)
+                                        phoneInputChangeHandler(e.target.value, setPhoneErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        phoneInputBlurHandler(e.target.value, setPhoneErr)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    label="Contact No"
+                                />
+                                <p style={{ color: "red" }}>{phoneErr}</p>
                             </div>
                         </div>
                         <div className="row mt-5">
 
+
                             <div className="col-md-3">
-                                <TextField variant="standard" id="doc_contact" onChange={(e) => { inputHandler(e) }} label="Contact No" />
+                                <TextField
+                                    variant="standard"
+                                    id="doc_email"
+                                    onChange={(e) => {
+                                        setEmail(e.target.value)
+                                        emailInputChangeHandler(e.target.value, setEmailError)
+                                    }}
+                                    onBlur={(e) => {
+                                        emailInputBlurHandler(e.target.value, setEmailError)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    label="Email ID"
+                                />
+                                <p style={{ color: "red" }}>{emailError}</p>
                             </div>
                             <div className="col-md-3">
-                                <TextField variant="standard" id="doc_email" onChange={(e) => { inputHandler(e) }} label="Email ID" />
-                            </div>
-                            <div className="col-md-3">
-                                <TextField variant="standard" id="doc_password" type='password' onChange={(e) => { inputHandler(e) }} label="Password" />
+                                <TextField
+                                    variant="standard"
+                                    id="doc_password"
+                                    type='password'
+                                    onChange={(e) => {
+                                        setPassword(e.target.value)
+                                        passwordInputChangeHandler(e.target.value, setPasswordErr)
+                                    }}
+                                    onBlur={(e) => {
+                                        passwordInputBlurHandler(e.target.value, setPasswordErr)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    label="Password"
+                                />
+                                <p style={{ color: "red" }}>{passwordErr}</p>
                             </div>
                         </div>
-                        {inputDateFields.map((inputDateFields, index) => {
+                        {/* {inputDateFields.map((inputDateFields, index) => {
                             return (
                                 <div key={index} className="row">
                                     <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
@@ -225,7 +498,6 @@ function DoctorView() {
                                                 <div className="row" style={{ marginLeft: "5%" }}>
                                                     Day
                                                 </div>
-                                                {/* <input id='doc_avail_day' className="mt-2" onChange={(e) => { dropDownHandler(e,index) }} type="text" style={{ width: "90%", position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Day" /> */}
                                                 <Dropdown id='doc_avail_day' options={options} onChange={(e) => { dropDownHandler(e, index) }} value={defaultOption} placeholder="Select an option" />
                                             </div>
                                             <div className="col-md-3">
@@ -256,7 +528,6 @@ function DoctorView() {
                                                             </div>
                                                         </div>
 
-                                                        {/* <label>Add More</label> */}
                                                     </div>
                                                     <div className="col-md-6">
                                                         <div className="row mt-4">
@@ -276,7 +547,7 @@ function DoctorView() {
                                     </div>
                                 </div>
                             )
-                        })}
+                        })} */}
 
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >

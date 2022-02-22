@@ -42,7 +42,6 @@ export default function BasicTable({ List }) {
                         {/* <TableCell>Patient ID</TableCell> */}
                         <TableCell >Name</TableCell>
                         <TableCell >Qualification</TableCell>
-                        <TableCell >Address</TableCell>
                         <TableCell >Specialization</TableCell>
                         <TableCell >Contact No</TableCell>
                         <TableCell >Email ID</TableCell>
@@ -58,7 +57,6 @@ export default function BasicTable({ List }) {
                                 {value.doc_name}
                             </TableCell>
                             <TableCell >{value.doc_qualification}</TableCell>
-                            <TableCell >{value.doc_address}</TableCell>
                             <TableCell >{value.doc_spec}</TableCell>
                             <TableCell >{value.doc_contact}</TableCell>
                             <TableCell >{value.doc_email}</TableCell>
