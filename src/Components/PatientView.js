@@ -231,6 +231,7 @@ function PatientView() {
             }
 
             instance.post('/add_patient', obj).then((response) => {
+            setMainErr('')
                 console.log('response from backend', response)
                 if (response) {
                     setReload(true)

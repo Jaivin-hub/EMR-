@@ -33,8 +33,9 @@ function DoctorView() {
     const [reload, setReload] = useState(false)
     const [hospitalName, setHospitalName] = useState('')
     const [availableDay, setAvailableDay] = useState('')
+    const [mainErr, setMainErr] = useState('')
     const [inputDateFields, setInputDateFields] = useState([
-        { doc_avail_day: '', doc_from_time: '', doc_to_time: '' },
+        { doc_avail_day: 'Monday', doc_from_time: '10:00AM', doc_to_time: '02:00PM' },
     ])
 
     const handleAddFields = () => {
@@ -306,7 +307,7 @@ function DoctorView() {
         if (password === '') {
             setPasswordErr('This field cannot be empty!')
             return false
-        } else if (password.length < 5) {
+        } else if (password.length < 3) {
             setPasswordErr('password should have atleast 5 charecters')
             return false
         } else if (password.length > 20) {
@@ -339,23 +340,36 @@ function DoctorView() {
 
         const { doc_name, doc_qualification, doc_address, doc_spec, doc_contact, doc_email, doc_password } = doctorDetails
 
-        const obj = {
-            doc_name: doctorName,
-            doc_qualification: qualification,
-            doc_address: doc_address,
-            doc_spec: specialization,
-            doc_contact: phone,
-            doc_email: email,
-            doc_password: password,
-            _hos_id: HospitalId,
-            availability: inputDateFields
-        }
-        instance.post('/add_doctor', obj).then((response) => {
-            console.log('response from backend doctor', response)
-            if (response) {
-                setReload(true)
+        if (!doctorName == '' && !qualification == "" && !specialization == "" && !phone == "" && !email == "" && !password == "") {
+            const obj = {
+                doc_name: doctorName,
+                doc_qualification: qualification,
+                doc_address: doc_address,
+                doc_spec: specialization,
+                doc_contact: phone,
+                doc_email: email,
+                doc_password: password,
+                _hos_id: HospitalId,
+                availability: [
+                    {
+                        doc_avail_day: "Monday",
+                        doc_from_time: "09:30AM",
+                        doc_to_time: "11:30AM"
+                    }
+                ]
             }
-        })
+            instance.post('/add_doctor', obj).then((response) => {
+                console.log('response from backend doctor', response)
+                if (response) {
+                    setMainErr('')
+                    setReload(true)
+                }
+            })
+        } else (
+            setMainErr('Check all the fields that you entered!')
+        )
+
+
     }
 
 
@@ -387,6 +401,7 @@ function DoctorView() {
                                 <hr />
                             </div>
                         </div>
+                        <p style={{ color: 'red' }}>{mainErr}</p>
                         <div className="row mt-3">
                             <div className="col-md-3">
                                 <TextField
