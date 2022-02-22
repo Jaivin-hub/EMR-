@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 function PatientView() {
     const classes = useStyles()
+    const [Phone, setPhone] = useState('')
     const [scanResultWebCam, setScanResultWebCam] = useState('')
     const [openScanner, setOpenScanner] = useState(false)
     const [scanResultFile, setScanResultFile] = useState('')
@@ -32,6 +33,9 @@ function PatientView() {
     const [reload, setReload] = useState(false)
     const [patientList, setPatientList] = useState([])
     const [showUploadFile, setShowUploadFile] = useState(false)
+    const [state, setState] = useState('')
+    const [district, setDistrict] = useState('')
+    const [mainErr, setMainErr] = useState('')
 
     const bloodGroups = ['A-positive (A+)', 'A-negative (A-)', 'B-positive (B+)', 'B-negative (B-)', 'AB-positive (AB+)', 'AB-negative (AB-)', 'O-positive (O+)', 'O-negative (O-)']
 
@@ -54,12 +58,16 @@ function PatientView() {
         if (result) {
             var xml = new XMLParser().parseFromString(result);
             const adharData = xml.attributes
-            console.log(adharData)
+            console.log('adhar data---', adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
             setAdharNo(uid)
             setPatientName(name)
             setPatientDOB(yob)
             setAddress(house)
+            setDistrict(dist)
+            setState(state)
+            // dist
+            // state
             // var x2js = new X2JS();
             // x2js.xml_str2json()
             // let parser = new DOMParser()
@@ -91,6 +99,8 @@ function PatientView() {
             setPatientName(name)
             setPatientDOB(yob)
             setAddress(house)
+            setDistrict(dist)
+            setState(state)
             // var x2js = new X2JS();
             // x2js.xml_str2json()
             // let parser = new DOMParser()
@@ -104,32 +114,6 @@ function PatientView() {
         qrRef.current.openImageDialog()
     }
 
-
-
-    const inputHandler = (e) => {
-        const id = e.target.id
-        const value = e.target.value
-        const newData = { ...patientData }
-        if (id == 'adharCardNo') {
-            newData[id] = value
-            setPatientData(newData)
-        } else if (id == 'patientName') {
-            newData[id] = value
-            setPatientData(newData)
-        } else if (id == 'patiantDOB') {
-            newData[id] = value
-            setPatientData(newData)
-        } else if (id == 'bloodBloodGroup') {
-            newData[id] = value
-            setPatientData(newData)
-        } else if (id == 'patientAddress') {
-            newData[id] = value
-            setPatientData(newData)
-        } else if (id == 'patientPhoneNo') {
-            newData[id] = value
-            setPatientData(newData)
-        }
-    }
 
     useEffect(() => {
         const obj = {
@@ -159,7 +143,6 @@ function PatientView() {
 
     //######################### Validating phone number! ###########################
 
-    const [Phone, setPhone] = useState('')
     const [patientPhoneErr, setPatientPhoneErr] = useState('')
 
     const phoneInputBlurHandler = (phone, setPatientPhoneErr) => {
@@ -229,6 +212,13 @@ function PatientView() {
 
     const addPatientHandler = () => {
         const { bloodBloodGroup, patientPhoneNo } = patientData
+        // AdharNo
+        // patientName
+        // patientDOB
+        // address
+        // district
+        // state
+        // Phone
         if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
@@ -249,10 +239,259 @@ function PatientView() {
                 console.log('error', err)
             })
         } else {
+            setMainErr('Check all the fields that you entered!')
             console.log('all fields are required')
         }
 
     }
+
+    // #################### Validating Name! ###########################
+
+    const [patientNameErr, setPatientNameErr] = useState('')
+
+
+    const patientNameInputBlurHandler = (patientName, setPatientNameErr) => {
+        if (patientName === '') {
+            setPatientNameErr('This field cannot be empty!')
+            return false
+        } else if (patientName.length < 4) {
+            setPatientNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (patientName.slice(-1) === ' ') {
+            setPatientNameErr('should not end with space.')
+            return false
+        } else {
+            setPatientNameErr('')
+            return true
+        }
+    }
+
+
+    const patientNameInputChangeHandler = (patientName, setPatientNameErr) => {
+        if (patientName.length === 0) {
+            setPatientNameErr('This field cannot be empty!')
+            return false
+        } else if (patientName.charAt(0) === ' ') {
+            setPatientNameErr('should not start with space.')
+            return false
+        } else if (patientName.includes('  ')) {
+            setPatientNameErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(patientName)) {
+            setPatientNameErr('should not contain numbers.')
+            return false
+        } else if (!patientName.match(/^[a-zA-Z ]+$/)) {
+            setPatientNameErr('Invalid charecter!')
+            return false
+        } else if (patientName === '') {
+            setPatientNameErr('This field cannot be empty!')
+            return false
+        } else if (patientName.length < 4) {
+            setPatientNameErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (patientName.slice(-1) === ' ') {
+            setPatientNameErr('should not end with space.')
+            return false
+        } else {
+            setPatientNameErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Name! ###########################
+
+    //######################### Validating DOB! ###########################
+
+    // const [DOB, setDOB] = useState('')
+    const [patientDOBErr, setPatientDOBErr] = useState('')
+
+    const patientDOBBlurChangeHandler = (patientDOB, setPatientDOBErr) => {
+        if (patientDOB === '') {
+            setPatientDOBErr('This field cannot be empty!')
+            return false
+        } else if (patientDOB.length < 4) {
+            setPatientDOBErr('Enter valid Year')
+            return false
+        } else if (patientDOB.length > 4) {
+            setPatientDOBErr('Incorect Year')
+            return false
+        } else {
+            setPatientDOBErr('')
+            return true
+        }
+    }
+
+    const patientDOBInputChangeHandler = (patientDOB, setPatientDOBErr) => {
+        if (!patientDOB.match(/^[0-9][-\s\./0-9]*$/g)) {
+            setPatientDOBErr("Enter numbers only!");
+            return false
+        }
+        else {
+            setPatientDOBErr('')
+            return true
+        }
+    }
+
+    //######################### Validating DOB! ###########################
+
+    // #################### Validating City! ###########################
+
+    const [cityErr, setCityErr] = useState('')
+
+
+    const districtInputBlurHandler = (district, setCityErr) => {
+        if (district === '') {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (district.length < 4) {
+            setCityErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (district.slice(-1) === ' ') {
+            setCityErr('should not end with space.')
+            return false
+        } else {
+            setCityErr('')
+            return true
+        }
+    }
+
+
+    const districtInputChangeHandler = (district, setCityErr) => {
+        if (district.length === 0) {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (district.charAt(0) === ' ') {
+            setCityErr('should not start with space.')
+            return false
+        } else if (district.includes('  ')) {
+            setCityErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(district)) {
+            setCityErr('should not contain numbers.')
+            return false
+        } else if (!district.match(/^[a-zA-Z ]+$/)) {
+            setCityErr('Invalid charecter!')
+            return false
+        } else if (district === '') {
+            setCityErr('This field cannot be empty!')
+            return false
+        } else if (district.length < 4) {
+            setCityErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (district.slice(-1) === ' ') {
+            setCityErr('should not end with space.')
+            return false
+        } else {
+            setCityErr('')
+            return true
+        }
+    }
+
+    // #################### Validating City! ###########################
+
+    // #################### Validating State! ###########################
+
+    const [stateErr, setStateErr] = useState('')
+
+
+    const stateInputBlurHandler = (district, setStateErr) => {
+        if (district === '') {
+            setStateErr('This field cannot be empty!')
+            return false
+        } else if (district.length < 4) {
+            setStateErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (district.slice(-1) === ' ') {
+            setStateErr('should not end with space.')
+            return false
+        } else {
+            setStateErr('')
+            return true
+        }
+    }
+
+
+    const stateInputChangeHandler = (district, setStateErr) => {
+        if (district.length === 0) {
+            setStateErr('This field cannot be empty!')
+            return false
+        } else if (district.charAt(0) === ' ') {
+            setStateErr('should not start with space.')
+            return false
+        } else if (district.includes('  ')) {
+            setStateErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(district)) {
+            setStateErr('should not contain numbers.')
+            return false
+        } else if (!district.match(/^[a-zA-Z ]+$/)) {
+            setStateErr('Invalid charecter!')
+            return false
+        } else if (district === '') {
+            setStateErr('This field cannot be empty!')
+            return false
+        } else if (district.length < 4) {
+            setStateErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (district.slice(-1) === ' ') {
+            setStateErr('should not end with space.')
+            return false
+        } else {
+            setStateErr('')
+            return true
+        }
+    }
+
+    // #################### Validating State! ###########################
+
+    // #################### Validating Address! ###########################
+
+    const [addressErr, setAddressErr] = useState('')
+
+
+    const addressInputBlurHandler = (address, setAddressErr) => {
+        if (address === '') {
+            setAddressErr('This field cannot be empty!')
+            return false
+        } else if (address.length < 4) {
+            setAddressErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (address.slice(-1) === ' ') {
+            setAddressErr('should not end with space.')
+            return false
+        } else {
+            setAddressErr('')
+            return true
+        }
+    }
+
+
+    const addressInputChangeHandler = (address, setAddressErr) => {
+        if (address.length === 0) {
+            setAddressErr('This field cannot be empty!')
+            return false
+        } else if (address.charAt(0) === ' ') {
+            setAddressErr('should not start with space.')
+            return false
+        } else if (address.includes('  ')) {
+            setAddressErr('should not contain consecutive spaces.')
+            return false
+        } else if (address === '') {
+            setAddressErr('This field cannot be empty!')
+            return false
+        } else if (address.length < 4) {
+            setAddressErr('This field should have atleast 4 charecters.')
+            return false
+        } else if (address.slice(-1) === ' ') {
+            setAddressErr('should not end with space.')
+            return false
+        } else {
+            setAddressErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Address! ###########################
 
 
     return (
@@ -332,6 +571,7 @@ function PatientView() {
                                 <hr />
                             </div>
                         </div>
+                        <p style={{ color: 'red' }}>{mainErr}</p>
                         <div className="row">
                             <div className="col-md-3 mt-3">
                                 <TextField
@@ -355,18 +595,37 @@ function PatientView() {
                                 <TextField
                                     variant="standard"
                                     id='patientName'
-                                    onChange={(e) => { inputHandler(e) }}
+                                    onChange={(e) => {
+                                        setPatientName(e.target.value)
+                                        patientNameInputChangeHandler(e.target.value, setPatientNameErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        patientNameInputBlurHandler(e.target.value, setPatientNameErr)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
                                     value={patientName}
                                     label="Patient Name"
                                 />
+                                <p style={{ color: "red" }}>{patientNameErr}</p>
+
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='patiantDOB'
-                                    onChange={(e) => { inputHandler(e) }}
+                                    onChange={(e) => {
+                                        setPatientDOB(e.target.value)
+                                        patientDOBInputChangeHandler(e.target.value, setPatientDOBErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        patientDOBBlurChangeHandler(e.target.value, setPatientDOBErr)
+                                    }}
                                     value={patientDOB}
-                                    label="Patient DOB" />
+                                    label="Patient DOB"
+                                />
+                                <p style={{ color: "red" }}>{patientDOBErr}</p>
                             </div>
                             <div className="col-md-3 mt-3">
                                 <FormControl className={classes.formControl}>
@@ -379,7 +638,6 @@ function PatientView() {
                                         })}
                                     </Select>
                                 </FormControl>
-                                {/* <TextField variant="standard" id='bloodBloodGroup' onChange={(e) => { inputHandler(e) }} label="Patient Blood Group" /> */}
                             </div>
                         </div>
                         <div className="row">
@@ -388,10 +646,52 @@ function PatientView() {
                                 <TextField
                                     variant="standard"
                                     id='patientAddress'
-                                    onChange={(e) => { inputHandler(e) }}
+                                    onChange={(e) => {
+                                        setAddress(e.target.value)
+                                        addressInputChangeHandler(e.target.value, setAddressErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        addressInputBlurHandler(e.target.value, setAddressErr)
+                                    }}
                                     value={address}
                                     label="Patient Address"
                                 />
+                                <p style={{ color: "red" }}>{addressErr}</p>
+                            </div>
+                            <div className="col-md-3 mt-3">
+                                <TextField
+                                    variant="standard"
+                                    id='city'
+                                    onChange={(e) => {
+                                        setDistrict(e.target.value)
+                                        districtInputChangeHandler(e.target.value, setCityErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        districtInputBlurHandler(e.target.value, setCityErr)
+                                    }}
+                                    value={district}
+                                    label="City"
+                                />
+                                <p style={{ color: "red" }}>{cityErr}</p>
+                            </div>
+                            <div className="col-md-3 mt-3">
+                                <TextField
+                                    variant="standard"
+                                    id='State'
+                                    onChange={(e) => {
+                                        setState(e.target.value)
+                                        stateInputChangeHandler(e.target.value, setStateErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        stateInputBlurHandler(e.target.value, setStateErr)
+                                    }}
+                                    value={state}
+                                    label="State"
+                                />
+                                <p style={{ color: "red" }}>{stateErr}</p>
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
