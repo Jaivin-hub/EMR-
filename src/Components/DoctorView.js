@@ -200,12 +200,6 @@ function DoctorView() {
         } else if (qualification.includes('  ')) {
             setQualificationErr('should not contain consecutive spaces.')
             return false
-        } else if (/\d/.test(qualification)) {
-            setQualificationErr('should not contain numbers.')
-            return false
-        } else if (!qualification.match(/^[a-zA-Z ]+$/)) {
-            setQualificationErr('Invalid charecter!')
-            return false
         } else if (qualification === '') {
             setQualificationErr('This field cannot be empty!')
             return false

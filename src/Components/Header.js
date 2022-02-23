@@ -12,7 +12,7 @@ function Header() {
 
     const navigateHandler = (value) => {
         if (value == 'doctor') {
-            navigate('/takeAppointment')
+            navigate('/hospitallisting')
         } else if (value == 'appointments') {
             navigate('/taskDashboard');
         } else if (value == 'patients') {
@@ -22,6 +22,9 @@ function Header() {
             navigate('/taskDashboard');
         }
     }
+    const pathname = window.location.pathname
+    // alert(pathname)
+    console.log('pathname:::', pathname)
     return (
         <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
             <Navbar sticky expand="lg">
@@ -29,10 +32,17 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
-                        <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>
-                        <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
-                        <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
-                        <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
+                        {pathname == '/project/emr/adminDashboard' ?
+                            null
+                            :
+                            <>
+                                <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>
+                                <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
+                                <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
+                                <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
+                            </>
+                        }
+
                     </Nav>
                     <Nav className="ml-auto" >
                         {/* <input type="text" placeholder="search" style={{ backgroundColor: 'rgba(196, 196, 196, 0.2)', borderColor: 'rgba(196, 196, 196, 0.2)', width: "100%" }} />

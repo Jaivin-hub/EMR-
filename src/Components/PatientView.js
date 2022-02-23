@@ -25,6 +25,7 @@ function PatientView() {
     const [scanResultFile, setScanResultFile] = useState('')
     const [AdharNo, setAdharNo] = useState('')
     const [patientName, setPatientName] = useState('')
+    const [patientLastName, setPatientLastName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientBlood, setPatientBlood] = useState('')
     const [address, setAddress] = useState('')
@@ -103,7 +104,54 @@ function PatientView() {
         }
     }
 
+    // // #################### Validating Name! ###########################
 
+    // const [patientNameErr, setPatientNameErr] = useState('')
+
+
+    // const patientNameInputBlurHandler = (patientName, setPatientNameErr) => {
+    //     if (patientName === '') {
+    //         setPatientNameErr('This field cannot be empty!')
+    //         return false
+    //     } else if (patientName.slice(-1) === ' ') {
+    //         setPatientNameErr('should not end with space.')
+    //         return false
+    //     } else {
+    //         setPatientNameErr('')
+    //         return true
+    //     }
+    // }
+
+
+    // const patientNameInputChangeHandler = (patientName, setPatientNameErr) => {
+    //     if (patientName.length === 0) {
+    //         setPatientNameErr('This field cannot be empty!')
+    //         return false
+    //     } else if (patientName.charAt(0) === ' ') {
+    //         setPatientNameErr('should not start with space.')
+    //         return false
+    //     } else if (patientName.includes('  ')) {
+    //         setPatientNameErr('should not contain consecutive spaces.')
+    //         return false
+    //     } else if (/\d/.test(patientName)) {
+    //         setPatientNameErr('should not contain numbers.')
+    //         return false
+    //     } else if (!patientName.match(/^[a-zA-Z ]+$/)) {
+    //         setPatientNameErr('Invalid charecter!')
+    //         return false
+    //     } else if (patientName === '') {
+    //         setPatientNameErr('This field cannot be empty!')
+    //         return false
+    //     } else if (patientName.slice(-1) === ' ') {
+    //         setPatientNameErr('should not end with space.')
+    //         return false
+    //     } else {
+    //         setPatientNameErr('')
+    //         return true
+    //     }
+    // }
+
+    // // #################### Validating Name! ###########################
 
     console.log('patientData', patientData)
 
@@ -120,10 +168,11 @@ function PatientView() {
             console.log(adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
             const patientAge = currentYear - yob
-            console.log('patietAge--------------------------------', patientAge)
-
+            const [first, middle, last] = name.split(' ');
+            // console.log('patietName--------------------------------', first, "----", last)
+            setPatientLastName(middle + " " + last)
             setAdharNo(uid)
-            setPatientName(name)
+            setPatientName(first)
             setPatientDOB(patientAge)
             setAddress(house)
             setDistrict(dist)
@@ -255,14 +304,13 @@ function PatientView() {
     }
 
     const selectDoctorHandler = (e) => {
-        console.log(e.target)
         setAppointmentDoctor(e.target.value)
     }
 
     const appointmentHandler = () => {
         const obj = {
             _hos_id: HospitalId,
-            _doc_id: "620e4e24f4f5c2b6353ed002",
+            _doc_id: appointmentDoctor,
             _pat_id: "614ce34cfe3edcd0e3c6413t",
             app_date: appoinmentDate,
             app_time: appointmentTime
@@ -348,7 +396,7 @@ function PatientView() {
         } else if (patientName === '') {
             setPatientNameErr('This field cannot be empty!')
             return false
-        }  else if (patientName.slice(-1) === ' ') {
+        } else if (patientName.slice(-1) === ' ') {
             setPatientNameErr('should not end with space.')
             return false
         } else {
@@ -358,6 +406,55 @@ function PatientView() {
     }
 
     // #################### Validating Name! ###########################
+
+    // #################### Validating Last Name! ###########################
+
+    const [patientLastNameErr, setPatientLastNameErr] = useState('')
+
+
+    const patientLastNameInputBlurHandler = (patientLastName, setPatientLastNameErr) => {
+        if (patientLastName === '') {
+            setPatientLastNameErr('This field cannot be empty!')
+            return false
+        } else if (patientLastName.slice(-1) === ' ') {
+            setPatientLastNameErr('should not end with space.')
+            return false
+        } else {
+            setPatientLastNameErr('')
+            return true
+        }
+    }
+
+
+    const patientLastNameInputChangeHandler = (patientLastName, setPatientLastNameErr) => {
+        if (patientLastName.length === 0) {
+            setPatientLastNameErr('This field cannot be empty!')
+            return false
+        } else if (patientLastName.charAt(0) === ' ') {
+            setPatientLastNameErr('should not start with space.')
+            return false
+        } else if (patientLastName.includes('  ')) {
+            setPatientLastNameErr('should not contain consecutive spaces.')
+            return false
+        } else if (/\d/.test(patientLastName)) {
+            setPatientLastNameErr('should not contain numbers.')
+            return false
+        } else if (!patientLastName.match(/^[a-zA-Z ]+$/)) {
+            setPatientLastNameErr('Invalid charecter!')
+            return false
+        } else if (patientLastName === '') {
+            setPatientLastNameErr('This field cannot be empty!')
+            return false
+        } else if (patientLastName.slice(-1) === ' ') {
+            setPatientLastNameErr('should not end with space.')
+            return false
+        } else {
+            setPatientLastNameErr('')
+            return true
+        }
+    }
+
+    // #################### Validating Last Name! ###########################
 
     //######################### Validating DOB! ###########################
 
@@ -396,7 +493,7 @@ function PatientView() {
         if (district === '') {
             setCityErr('This field cannot be empty!')
             return false
-        }else if (district.slice(-1) === ' ') {
+        } else if (district.slice(-1) === ' ') {
             setCityErr('should not end with space.')
             return false
         } else {
@@ -415,12 +512,6 @@ function PatientView() {
             return false
         } else if (district.includes('  ')) {
             setCityErr('should not contain consecutive spaces.')
-            return false
-        } else if (/\d/.test(district)) {
-            setCityErr('should not contain numbers.')
-            return false
-        } else if (!district.match(/^[a-zA-Z ]+$/)) {
-            setCityErr('Invalid charecter!')
             return false
         } else if (district === '') {
             setCityErr('This field cannot be empty!')
@@ -465,16 +556,10 @@ function PatientView() {
         } else if (district.includes('  ')) {
             setStateErr('should not contain consecutive spaces.')
             return false
-        } else if (/\d/.test(district)) {
-            setStateErr('should not contain numbers.')
-            return false
-        } else if (!district.match(/^[a-zA-Z ]+$/)) {
-            setStateErr('Invalid charecter!')
-            return false
         } else if (district === '') {
             setStateErr('This field cannot be empty!')
             return false
-        }  else if (district.slice(-1) === ' ') {
+        } else if (district.slice(-1) === ' ') {
             setStateErr('should not end with space.')
             return false
         } else {
@@ -494,7 +579,7 @@ function PatientView() {
         if (address === '') {
             setAddressErr('This field cannot be empty!')
             return false
-        }  else if (address.slice(-1) === ' ') {
+        } else if (address.slice(-1) === ' ') {
             setAddressErr('should not end with space.')
             return false
         } else {
@@ -517,7 +602,7 @@ function PatientView() {
         } else if (address === '') {
             setAddressErr('This field cannot be empty!')
             return false
-        }  else if (address.slice(-1) === ' ') {
+        } else if (address.slice(-1) === ' ') {
             setAddressErr('should not end with space.')
             return false
         } else {
@@ -594,7 +679,7 @@ function PatientView() {
                                     onScan={handleScanWebCam}
                                 />
                                 :
-                                <img onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', marginTop: '5%' }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
+                                <img onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', marginTop: '10%' }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
                         }
                         <h4>{scanResultWebCam}</h4>
                     </div>
@@ -641,9 +726,28 @@ function PatientView() {
                                     }}
                                     // onChange={(e) => { inputHandler(e) }}
                                     value={patientName}
-                                    label="Patient Name"
+                                    label="Patient First Name"
                                 />
                                 <p style={{ color: "red" }}>{patientNameErr}</p>
+
+                            </div>
+                            <div className="col-md-3 mt-3">
+                                <TextField
+                                    variant="standard"
+                                    id='patientName'
+                                    onChange={(e) => {
+                                        setPatientLastName(e.target.value)
+                                        patientLastNameInputChangeHandler(e.target.value, setPatientLastNameErr)
+                                    }}
+
+                                    onBlur={(e) => {
+                                        patientLastNameInputBlurHandler(e.target.value, setPatientLastNameErr)
+                                    }}
+                                    // onChange={(e) => { inputHandler(e) }}
+                                    value={patientLastName}
+                                    label="Patient Last Name"
+                                />
+                                <p style={{ color: "red" }}>{patientLastNameErr}</p>
 
                             </div>
                             <div className="col-md-3 mt-3">
@@ -663,18 +767,7 @@ function PatientView() {
                                 />
                                 <p style={{ color: "red" }}>{patientDOBErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel>Patient Blood Group</InputLabel>
-                                    <Select onChange={bloodGroupHandler}>
-                                        {bloodGroups.map((item, index) => {
-                                            return (
-                                                <MenuItem value={item} key={index}>{item}</MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            </div>
+
                         </div>
                         <div className="row">
 
@@ -751,6 +844,18 @@ function PatientView() {
                             </div>
                         </div>
                         <div className="row">
+                            <div className="col-md-3 mt-3">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>Patient Blood Group</InputLabel>
+                                    <Select onChange={bloodGroupHandler}>
+                                        {bloodGroups.map((item, index) => {
+                                            return (
+                                                <MenuItem value={item} key={index}>{item}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </div>
 
                             <div className="col-md-3 mt-3">
                                 <FormControl className={classes.formControl}>
@@ -758,18 +863,17 @@ function PatientView() {
                                     <Select onChange={selectDoctorHandler}>
                                         {doctorList.map((item, index) => {
                                             return (
-                                                <MenuItem id={item._id} name={item._id} value={item.doc_name} key={index}>{item.doc_name}</MenuItem>
+                                                <MenuItem id={item._id} name={item._id} value={item._id} key={index}>{item.doc_name}</MenuItem>
                                             )
                                         })}
                                     </Select>
                                 </FormControl>
-                                <p style={{ color: "red" }}>{addressErr}</p>
                             </div>
-                            <div className="col-md-3 mt-4" style={{ marginTop: "3em" }}>
+                            <div className="col-md-3 mt-3" style={{ paddingTop: "1em" }}>
                                 <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
                                 {/* <p style={{ color: "red" }}>{cityErr}</p> */}
                             </div>
-                            <div className="col-md-3 mt-4">
+                            <div className="col-md-3 mt-3" style={{ paddingTop: "1em" }}>
                                 <input type="time" onChange={(e) => timeChangeHandler(e)} />
                                 {/* <p style={{ color: "red" }}>{stateErr}</p> */}
                             </div>
@@ -781,7 +885,7 @@ function PatientView() {
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3">
-                                <Button variant="contained" onClick={addPatientHandler}>Add Patient</Button>
+                                <Button variant="contained" style={{ width: "50%" }} onClick={addPatientHandler}>ADD</Button>
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">

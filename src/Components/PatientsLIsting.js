@@ -118,12 +118,12 @@ function PatientsLIsting() {
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell >aadhar_card_no</TableCell>
-                                                <TableCell >p_name</TableCell>
-                                                <TableCell >p_bloodgroup</TableCell>
-                                                <TableCell >p_city</TableCell>
-                                                <TableCell >p_state</TableCell>
-                                                <TableCell >age</TableCell>
-                                                <TableCell >p_phoneno</TableCell>
+                                                <TableCell >Patient Name</TableCell>
+                                                <TableCell >Patient Bloodgroup</TableCell>
+                                                <TableCell >Patient City</TableCell>
+                                                <TableCell >Patient State</TableCell>
+                                                <TableCell >Patient Age</TableCell>
+                                                <TableCell >Patient Phoneno</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -148,7 +148,8 @@ function PatientsLIsting() {
                                                     <TableCell >{value.p_bloodgroup}</TableCell>
                                                     <TableCell >{value.p_city}</TableCell>
                                                     <TableCell >{value.p_state}</TableCell>
-                                                    <TableCell >{value.doc_email}</TableCell>
+                                                    {/* <TableCell >{value.doc_email}</TableCell> */}
+                                                    <TableCell >{value.p_dob}</TableCell>
                                                     <TableCell >{value.p_phoneno}</TableCell>
                                                 </TableRow>
                                             ))}

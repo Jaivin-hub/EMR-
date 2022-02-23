@@ -8,6 +8,7 @@ import { ApiHelper } from '../../Helper/Apihelper';
 import { useNavigate } from 'react-router-dom';
 import instance from '../../config/api'
 import backGroundImage from '../../assets/imgs/Rectangle 55.png'
+import { SiGmail } from 'react-icons/si';
 function Admin_login() {
     const navigate = useNavigate();
 
@@ -98,9 +99,16 @@ function Admin_login() {
             email_id: email,
             password: password
         }
+        const adminEmail = "admin@gmail.com"
+        const adminPassword = '123456'
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
-                navigate('/adminDashboard')
+                if (email == adminEmail && adminPassword == password) {
+                    setMainErr('')
+                    navigate('/adminDashboard')
+                } else {
+                    setMainErr('Email or password is incorrect')
+                }
                 // instance.post('/login_hospital', obj).then((response) => {
                 //     console.log('response login hospital ---', response)
                 //     if (response.data.msg == 'Success') {

@@ -8,6 +8,7 @@ import { ApiHelper } from '../Helper/Apihelper';
 import { useNavigate } from 'react-router-dom';
 import instance from '../config/api'
 import backGroundImage from '../assets/imgs/Rectangle 55.png'
+import Footer from './Footer';
 
 
 function SignIn() {
@@ -152,73 +153,89 @@ function SignIn() {
         // navigate('/login');
     }
     return (
-        <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-            <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
-                <div className="card">
-                    <div className="d-flex loginBoxs">
-                        <div className="col-md-12">
-                            <div className="row d-flex justify-content-center">
-                                <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login Here</strong></h4>
-                            </div>
-                            <div className="row pt-3 d-flex justify-content-center">
-                                {/* --- */}
-                                <p className='text-danger'>{mainErr}</p>
-                            </div>
-                            <div className="row ">
-                                <div className="col-md-12 mt-5 d-flex justify-content-center">
-                                    <input
-                                        className="form-control"
-                                        id='email_id'
-                                        type="email"
-                                        onChange={(e) => {
-                                            setEmail(e.target.value)
-                                            emailInputChangeHandler(e.target.value, setEmailError)
-                                        }}
-                                        onBlur={(e) => {
-                                            emailInputBlurHandler(e.target.value, setEmailError)
-                                        }}
-                                        placeholder=" email id"
-                                        style={{ width: '80%', height: "3em", borderRadius: '5px' }}
-                                    />
+        <>
+            <div className='centered loginWrapper d-flex justify-content-center' style={{ height: "50em", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+                <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
+                    <div className="card">
+                        <div className="d-flex loginBoxs">
+                            <div className="col-md-12">
+                                <div className="row d-flex justify-content-center">
+                                    <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login Here</strong></h4>
                                 </div>
-                                <div className="col-md-12">
-                                    <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
+                                <div className="row pt-3 d-flex justify-content-center">
+                                    {/* --- */}
+                                    <p className='text-danger'>{mainErr}</p>
                                 </div>
-                                <div className="col-md-12 mt-5 d-flex justify-content-center">
-                                    <input
-                                        className="form-control"
-                                        id='password'
-                                        type="password"
-                                        onChange={(e) => {
-                                            setPassword(e.target.value)
-                                            passwordInputChangeHandler(e.target.value, setPasswordErr)
-                                        }}
-                                        onBlur={(e) => {
-                                            passwordInputBlurHandler(e.target.value, setPasswordErr)
-                                        }}
-                                        placeholder="  password"
-                                        style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
-                                </div>
-                                <div className="col-md-12">
-                                    <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
-                                </div>
-                                <div className="col-md-12 pt-3">
-                                    <a href="" className="" style={{ marginLeft: '10%' }}>Forget password?</a>
-                                </div>
-                                <div className="col-md-12 mt-5 d-flex justify-content-center">
-                                    <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button>
-                                </div>
-                                <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
-                                    {/* <div className="row"> */}
-                                    <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label>
-                                    {/* </div> */}
+                                <div className="row ">
+                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                        <input
+                                            className="form-control"
+                                            id='email_id'
+                                            type="email"
+                                            onChange={(e) => {
+                                                setEmail(e.target.value)
+                                                emailInputChangeHandler(e.target.value, setEmailError)
+                                            }}
+                                            onBlur={(e) => {
+                                                emailInputBlurHandler(e.target.value, setEmailError)
+                                            }}
+                                            placeholder=" email id"
+                                            style={{ width: '80%', height: "3em", borderRadius: '5px' }}
+                                        />
+                                    </div>
+                                    <div className="col-md-12">
+                                        <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
+                                    </div>
+                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                        <input
+                                            className="form-control"
+                                            id='password'
+                                            type="password"
+                                            onChange={(e) => {
+                                                setPassword(e.target.value)
+                                                passwordInputChangeHandler(e.target.value, setPasswordErr)
+                                            }}
+                                            onBlur={(e) => {
+                                                passwordInputBlurHandler(e.target.value, setPasswordErr)
+                                            }}
+                                            placeholder="  password"
+                                            style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                    </div>
+                                    <div className="col-md-12">
+                                        <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
+                                    </div>
+                                    <div className="col-md-12 pt-3">
+                                        <a href="" className="" style={{ marginLeft: '10%' }}>Forget password?</a>
+                                    </div>
+                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                        <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button>
+                                    </div>
+                                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
+                                        {/* <div className="row"> */}
+                                        <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label>
+                                        {/* </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
+                        {/* <div className="row"> */}
+                        {/* <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label> */}
+                        {/* </div> */}
+                    </div>
+                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
+                        {/* <div className="row"> */}
+                        {/* <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label> */}
+                        {/* </div> */}
+                    </div>
+
+
+
                 </div>
             </div>
-        </div>
+            {/* <Footer /> */}
+        </>
     )
 }
 

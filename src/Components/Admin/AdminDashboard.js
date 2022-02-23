@@ -36,7 +36,7 @@ function TaskDashboard() {
     const [showPatientView, setShowPatientView] = useState(false)
     // const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
-   
+
 
 
     const classes = useStyles()
@@ -143,7 +143,7 @@ function TaskDashboard() {
         } else if (firstName === '') {
             setFirstNameErr('This field cannot be empty!')
             return false
-        }  else {
+        } else {
             setFirstNameErr('')
             return true
         }
@@ -329,7 +329,7 @@ function TaskDashboard() {
         if (city === '') {
             setCityErr('This field cannot be empty!')
             return false
-        }  else {
+        } else {
             setCityErr('')
             return true
         }
@@ -393,7 +393,7 @@ function TaskDashboard() {
         } else if (address1 === '') {
             setAddress1Err('This field cannot be empty!')
             return false
-        }  else {
+        } else {
             setAddress1Err('')
             return true
         }
@@ -431,7 +431,7 @@ function TaskDashboard() {
         } else if (address2 === '') {
             setAddress2Err('This field cannot be empty!')
             return false
-        }  else {
+        } else {
             setAddress2Err('')
             return true
         }
@@ -468,6 +468,9 @@ function TaskDashboard() {
 
             instance.post("/add_hospital", obj).then((response) => {
                 console.log('response_add_hospital---', response);
+                if (response) {
+                    alert(response.data.msg)
+                }
                 // setValidateErr('')
                 // console.log('response of hospital', response)
                 if (response) {
@@ -542,7 +545,7 @@ function TaskDashboard() {
                                 <div className="row text-center">
                                     <div className="col-md-2">
                                         <div className="uploadDiv mt-4" style={{ width: '60%', height: "12em", marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
-                                            <img width="80%" height="" src={uploadImg} alt="" />
+                                            <img width="80%" height="" src='https://cdn5.vectorstock.com/i/thumb-large/49/04/letter-h-home-hospital-plus-medical-symbol-vector-33034904.jpg' alt="" />
                                             <label className="mt-3" style={{ color: '#0298D5' }}>Upload Logo</label>
                                         </div>
                                     </div>
@@ -807,7 +810,7 @@ function TaskDashboard() {
 
                                         <div className="row mt-1 d-flex justify-content-end">
                                             <div className="col-md-3 mt-4" >
-                                                <Button variant="contained" onClick={addHospitalSubmitHandler}>Add Doctor</Button>
+                                                <Button variant="contained" onClick={addHospitalSubmitHandler}>Add Hospital</Button>
 
                                                 {/* <Button variant="contained" style={{ marginLeft: '30%' }} onClick={submitHandler}>Add Doctor</Button> */}
                                             </div>
