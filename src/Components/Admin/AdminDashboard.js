@@ -117,9 +117,6 @@ function TaskDashboard() {
         if (firstName === '') {
             setFirstNameErr('This field cannot be empty!')
             return false
-        } else if (firstName.slice(-1) === ' ') {
-            setFirstNameErr('should not end with space.')
-            return false
         } else {
             setFirstNameErr('')
             return true
@@ -146,10 +143,7 @@ function TaskDashboard() {
         } else if (firstName === '') {
             setFirstNameErr('This field cannot be empty!')
             return false
-        } else if (firstName.slice(-1) === ' ') {
-            setFirstNameErr('should not end with space.')
-            return false
-        } else {
+        }  else {
             setFirstNameErr('')
             return true
         }
@@ -335,10 +329,7 @@ function TaskDashboard() {
         if (city === '') {
             setCityErr('This field cannot be empty!')
             return false
-        }  else if (city.slice(-1) === ' ') {
-            setCityErr('should not end with space.')
-            return false
-        } else {
+        }  else {
             setCityErr('')
             return true
         }
@@ -364,9 +355,6 @@ function TaskDashboard() {
         } else if (city === '') {
             setCityErr('This field cannot be empty!')
             return false
-        }  else if (city.slice(-1) === ' ') {
-            setCityErr('should not end with space.')
-            return false
         } else {
             setCityErr('')
             return true
@@ -384,9 +372,6 @@ function TaskDashboard() {
     const address1InputBlurHandler = (address1, setAddress1Err) => {
         if (address1 === '') {
             setAddress1Err('This field cannot be empty!')
-            return false
-        } else if (address1.slice(-1) === ' ') {
-            setAddress1Err('should not end with space.')
             return false
         } else {
             setAddress1Err('')
@@ -408,10 +393,7 @@ function TaskDashboard() {
         } else if (address1 === '') {
             setAddress1Err('This field cannot be empty!')
             return false
-        } else if (address1.slice(-1) === ' ') {
-            setAddress1Err('should not end with space.')
-            return false
-        } else {
+        }  else {
             setAddress1Err('')
             return true
         }
@@ -428,9 +410,6 @@ function TaskDashboard() {
     const address2InputBlurHandler = (address2, setAddress2Err) => {
         if (address2 === '') {
             setAddress2Err('This field cannot be empty!')
-            return false
-        } else if (address2.slice(-1) === ' ') {
-            setAddress2Err('should not end with space.')
             return false
         } else {
             setAddress2Err('')
@@ -452,10 +431,7 @@ function TaskDashboard() {
         } else if (address2 === '') {
             setAddress2Err('This field cannot be empty!')
             return false
-        } else if (address2.slice(-1) === ' ') {
-            setAddress2Err('should not end with space.')
-            return false
-        } else {
+        }  else {
             setAddress2Err('')
             return true
         }
