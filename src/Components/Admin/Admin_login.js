@@ -103,11 +103,16 @@ function Admin_login() {
         const adminPassword = '123456'
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
-                if (email == adminEmail && adminPassword == password) {
-                    setMainErr('')
-                    navigate('/adminDashboard')
+                if (email == adminEmail) {
+                    if (adminPassword == password) {
+
+                        setMainErr('')
+                        navigate('/adminDashboard')
+                    } else {
+                        setMainErr('Password is incorrect')
+                    }
                 } else {
-                    setMainErr('Email or password is incorrect')
+                    setMainErr('Email is incorrect')
                 }
                 // instance.post('/login_hospital', obj).then((response) => {
                 //     console.log('response login hospital ---', response)

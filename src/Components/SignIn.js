@@ -154,7 +154,7 @@ function SignIn() {
     }
     return (
         <>
-            <div className='centered loginWrapper d-flex justify-content-center' style={{ height: "50em", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+            <div className='centered loginWrapper d-flex justify-content-center' style={{ maxHeight:"100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
                 <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
                     <div className="card">
                         <div className="d-flex loginBoxs">
@@ -219,16 +219,7 @@ function SignIn() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
-                        {/* <div className="row"> */}
-                        {/* <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label> */}
-                        {/* </div> */}
-                    </div>
-                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
-                        {/* <div className="row"> */}
-                        {/* <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label> */}
-                        {/* </div> */}
-                    </div>
+                   
 
 
 
