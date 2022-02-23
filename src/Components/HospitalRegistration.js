@@ -505,36 +505,7 @@ function HospitalRegistration() {
             console.log('something missing')
             setMainErr('Check all the fields that you entered!')
         }
-        // const { Hospital_Name, Email_ID, Hospital_Address_1, Hospital_Address_2, Country, State, City, Pin_Code, Contact_No_1, Contact_No_2, Password } = hospitalData
-        // const obj = {
-        //     name: Hospital_Name,
-        //     email_id: Email_ID,
-        //     password: Password,
-        //     address_1: Hospital_Address_1,
-        //     address_2: Hospital_Address_2,
-        //     city: City,
-        //     state: State,
-        //     country: Country,
-        //     pincode: Pin_Code,
-        //     contact_1: Contact_No_1,
-        //     contact_2: Contact_No_2,
-        //     logo: "logo.png"
-        // }
-        // console.log('objects---', obj)
-        // if (!Hospital_Name == "" && !Email_ID == "" && !Hospital_Address_1 == "" && !Hospital_Address_2 == "" && !Country == "" && !State == "" && !City == "" && !Pin_Code == "" && !Contact_No_1 == "" && !Contact_No_2 == "" && !Password == "") {
-        //     instance.post("/add_hospital", obj).then((response) => {
-        //         setValidateErr('')
-        //         console.log('response of hospital', response)
-        //         if (response) {
-        //             navigate('/registerSuccess');
-        //         }
-        //     }).catch((err) => {
-        //         console.log('error', err)
-        //     })
-        // } else {
-        //     setValidateErr('All fields are required')
-        //     console.log('else')
-        // }
+   
 
     }
 

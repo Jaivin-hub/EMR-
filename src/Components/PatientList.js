@@ -27,7 +27,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable({ List }) {
+export default function BasicTable({ List, searchTerm }) {
     const navigate = useNavigate();
     // const [patientList, setPatientList] = useState([])
     const HospitalId = localStorage.getItem('HospitalId')
@@ -64,11 +64,20 @@ export default function BasicTable({ List }) {
                             <TableCell >Patient Phone No</TableCell>
                             <TableCell >Patient Blood Group</TableCell>
                             <TableCell >Address</TableCell>
-                            <TableCell >Appointments</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {List.map((patient, index) => (
+                        {List.filter((val) => {
+                            if (searchTerm == '') {
+                                return val
+                            } else if (val.p_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                return val
+                            } else if (val.p_phoneno.includes(searchTerm)) {
+                                return val
+                            } else if (val.aadhar_card_no.includes(searchTerm)) {
+                                return val
+                            }
+                        }).map((patient, index) => (
                             <TableRow
                                 key={index}
                             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -83,7 +92,6 @@ export default function BasicTable({ List }) {
                                 <TableCell >{patient.p_phoneno}</TableCell>
                                 <TableCell >{patient.p_bloodgroup}</TableCell>
                                 <TableCell >{patient.p_address_1}</TableCell>
-                                <TableCell ><Button variant="outlined" onClick={() => { AppointmentsHandler(patient._id) }}>Take Appointment</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

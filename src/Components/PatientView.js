@@ -8,6 +8,7 @@ import { ApiHelper } from '../Helper/Apihelper';
 import BasicTable from './PatientList'
 import Modal from './Modal'
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import SearchPage from './SearchPage';
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,8 +37,28 @@ function PatientView() {
     const [state, setState] = useState('')
     const [district, setDistrict] = useState('')
     const [mainErr, setMainErr] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
+    const [appoinmentDate, setAppoinmentDate] = useState('')
+    const [appointmentTime, setAppointmentTime] = useState('')
+
+    const dateChangeHandler = (e) => {
+        setAppoinmentDate(e.target.value)
+    }
+
+    const timeChangeHandler = (e) => {
+        setAppointmentTime(e.target.value)
+    }
+
 
     const bloodGroups = ['A-positive (A+)', 'A-negative (A-)', 'B-positive (B+)', 'B-negative (B-)', 'AB-positive (AB+)', 'AB-negative (AB-)', 'O-positive (O+)', 'O-negative (O-)']
+
+    const getYear = () => {
+        return new Date().getFullYear();
+    }
+
+    const currentYear = getYear()
+
+    console.log('currentYear', currentYear)
 
 
 
@@ -60,6 +81,7 @@ function PatientView() {
             const adharData = xml.attributes
             console.log('adhar data---', adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
+            console.log('yob--------------------------------', yob)
             setAdharNo(uid)
             setPatientName(name)
             setPatientDOB(yob)
@@ -89,15 +111,20 @@ function PatientView() {
         console.log(err)
     }
 
+
+
     const handleScanFile = (result) => {
         if (result) {
             var xml = new XMLParser().parseFromString(result);
             const adharData = xml.attributes
             console.log(adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
+            const patientAge = currentYear - yob
+            console.log('patietAge--------------------------------', patientAge)
+
             setAdharNo(uid)
             setPatientName(name)
-            setPatientDOB(yob)
+            setPatientDOB(patientAge)
             setAddress(house)
             setDistrict(dist)
             setState(state)
@@ -114,6 +141,8 @@ function PatientView() {
         qrRef.current.openImageDialog()
     }
 
+    const [doctorList, setDoctorList] = useState([])
+
 
     useEffect(() => {
         const obj = {
@@ -127,6 +156,11 @@ function PatientView() {
 
         }).catch((err) => {
             console.log('error', err)
+        })
+
+        instance.post('/list_doctors').then((res) => {
+            console.log('response---doctor list ---', res)
+            setDoctorList(res.data.doctorList)
         })
     }, [reload])
 
@@ -215,35 +249,35 @@ function PatientView() {
     //######################### Validating adhar number! ###########################
 
     const [patientBloodGroup, setPatientBloodGroup] = useState('')
+    const [appointmentDoctor, setAppointmentDoctor] = useState('')
     const bloodGroupHandler = (e) => {
         setPatientBloodGroup(e.target.value)
     }
 
+    const selectDoctorHandler = (e) => {
+        console.log(e.target)
+        setAppointmentDoctor(e.target.value)
+    }
 
-    // {
-    //     "aadhar_card_no":"558909843",
-    //     "p_name":"Karthik",
-    //     "p_dob":"01-12-1983",
-    //     "p_bloodgroup":"AB-",
-    //     "p_address_1":"C1, First floor, Carnival Technopark",
-    //     "p_address_2":"Kazhakoottam",
-    //     "p_city":"Trivandrum",
-    //     "p_state":"kerala",
-    //     "p_pincode":"695081",
-    //     "p_phoneno":"9947832736",
-    //     "_hos_id":"620a4845db8b9874e8e7466c"
-    // }
+    const appointmentHandler = () => {
+        const obj = {
+            _hos_id: HospitalId,
+            _doc_id: "620e4e24f4f5c2b6353ed002",
+            _pat_id: "614ce34cfe3edcd0e3c6413t",
+            app_date: appoinmentDate,
+            app_time: appointmentTime
+        }
+        instance.post('/patient_appointment', obj).then((response) => {
+            console.log('appoinment response---', response);
+            if (response.data.msg == 'Patient Appointment created successfully') {
+                alert(response.data.msg)
+            }
+        })
+    }
 
 
     const addPatientHandler = () => {
         const { bloodBloodGroup, patientPhoneNo } = patientData
-        // AdharNo
-        // patientName
-        // patientDOB
-        // address
-        // district
-        // state
-        // Phone
         if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
@@ -263,6 +297,7 @@ function PatientView() {
                 setMainErr('')
                 console.log('response from backend', response)
                 if (response) {
+                    appointmentHandler()
                     setReload(true)
                 }
             }).catch((err) => {
@@ -283,9 +318,6 @@ function PatientView() {
     const patientNameInputBlurHandler = (patientName, setPatientNameErr) => {
         if (patientName === '') {
             setPatientNameErr('This field cannot be empty!')
-            return false
-        } else if (patientName.length < 4) {
-            setPatientNameErr('This field should have atleast 4 charecters.')
             return false
         } else if (patientName.slice(-1) === ' ') {
             setPatientNameErr('should not end with space.')
@@ -316,10 +348,7 @@ function PatientView() {
         } else if (patientName === '') {
             setPatientNameErr('This field cannot be empty!')
             return false
-        } else if (patientName.length < 4) {
-            setPatientNameErr('This field should have atleast 4 charecters.')
-            return false
-        } else if (patientName.slice(-1) === ' ') {
+        }  else if (patientName.slice(-1) === ' ') {
             setPatientNameErr('should not end with space.')
             return false
         } else {
@@ -338,12 +367,6 @@ function PatientView() {
     const patientDOBBlurChangeHandler = (patientDOB, setPatientDOBErr) => {
         if (patientDOB === '') {
             setPatientDOBErr('This field cannot be empty!')
-            return false
-        } else if (patientDOB.length < 4) {
-            setPatientDOBErr('Enter valid Year')
-            return false
-        } else if (patientDOB.length > 4) {
-            setPatientDOBErr('Incorect Year')
             return false
         } else {
             setPatientDOBErr('')
@@ -373,10 +396,7 @@ function PatientView() {
         if (district === '') {
             setCityErr('This field cannot be empty!')
             return false
-        } else if (district.length < 4) {
-            setCityErr('This field should have atleast 4 charecters.')
-            return false
-        } else if (district.slice(-1) === ' ') {
+        }else if (district.slice(-1) === ' ') {
             setCityErr('should not end with space.')
             return false
         } else {
@@ -405,9 +425,6 @@ function PatientView() {
         } else if (district === '') {
             setCityErr('This field cannot be empty!')
             return false
-        } else if (district.length < 4) {
-            setCityErr('This field should have atleast 4 charecters.')
-            return false
         } else if (district.slice(-1) === ' ') {
             setCityErr('should not end with space.')
             return false
@@ -427,9 +444,6 @@ function PatientView() {
     const stateInputBlurHandler = (district, setStateErr) => {
         if (district === '') {
             setStateErr('This field cannot be empty!')
-            return false
-        } else if (district.length < 4) {
-            setStateErr('This field should have atleast 4 charecters.')
             return false
         } else if (district.slice(-1) === ' ') {
             setStateErr('should not end with space.')
@@ -460,10 +474,7 @@ function PatientView() {
         } else if (district === '') {
             setStateErr('This field cannot be empty!')
             return false
-        } else if (district.length < 4) {
-            setStateErr('This field should have atleast 4 charecters.')
-            return false
-        } else if (district.slice(-1) === ' ') {
+        }  else if (district.slice(-1) === ' ') {
             setStateErr('should not end with space.')
             return false
         } else {
@@ -483,10 +494,7 @@ function PatientView() {
         if (address === '') {
             setAddressErr('This field cannot be empty!')
             return false
-        } else if (address.length < 4) {
-            setAddressErr('This field should have atleast 4 charecters.')
-            return false
-        } else if (address.slice(-1) === ' ') {
+        }  else if (address.slice(-1) === ' ') {
             setAddressErr('should not end with space.')
             return false
         } else {
@@ -509,10 +517,7 @@ function PatientView() {
         } else if (address === '') {
             setAddressErr('This field cannot be empty!')
             return false
-        } else if (address.length < 4) {
-            setAddressErr('This field should have atleast 4 charecters.')
-            return false
-        } else if (address.slice(-1) === ' ') {
+        }  else if (address.slice(-1) === ' ') {
             setAddressErr('should not end with space.')
             return false
         } else {
@@ -520,6 +525,7 @@ function PatientView() {
             return true
         }
     }
+
 
     // #################### Validating Address! ###########################
 
@@ -653,7 +659,7 @@ function PatientView() {
                                         patientDOBBlurChangeHandler(e.target.value, setPatientDOBErr)
                                     }}
                                     value={patientDOB}
-                                    label="Patient DOB"
+                                    label="Patient Age"
                                 />
                                 <p style={{ color: "red" }}>{patientDOBErr}</p>
                             </div>
@@ -744,27 +750,72 @@ function PatientView() {
 
                             </div>
                         </div>
+                        <div className="row">
+
+                            <div className="col-md-3 mt-3">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel>Select Doctor</InputLabel>
+                                    <Select onChange={selectDoctorHandler}>
+                                        {doctorList.map((item, index) => {
+                                            return (
+                                                <MenuItem id={item._id} name={item._id} value={item.doc_name} key={index}>{item.doc_name}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <p style={{ color: "red" }}>{addressErr}</p>
+                            </div>
+                            <div className="col-md-3 mt-4" style={{ marginTop: "3em" }}>
+                                <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
+                                {/* <p style={{ color: "red" }}>{cityErr}</p> */}
+                            </div>
+                            <div className="col-md-3 mt-4">
+                                <input type="time" onChange={(e) => timeChangeHandler(e)} />
+                                {/* <p style={{ color: "red" }}>{stateErr}</p> */}
+                            </div>
+                            <div className="col-md-3 mt-3">
+
+                                {/* <p style={{ color: "red" }}>{patientPhoneErr}</p> */}
+
+                            </div>
+                        </div>
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3">
                                 <Button variant="contained" onClick={addPatientHandler}>Add Patient</Button>
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
+
                             {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
                         </div>
                     </div>
 
                 </div>
+
+            </div>
+            <div className="row mt-5">
+                <div className="col-md-6">
+                    <div className="row ">
+
+                        <SearchPage setSearchTerm={setSearchTerm} />
+
+                    </div>
+                </div>
+                <div className="col-md-6">
+
+                </div>
             </div>
             {patientList.length >= 1 ?
 
-                <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                     {/* <label htmlFor="" style={{marginLeft:'4%'}}></label> */}
+
                     <div className="row pt-4 " >
                         {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
                         Patient List
 
                     </div> */}
+
                         <div className="col-md-3" style={{ marginLeft: '3%' }}>
                             {/* <Button variant="contained" onClick={onScanFile}>upload file</Button>
 
@@ -783,7 +834,7 @@ function PatientView() {
                     </div>
                     {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
-                    <BasicTable List={patientList} />
+                    <BasicTable searchTerm={searchTerm} List={patientList} />
 
                     {/* <Table size="sm">
                         <>

@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import '../assets/css/login.css';
-import '../assets/css/mainbackground.css'
-import hospitalImg from '../assets/imgs/88327_hospital_icon 1.png'
+import '../../assets/css/login.css';
+import '../../assets/css/mainbackground.css'
+import hospitalImg from '../../assets/imgs/88327_hospital_icon 1.png'
 import { TextField, Button } from '@mui/material'
-import { API } from '../config/api';
-import { ApiHelper } from '../Helper/Apihelper';
+import { API } from '../../config/api';
+import { ApiHelper } from '../../Helper/Apihelper';
 import { useNavigate } from 'react-router-dom';
-import instance from '../config/api'
-import backGroundImage from '../assets/imgs/Rectangle 55.png'
-
-
-function SignIn() {
+import instance from '../../config/api'
+import backGroundImage from '../../assets/imgs/Rectangle 55.png'
+function Admin_login() {
     const navigate = useNavigate();
 
     const [loginData, setLoginData] = useState({})
@@ -102,21 +100,22 @@ function SignIn() {
         }
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
-                instance.post('/login_hospital', obj).then((response) => {
-                    console.log('response login hospital ---', response)
-                    if (response.data.msg == 'Success') {
-                        const Data = response.data.hospital[0].name
-                        const id = response.data.hospital[0]._id
-                        localStorage.setItem('HospitalName', Data)
-                        localStorage.setItem('HospitalId', id)
-                        navigate('/taskDashboard');
-                    } else if (response.data.msg == 'Email or Password is invalid') {
-                        setMainErr(response.data.msg)
-                        console.log('invalid username or password')
-                    }
-                }).catch((err) => {
-                    console.log('Error from login : ', err)
-                })
+                navigate('/adminDashboard')
+                // instance.post('/login_hospital', obj).then((response) => {
+                //     console.log('response login hospital ---', response)
+                //     if (response.data.msg == 'Success') {
+                //         const Data = response.data.hospital[0].name
+                //         const id = response.data.hospital[0]._id
+                //         localStorage.setItem('HospitalName', Data)
+                //         localStorage.setItem('HospitalId', id)
+                //         navigate('/taskDashboard');
+                //     } else if (response.data.msg == 'Email or Password is invalid') {
+                //         setMainErr(response.data.msg)
+                //         console.log('invalid username or password')
+                //     }
+                // }).catch((err) => {
+                //     console.log('Error from login : ', err)
+                // })
             } else {
                 console.log('the way')
                 setMainErr('All fields are required!')
@@ -149,7 +148,7 @@ function SignIn() {
     }
 
     const signUpchangeHandler = () => {
-        // navigate('/login');
+        navigate('/login');
     }
     return (
         <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
@@ -158,7 +157,7 @@ function SignIn() {
                     <div className="d-flex loginBoxs">
                         <div className="col-md-12">
                             <div className="row d-flex justify-content-center">
-                                <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login Here</strong></h4>
+                                <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Welcome Admin</strong></h4>
                             </div>
                             <div className="row pt-3 d-flex justify-content-center">
                                 {/* --- */}
@@ -210,7 +209,7 @@ function SignIn() {
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
                                     {/* <div className="row"> */}
-                                    <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label>
+                                    {/* <label >Not a member? <a style={{ cursor: 'pointer', color: "" }} onClick={signUpchangeHandler}>Contact- 9072442200</a></label> */}
                                     {/* </div> */}
                                 </div>
                             </div>
@@ -222,4 +221,4 @@ function SignIn() {
     )
 }
 
-export default SignIn
+export default Admin_login

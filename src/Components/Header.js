@@ -15,18 +15,23 @@ function Header() {
             navigate('/takeAppointment')
         } else if (value == 'appointments') {
             navigate('/taskDashboard');
+        } else if (value == 'patients') {
+            navigate('/patientlisting')
+        } else if (value == 'dashboard') {
+            console.log('ivide')
+            navigate('/taskDashboard');
         }
     }
     return (
         <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
             <Navbar sticky expand="lg">
-                <Navbar.Brand href="#home"><img src={MainLogo} alt="" /></Navbar.Brand>
+                <Navbar.Brand ><img onClick={() => { navigateHandler('dashboard') }} style={{ cursor: 'pointer' }} src={MainLogo} alt="" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
                         <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>
                         <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
-                        <Nav.Link href="/taskDashboard" className="navMenu3">Patients</Nav.Link>
+                        <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
                         <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
                     </Nav>
                     <Nav className="ml-auto" >

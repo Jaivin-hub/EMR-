@@ -49,6 +49,7 @@ function Modal({ closeModal, patientId }) {
             _hos_id: HospitalId,
             _doc_id: id,
             _pat_id: patientId,
+            _pat_id:"614ce34cfe3edcd0e3c6413t",
             app_date: appoinmentDate,
             app_time: appointmentTime
         }

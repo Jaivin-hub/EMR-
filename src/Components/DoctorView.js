@@ -46,7 +46,9 @@ function DoctorView() {
         'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     ];
 
-    const Specialization = ['Ortho', 'Pediatrician', 'Nephrology', 'Gastrology', 'Gynecologist', 'Neurology', 'Dermatology', 'Ophthalmologist']
+    const Specialization = ['Cardiology', 'Cardio Thoracic & Vascular Surgery', 'Dental & Maxillo Facial Surgery', 'Dermatology', 'Endocrinology & Diabetes', 'E.N.T', 'Gastroenterology & Hepatology', 'General Medicine',
+        'Obstetrics & Gynecology', 'Infertility & Laproscopy', 'Nephrology', 'Neurosurgery', 'Neurology', 'Ophthalmology', 'Orthopaedics', 'Paediatrics', 'Paediatric Surgery', 'Paedeatric Endocrinology', 'Plastic & Reconstructive Surgery',
+        'Psychiatry & Behavioural Sciences', 'Pulmonology', 'Rheumatology', 'Urology', 'Ayurveda Department', 'Heart Rhythm Disorders', 'Paedeatric Neurology', 'Paedeatric Nephrology', 'Neonatology', 'Oncology', 'Cardiac Anesthesia & Cardiac Critical Care']
     const defaultOption = options[0];
 
     const dropDownHandler = (e, index) => {
@@ -128,10 +130,7 @@ function DoctorView() {
         if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        } else if (doctorName.length < 3) {
-            setDoctorNameErr('This field should have atleast 3 characters.')
-            return false
-        } else if (doctorName.slice(-1) === ' ') {
+        }  else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
             return false
         } else {
@@ -160,10 +159,7 @@ function DoctorView() {
         } else if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        } else if (doctorName.length < 3) {
-            setDoctorNameErr('This field should have atleast 3 characters.')
-            return false
-        } else if (doctorName.slice(-1) === ' ') {
+        }else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
             return false
         } else {
@@ -183,9 +179,6 @@ function DoctorView() {
     const qualificationInputBlurHandler = (qualification, setQualificationErr) => {
         if (qualification === '') {
             setQualificationErr('This field cannot be empty!')
-            return false
-        } else if (qualification.length < 4) {
-            setQualificationErr('This field should have atleast 4 charecters.')
             return false
         } else if (qualification.slice(-1) === ' ') {
             setQualificationErr('should not end with space.')
@@ -215,9 +208,6 @@ function DoctorView() {
             return false
         } else if (qualification === '') {
             setQualificationErr('This field cannot be empty!')
-            return false
-        } else if (qualification.length < 4) {
-            setQualificationErr('This field should have atleast 4 charecters.')
             return false
         } else if (qualification.slice(-1) === ' ') {
             setQualificationErr('should not end with space.')
@@ -307,10 +297,7 @@ function DoctorView() {
         if (password === '') {
             setPasswordErr('This field cannot be empty!')
             return false
-        } else if (password.length < 3) {
-            setPasswordErr('password should have atleast 5 charecters')
-            return false
-        } else if (password.length > 20) {
+        }  else if (password.length > 20) {
             setPasswordErr('password should not exceed 20 characters')
             return false
         } else {
