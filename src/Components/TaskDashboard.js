@@ -65,7 +65,7 @@ function TaskDashboard() {
 
     console.log('hospitalName', hospitalName)
     return (
-        <div className="div">
+        <div className="div" >
             <Header />
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="row">

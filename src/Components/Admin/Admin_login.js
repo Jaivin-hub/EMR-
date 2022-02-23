@@ -164,7 +164,7 @@ function Admin_login() {
         navigate('/login');
     }
     return (
-        <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+        <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '100vh', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
             <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
                 <div className="card">
                     <div className="d-flex loginBoxs">
