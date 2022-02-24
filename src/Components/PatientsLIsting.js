@@ -107,11 +107,11 @@ function PatientsLIsting() {
                                             {patientList?.filter((val) => {
                                                 if (searchTerm == '') {
                                                     return val
-                                                } else if (val.p_firstname.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                } else if (val.p_firstname?.toLowerCase().includes(searchTerm.toLowerCase())) {
                                                     return val
-                                                } else if (val.p_phoneno.includes(searchTerm)) {
+                                                } else if (val.p_phoneno?.includes(searchTerm)) {
                                                     return val
-                                                } else if (val.aadhar_card_no.includes(searchTerm)) {
+                                                } else if (val.aadhar_card_no?.includes(searchTerm)) {
                                                     return val
                                                 }
                                             }).map((value, index) => (
