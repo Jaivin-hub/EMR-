@@ -43,6 +43,7 @@ function PatientView() {
     const [searchTerm, setSearchTerm] = useState('')
     const [appoinmentDate, setAppoinmentDate] = useState('')
     const [appointmentTime, setAppointmentTime] = useState('')
+    const [bloodGroupErr, setBloodGroupErr] = useState('')
 
     const dateChangeHandler = (e) => {
         const date = e.target.value
@@ -304,6 +305,7 @@ function PatientView() {
     const [appointmentDoctor, setAppointmentDoctor] = useState('')
     const bloodGroupHandler = (e) => {
         setPatientBloodGroup(e.target.value)
+        setBloodGroupErr('')
     }
 
     const selectDoctorHandler = (e) => {
@@ -327,8 +329,9 @@ function PatientView() {
 
 
     const addPatientHandler = () => {
+        console.log('function calling')
         const { bloodBloodGroup, patientPhoneNo } = patientData
-        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "") {
+        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
                 p_firstname: patientName,
@@ -358,26 +361,36 @@ function PatientView() {
                 console.log('error', err)
             })
         } else {
-            // if (AdharNo == '') {
-                
-            // } else if (patientName == "") {
-            //     setPatientNameErr('This field is required')
-            // } else if (patientLastName == "") {
-                
-            // } else if (patientDOB == "") {
-                
-            // } else if (patientBloodGroup == "") {
+            if (patientName == '') {
+                setPatientNameErr('This field is required')
+            }
+            if (AdharNo == "") {
+                setAdharErr('This field is required')
+            }
+            if (patientLastName == "") {
+                setPatientLastNameErr('This field is required')
+            }
+            if (patientDOB == "") {
+                setPatientDOBErr('This field is required')
+            }
+            if (address == "") {
+                setAddressErr('This field is required')
+            }
+            if (district == "") {
+                setCityErr('This field is required')
+            }
+            if (state == "") {
+                setStateErr('This field is required')
+            }
+            if (Phone == '') {
+                setPatientPhoneErr('This field is required')
+            } if (patientBloodGroup == "") {
+                setBloodGroupErr('This field is required')
+            }
 
-            // } else if (address == "") {
-                
-            // } else if (district == "") {
-                
-            // } else if (state == "") {
-                
-            // } else if (Phone == "") {
-                
-            // }
-            setMainErr('Check all the fields that you entered!')
+
+
+            // setMainErr('Check all the fields that you entered!')
             console.log('else case')
         }
 
@@ -880,6 +893,8 @@ function PatientView() {
                                         })}
                                     </Select>
                                 </FormControl>
+                                <p style={{ color: "red" }}>{bloodGroupErr}</p>
+
                             </div>
 
                             <div className="col-md-3 mt-3">
