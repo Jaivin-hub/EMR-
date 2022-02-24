@@ -156,7 +156,7 @@ function SignIn() {
     return (
         <>
             <div className='centered loginWrapper d-flex justify-content-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-                <div className="login_container" style={{ marginTop: "10em", width: '30%' }}>
+                <div className="login_container" style={{ marginTop: "10em", maxWidth: '30%' }}>
                     <div className="card mt-5">
                         <div className="d-flex loginBoxs">
                             <div className="col-md-12">
@@ -168,7 +168,7 @@ function SignIn() {
                                     <p className='text-danger'>{mainErr}</p>
                                 </div>
                                 <div className="row ">
-                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                    <div className="col-md-12 mt-2 d-flex justify-content-center">
                                         <input
                                             className="form-control"
                                             id='email_id'
@@ -208,7 +208,7 @@ function SignIn() {
                                     <div className="col-md-12">
                                         <a href="" className="" style={{ marginLeft: '10%' }}>Forget password?</a>
                                     </div>
-                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                    <div className="col-md-12 mt-3 d-flex justify-content-center">
                                         <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button>
                                     </div>
                                     <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
