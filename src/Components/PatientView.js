@@ -347,7 +347,7 @@ function PatientView() {
                 app_time: appointmentTime
             }
 
-          
+
             instance.post('/add_patient', obj).then((response) => {
                 setMainErr('')
                 if (response) {
@@ -358,7 +358,27 @@ function PatientView() {
                 console.log('error', err)
             })
         } else {
+            // if (AdharNo == '') {
+                
+            // } else if (patientName == "") {
+            //     setPatientNameErr('This field is required')
+            // } else if (patientLastName == "") {
+                
+            // } else if (patientDOB == "") {
+                
+            // } else if (patientBloodGroup == "") {
+
+            // } else if (address == "") {
+                
+            // } else if (district == "") {
+                
+            // } else if (state == "") {
+                
+            // } else if (Phone == "") {
+                
+            // }
             setMainErr('Check all the fields that you entered!')
+            console.log('else case')
         }
 
     }
@@ -757,7 +777,7 @@ function PatientView() {
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
-                        com            variant="standard"
+                                    com variant="standard"
                                     id='patiantDOB'
                                     onChange={(e) => {
                                         setPatientDOB(e.target.value)

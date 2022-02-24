@@ -155,8 +155,8 @@ function SignIn() {
     }
     return (
         <>
-            <div className='centered loginWrapper d-flex justify-content-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-                <div className="login_container" style={{ marginTop: "10em", maxWidth: '30%' }}>
+            <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+                <div className="login_container" style={{ maxWidth: '30%' }}>
                     <div className="card mt-5">
                         <div className="d-flex loginBoxs">
                             <div className="col-md-12">
