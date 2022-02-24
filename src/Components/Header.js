@@ -27,13 +27,14 @@ function Header() {
     console.log('pathname:::', pathname)
     return (
         <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)', width: '100%' }}>
-            <Navbar  expand="lg">
+            <Navbar expand="lg">
                 <Navbar.Brand ><img onClick={() => { navigateHandler('dashboard') }} style={{ cursor: 'pointer' }} src={MainLogo} alt="" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
                         {pathname == '/project/emr/adminDashboard' ?
-                            null
+                            // null
+                            <Nav.Link className="navMenu1">Hospitals</Nav.Link>
                             :
                             <>
                                 <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>

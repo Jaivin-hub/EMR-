@@ -93,8 +93,9 @@ function PatientsLIsting() {
                                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell >aadhar_card_no</TableCell>
-                                                <TableCell >Patient Name</TableCell>
+                                                <TableCell >Aadhar Card No</TableCell>
+                                                <TableCell >Patient First Name</TableCell>
+                                                <TableCell >Last Name</TableCell>
                                                 <TableCell >Patient Bloodgroup</TableCell>
                                                 <TableCell >Patient City</TableCell>
                                                 <TableCell >Patient State</TableCell>
@@ -121,6 +122,7 @@ function PatientsLIsting() {
                                                         {value.aadhar_card_no}
                                                     </TableCell>
                                                     <TableCell>{value.p_firstname}</TableCell>
+                                                    <TableCell>{value.p_lastname}</TableCell>
                                                     <TableCell >{value.p_bloodgroup}</TableCell>
                                                     <TableCell >{value.p_city}</TableCell>
                                                     <TableCell >{value.p_state}</TableCell>

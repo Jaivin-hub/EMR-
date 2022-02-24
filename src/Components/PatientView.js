@@ -757,7 +757,7 @@ function PatientView() {
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
-                                    variant="standard"
+                        com            variant="standard"
                                     id='patiantDOB'
                                     onChange={(e) => {
                                         setPatientDOB(e.target.value)

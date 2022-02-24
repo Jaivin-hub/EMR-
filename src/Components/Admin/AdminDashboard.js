@@ -541,7 +541,7 @@ function TaskDashboard() {
                         <>
                             <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                                 <div className="row pt-4" >
-                                    <div className="col-md-1" style={{ marginLeft: '5%' }} >
+                                    <div className="col-md-2 d-flex justify-content-center">
                                         Add Hospitals
                                     </div>
                                 </div>

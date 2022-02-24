@@ -176,8 +176,10 @@ function TaskDashboard() {
                                     <div className="row">
                                         <div className="col-md-7 d-flex">
                                             {pendingList?.length >= 1 ?
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"pendingAppointments" + " - " + pendingCount} />
-                                                : null}
+                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + pendingCount} />
+                                                :
+                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
+                                            }
                                             {/* <input type="text" value={pendingAppointments} /> */}
                                         </div>
                                         <div className="col-md-5 mt-1">
