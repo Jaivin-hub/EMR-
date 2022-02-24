@@ -9,6 +9,8 @@ import BasicTable from './PatientList'
 import Modal from './Modal'
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import SearchPage from './SearchPage';
+import moment from 'moment';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -43,11 +45,24 @@ function PatientView() {
     const [appointmentTime, setAppointmentTime] = useState('')
 
     const dateChangeHandler = (e) => {
-        setAppoinmentDate(e.target.value)
+        const date = e.target.value
+        const dateData = moment(date).format('DD-MM-YYYY');
+        setAppoinmentDate(dateData)
     }
 
     const timeChangeHandler = (e) => {
-        setAppointmentTime(e.target.value)
+        let time = e.target.value
+        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+        if (time.length > 1) { // If time format correct
+            time = time.slice(1);  // Remove full string match value
+            time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+            time[0] = +time[0] % 12 || 12; // Adjust hours
+        }
+        const newData = time.join(''); // return adjusted time or original string
+
+
+        setAppointmentTime(newData)
     }
 
 
@@ -59,7 +74,6 @@ function PatientView() {
 
     const currentYear = getYear()
 
-    console.log('currentYear', currentYear)
 
 
 
@@ -67,22 +81,16 @@ function PatientView() {
 
     const HospitalId = localStorage.getItem('HospitalId')
 
-    console.log('HospitalId', HospitalId)
 
     const handleErrWebCam = (err) => {
-        console.log('err function')
         console.log('err', err)
     }
 
     const handleScanWebCam = (result) => {
-        console.log('success')
-        console.log('result', result)
         if (result) {
             var xml = new XMLParser().parseFromString(result);
             const adharData = xml.attributes
-            console.log('adhar data---', adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
-            console.log('yob--------------------------------', yob)
             setAdharNo(uid)
             setPatientName(name)
             setPatientDOB(yob)
@@ -153,7 +161,6 @@ function PatientView() {
 
     // // #################### Validating Name! ###########################
 
-    console.log('patientData', patientData)
 
     const handleErrFile = (err) => {
         console.log(err)
@@ -165,7 +172,6 @@ function PatientView() {
         if (result) {
             var xml = new XMLParser().parseFromString(result);
             const adharData = xml.attributes
-            console.log(adharData)
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
             const patientAge = currentYear - yob
             const [first, middle, last] = name.split(' ');
@@ -197,9 +203,7 @@ function PatientView() {
         const obj = {
             _hos_id: HospitalId
         }
-        console.log('mounting')
         instance.post('/list_patients', obj).then((response) => {
-            console.log('data fetching fine', response)
             const patientList = response.data.patientList
             setPatientList(patientList)
 
@@ -207,9 +211,8 @@ function PatientView() {
             console.log('error', err)
         })
 
-        instance.post('/list_doctors').then((res) => {
-            console.log('response---doctor list ---', res)
-            setDoctorList(res.data.doctorList)
+        instance.post('/list_doctors', obj).then((res) => {
+            setDoctorList(res.data.doctors)
         })
     }, [reload])
 
@@ -316,7 +319,6 @@ function PatientView() {
             app_time: appointmentTime
         }
         instance.post('/patient_appointment', obj).then((response) => {
-            console.log('appoinment response---', response);
             if (response.data.msg == 'Patient Appointment created successfully') {
                 alert(response.data.msg)
             }
@@ -329,7 +331,8 @@ function PatientView() {
         if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
-                p_name: patientName,
+                p_firstname: patientName,
+                p_lastname: patientLastName,
                 p_dob: patientDOB,
                 p_bloodgroup: patientBloodGroup,
                 p_address_1: address,
@@ -338,14 +341,17 @@ function PatientView() {
                 p_state: state,
                 p_pincode: '691541',
                 p_phoneno: Phone,
-                _hos_id: HospitalId
+                _hos_id: HospitalId,
+                _doc_id: appointmentDoctor,
+                app_date: appoinmentDate,
+                app_time: appointmentTime
             }
 
+          
             instance.post('/add_patient', obj).then((response) => {
                 setMainErr('')
-                console.log('response from backend', response)
                 if (response) {
-                    appointmentHandler()
+                    // appointmentHandler()
                     setReload(true)
                 }
             }).catch((err) => {
@@ -353,7 +359,6 @@ function PatientView() {
             })
         } else {
             setMainErr('Check all the fields that you entered!')
-            console.log('all fields are required')
         }
 
     }
@@ -848,7 +853,7 @@ function PatientView() {
                                 <FormControl className={classes.formControl}>
                                     <InputLabel>Patient Blood Group</InputLabel>
                                     <Select onChange={bloodGroupHandler}>
-                                        {bloodGroups.map((item, index) => {
+                                        {bloodGroups?.map((item, index) => {
                                             return (
                                                 <MenuItem value={item} key={index}>{item}</MenuItem>
                                             )
@@ -861,7 +866,7 @@ function PatientView() {
                                 <FormControl className={classes.formControl}>
                                     <InputLabel>Select Doctor</InputLabel>
                                     <Select onChange={selectDoctorHandler}>
-                                        {doctorList.map((item, index) => {
+                                        {doctorList?.map((item, index) => {
                                             return (
                                                 <MenuItem id={item._id} name={item._id} value={item._id} key={index}>{item.doc_name}</MenuItem>
                                             )
@@ -869,11 +874,11 @@ function PatientView() {
                                     </Select>
                                 </FormControl>
                             </div>
-                            <div className="col-md-3 mt-3" style={{ paddingTop: "1em" }}>
+                            <div className="col-md-3 mt-1" >
                                 <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
                                 {/* <p style={{ color: "red" }}>{cityErr}</p> */}
                             </div>
-                            <div className="col-md-3 mt-3" style={{ paddingTop: "1em" }}>
+                            <div className="col-md-3 mt-1">
                                 <input type="time" onChange={(e) => timeChangeHandler(e)} />
                                 {/* <p style={{ color: "red" }}>{stateErr}</p> */}
                             </div>
@@ -909,7 +914,7 @@ function PatientView() {
 
                 </div>
             </div>
-            {patientList.length >= 1 ?
+            {patientList?.length >= 1 ?
 
                 <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                     {/* <label htmlFor="" style={{marginLeft:'4%'}}></label> */}

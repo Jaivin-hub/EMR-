@@ -39,7 +39,7 @@ function TakeAppoiment() {
         console.log('mounting')
         instance.post('/list_doctors', obj).then((response) => {
             console.log('list response', response)
-            const doctorData = response.data.doctorList
+            const doctorData = response.data.doctors
             setDoctorList(doctorData)
         }).catch((err) => {
             console.log('error', err)
@@ -54,30 +54,7 @@ function TakeAppoiment() {
 
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
-    const appointmentsHandler = (id) => {
-        console.log('id', id)
-        const obj = {
-            _hos_id: HospitalId,
-            _doc_id: id,
-            _pat_id: state.patientId,
-            app_date: appoinmentDate,
-            app_time: appointmentTime
-        }
-        instance.post('/patient_appointment', obj).then((response) => {
-            console.log('appoinment response---', response);
-            if (response.data.msg == 'Patient Appointment created successfully') {
-                alert(response.data.msg)
-            }
-        })
-    }
-
-    const dateChangeHandler = (e) => {
-        setAppoinmentDate(e.target.value)
-    }
-
-    const timeChangeHandler = (e) => {
-        setAppointmentTime(e.target.value)
-    }
+  
 
 
     return (
@@ -117,7 +94,7 @@ function TakeAppoiment() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {doctorList.map((value, index) => (
+                                            {doctorList?.map((value, index) => (
                                                 <TableRow
                                                     key={index}
                                                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

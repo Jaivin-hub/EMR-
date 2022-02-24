@@ -18,6 +18,7 @@ import Paper from '@mui/material/Paper';
 import uploadImg from '../../assets/imgs/image 7.png'
 import instance from '../../config/api'
 import { useNavigate } from 'react-router-dom';
+import HospitalListingTable from '../hospitalListingTable'
 
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 
@@ -36,6 +37,8 @@ function TaskDashboard() {
     const [showPatientView, setShowPatientView] = useState(false)
     // const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
+
+    const [hospitalList, setHospitalList] = useState([])
 
 
 
@@ -73,7 +76,6 @@ function TaskDashboard() {
 
     const fileUploader = async () => {
         const params = new FormData();
-        console.log('pickedFile', pickedFile)
         params.append('files', pickedFile);
         console.log(params.file)
         // params.append('id', task._id);
@@ -105,7 +107,14 @@ function TaskDashboard() {
         }
     }, [pickedFile]);
 
-    console.log('pickedFile', pickedFile)
+
+    useEffect(() => {
+        instance.post('/list_hospital').then((res) => {
+            setHospitalList(res.data.hospital)
+        }).catch((err) => {
+            console.log('error:', err)
+        })
+    }, [])
 
     // #################### Validating Name! ###########################
 
@@ -155,7 +164,6 @@ function TaskDashboard() {
 
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
-    console.log(email)
 
     const emailInputBlurHandler = (email, setError) => {
         if (email === '') {
@@ -442,14 +450,11 @@ function TaskDashboard() {
     const [state, setState] = useState('')
 
     const dropDownHandler = (e) => {
-        console.log('function called')
-        console.log('inside function', e.target.value)
         setState(e.target.value)
     }
 
     const addHospitalSubmitHandler = () => {
         if (!firstName == "" && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "" && !address2 == "") {
-            console.log('everything working fine')
             setMainErr('')
             const obj = {
                 name: firstName,
@@ -467,7 +472,6 @@ function TaskDashboard() {
             }
 
             instance.post("/add_hospital", obj).then((response) => {
-                console.log('response_add_hospital---', response);
                 if (response) {
                     alert(response.data.msg)
                 }
@@ -480,7 +484,6 @@ function TaskDashboard() {
                 console.log('error', err)
             })
         } else {
-            console.log('something missing')
             setMainErr('Check all the fields that you entered!')
         }
 
@@ -824,9 +827,24 @@ function TaskDashboard() {
                             </div>
                         </>
                         : null}
+                    {hospitalList?.length >= 1 ?
 
+                        <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                            <div className="row pt-4 " >
+
+                            </div>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <HospitalListingTable List={hospitalList} />
+                                </div>
+
+                            </div>
+                        </div>
+                        : null}
                 </div>
+
             </div>
+
         </div>
     )
 }

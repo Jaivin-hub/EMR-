@@ -13,6 +13,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import instance from '../config/api'
+import moment from 'moment';
+import AppoitmentsListing from './AppoitmentsListing'
+
 
 
 
@@ -23,20 +27,78 @@ function TaskDashboard() {
     const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
     const [showHospitalView, setShowHospitalView] = useState(false)
+    const hospitalId = localStorage.getItem('HospitalId')
+
+
+
+    const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
+    const [appointments, setAppointments] = useState([])
+
 
     const options = [
         'Appointments', 'Add Patient', 'Add Doctor'
     ];
     const defaultOption = options[0];
 
-    useEffect(() => {
-        console.log('first mounting')
-        const Data = localStorage.getItem('HospitalName')
-        setHospitalName(Data)
-    }, [])
+    // const getCurrentDate = () => {
+    //     return new Date().getDate();
+    // }
+
+    // const currentDate = getCurrentDate()
+
+    // const getCurrentMonth = () => {
+    //     return new Date().getMonth();
+    // }
+
+    // const currentMonth = getCurrentMonth()
+    // const exactMonth = currentMonth + 1
+
+    // const getCurrentYear = () => {
+    //     return new Date().getFullYear();
+    // }
+
+
+    // const currentYear = getCurrentYear()
+
+    // const todaysDate = currentDate + "-" + exactMonth + "-" + currentYear
+
+    // const current = new Date();
+    // const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+
+
+
+
+    // console.log('Current date------------', date_format)
+
+    // useEffect(() => {
+    //     console.log('first mounting')
+    //     const Data = localStorage.getItem('HospitalName')
+    //     setHospitalName(Data)
+    //     var today = new Date();
+    //     var dd = today.getDate();
+    //     if (dd < 10) {
+    //         dd = '0' + dd;
+    //     }
+    //     var mm = today.getMonth() + 1;
+    //     if (mm < 10) {
+    //         mm = '0' + mm;
+    //     }
+    //     var year = today.getFullYear();
+    //     const date_format = dd + "-" + mm + "-" + year
+    //     console.log('date_format', date_format)
+    //     setAppointmentCurrentDate(date_format)
+    //     fetchAppointment()
+    // }, [])
+
+
+    // useEffect(() => {
+    //     setShowDoctorView(false)
+    //     setShowPatientView(false)
+    //     setShowAppointmentView(true)
+    //     setShowHospitalView(false)
+    // }, [appointmentCurrentDate])
 
     const dropDownHandler = (e) => {
-        console.log('dropDownHandler', e.value)
         if (e.value == 'Add Patient') {
             setShowPatientView(true)
             setShowDoctorView(false)
@@ -63,7 +125,34 @@ function TaskDashboard() {
         }
     }
 
-    console.log('hospitalName', hospitalName)
+    // console.log('appointmentCurrentDate', appointmentCurrentDate)
+
+    // const fetchAppointment = () => {
+    //     const obj = {
+    //         _hos_id: hospitalId,
+    //         app_date: appointmentCurrentDate
+
+    //     }
+    //     instance.post('/list_appointment', obj).then((res) => {
+    //         setAppointments(res.data.appointment)
+    //     })
+    const pendingAppointments = appointments?.length
+    // }
+    console.log('length---', pendingAppointments)
+    const [pendingList, setPendingList] = useState()
+
+    console.log('pendingList**********************', pendingList?.length)
+    const pendingCount = pendingList?.length
+
+    // const appointmentsDateHandler = (e) => {
+    //     console.log('clicked')
+    //     console.log(e.target.value)
+    //     const date = e.target.value
+    //     const dateData = moment(date).format('DD-MM-YYYY');
+    //     setAppointmentCurrentDate(dateData)
+    //     fetchAppointment()
+    // }
+
     return (
         <div className="div" >
             <Header />
@@ -85,8 +174,11 @@ function TaskDashboard() {
                                 </div>
                                 <div className="col-md-8">
                                     <div className="row">
-                                        <div className="col-md-7">
-                                            <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value="Pending Appointments" />
+                                        <div className="col-md-7 d-flex">
+                                            {pendingList?.length >= 1 ?
+                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"pendingAppointments" + " - " + pendingCount} />
+                                                : null}
+                                            {/* <input type="text" value={pendingAppointments} /> */}
                                         </div>
                                         <div className="col-md-5 mt-1">
                                             <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" />
@@ -108,59 +200,8 @@ function TaskDashboard() {
                         : null}
 
                     {showAppointmentView ?
-
-                        <>
-                            <h6 className="pt-5" >Appointment List</h6>
-                            <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                                <div className="row pt-3" >
-
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <TableContainer component={Paper}>
-                                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        {/* <TableCell>Patient ID</TableCell> */}
-                                                        <TableCell >Patient name</TableCell>
-                                                        <TableCell >Age</TableCell>
-                                                        <TableCell >Gender</TableCell>
-                                                        <TableCell >Time</TableCell>
-                                                        <TableCell >Phone Number</TableCell>
-                                                        <TableCell >Doctor Name</TableCell>
-                                                        <TableCell >Actions</TableCell>
-
-
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {/* {List.map((value, index) => (
-                                                <TableRow
-                                                    key={index}
-                                                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                >
-                                                    <TableCell component="th" scope="row">
-                                                        {value.doc_name}
-                                                    </TableCell>
-                                                    <TableCell >{value.doc_qualification}</TableCell>
-                                                    <TableCell >{value.doc_address}</TableCell>
-                                                    <TableCell >{value.doc_spec}</TableCell>
-                                                    <TableCell >{value.doc_contact}</TableCell>
-                                                    <TableCell >{value.doc_email}</TableCell>
-
-                                                </TableRow>
-                                            ))} */}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </>
+                        <AppoitmentsListing setPendingList={setPendingList} />
                         : null}
-
                 </div>
             </div>
         </div>

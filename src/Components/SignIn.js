@@ -97,6 +97,7 @@ function SignIn() {
     // // console.log(loginData)
 
     const submitHandler = () => {
+        console.log('clicked')
         const obj = {
             email_id: email,
             password: password
@@ -155,12 +156,12 @@ function SignIn() {
     return (
         <>
             <div className='centered loginWrapper d-flex justify-content-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-                <div className="login_container" style={{ marginTop: "10em", width: '40%' }}>
-                    <div className="card">
+                <div className="login_container" style={{ marginTop: "10em", width: '30%' }}>
+                    <div className="card mt-5">
                         <div className="d-flex loginBoxs">
                             <div className="col-md-12">
                                 <div className="row d-flex justify-content-center">
-                                    <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login Here</strong></h4>
+                                    <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login</strong></h4>
                                 </div>
                                 <div className="row pt-3 d-flex justify-content-center">
                                     {/* --- */}
@@ -179,14 +180,14 @@ function SignIn() {
                                             onBlur={(e) => {
                                                 emailInputBlurHandler(e.target.value, setEmailError)
                                             }}
-                                            placeholder=" email id"
+                                            placeholder=" Email id"
                                             style={{ width: '80%', height: "3em", borderRadius: '5px' }}
                                         />
                                     </div>
                                     <div className="col-md-12">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
                                     </div>
-                                    <div className="col-md-12 mt-5 d-flex justify-content-center">
+                                    <div className="col-md-12 mt-3 d-flex justify-content-center">
                                         <input
                                             className="form-control"
                                             id='password'
@@ -198,13 +199,13 @@ function SignIn() {
                                             onBlur={(e) => {
                                                 passwordInputBlurHandler(e.target.value, setPasswordErr)
                                             }}
-                                            placeholder="  password"
+                                            placeholder="  Password"
                                             style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
                                     </div>
                                     <div className="col-md-12">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
                                     </div>
-                                    <div className="col-md-12 pt-3">
+                                    <div className="col-md-12">
                                         <a href="" className="" style={{ marginLeft: '10%' }}>Forget password?</a>
                                     </div>
                                     <div className="col-md-12 mt-5 d-flex justify-content-center">

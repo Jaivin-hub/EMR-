@@ -70,7 +70,6 @@ function DoctorView() {
     }
 
     const handleTimeSchedule = (e, index) => {
-        console.log(e.target.id)
         console.log(index)
         const newData = { ...inputDateFields }
         newData[index][e.target.id] = e.target.value
@@ -82,10 +81,9 @@ function DoctorView() {
         const obj = {
             _hos_id: HospitalId
         }
-        console.log('mounting')
+        // instance.post()
         instance.post('/list_doctors', obj).then((response) => {
-            console.log('list response', response.data.doctorList)
-            const doctorData = response.data.doctorList
+            const doctorData = response.data.doctors
             setDoctorList(doctorData)
         }).catch((err) => {
             console.log('error', err)
@@ -93,7 +91,6 @@ function DoctorView() {
     }, [reload])
 
     useEffect(() => {
-        console.log('first mounting')
         const Data = localStorage.getItem('HospitalName')
         setHospitalName(Data)
     }, [])
@@ -130,7 +127,7 @@ function DoctorView() {
         if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        }  else if (doctorName.slice(-1) === ' ') {
+        } else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
             return false
         } else {
@@ -159,7 +156,7 @@ function DoctorView() {
         } else if (doctorName === '') {
             setDoctorNameErr('This field cannot be empty!')
             return false
-        }else if (doctorName.slice(-1) === ' ') {
+        } else if (doctorName.slice(-1) === ' ') {
             setDoctorNameErr('should not end with space.')
             return false
         } else {
@@ -291,7 +288,7 @@ function DoctorView() {
         if (password === '') {
             setPasswordErr('This field cannot be empty!')
             return false
-        }  else if (password.length > 20) {
+        } else if (password.length > 20) {
             setPasswordErr('password should not exceed 20 characters')
             return false
         } else {
@@ -340,7 +337,6 @@ function DoctorView() {
                 ]
             }
             instance.post('/add_doctor', obj).then((response) => {
-                console.log('response from backend doctor', response)
                 if (response) {
                     setMainErr('')
                     setReload(true)
@@ -421,7 +417,7 @@ function DoctorView() {
                                 <FormControl className={classes.formControl}>
                                     <InputLabel>Specialization</InputLabel>
                                     <Select onChange={SpecializationHandler}>
-                                        {Specialization.map((item, index) => {
+                                        {Specialization?.map((item, index) => {
                                             return (
                                                 <MenuItem value={item} key={index}>{item}</MenuItem>
                                             )
@@ -557,7 +553,7 @@ function DoctorView() {
 
                 </div>
             </div>
-            {doctorList.length >= 1 ?
+            {doctorList?.length >= 1 ?
                 <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                     <div className="row pt-4" >
                         {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >

@@ -17,9 +17,10 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://13.234.177.61/api3',
-//   baseURL: 'http://localhost:5000/users'
+  baseURL: 'http://13.234.177.61/api3',
+  //   baseURL: 'http://localhost:5000/users'
 
-  });
 
- export default instance;
+});
+
+export default instance;

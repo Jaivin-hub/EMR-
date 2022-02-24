@@ -57,30 +57,6 @@ function PatientsLIsting() {
 
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
-    const appointmentsHandler = (id) => {
-        console.log('id', id)
-        const obj = {
-            _hos_id: HospitalId,
-            _doc_id: id,
-            _pat_id: state.patientId,
-            app_date: appoinmentDate,
-            app_time: appointmentTime
-        }
-        instance.post('/patient_appointment', obj).then((response) => {
-            console.log('appoinment response---', response);
-            if (response.data.msg == 'Patient Appointment created successfully') {
-                alert(response.data.msg)
-            }
-        })
-    }
-
-    const dateChangeHandler = (e) => {
-        setAppoinmentDate(e.target.value)
-    }
-
-    const timeChangeHandler = (e) => {
-        setAppointmentTime(e.target.value)
-    }
     return (
         <div className="div">
             <Header />
@@ -127,10 +103,10 @@ function PatientsLIsting() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {patientList.filter((val) => {
+                                            {patientList?.filter((val) => {
                                                 if (searchTerm == '') {
                                                     return val
-                                                } else if (val.p_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                } else if (val.p_firstname.toLowerCase().includes(searchTerm.toLowerCase())) {
                                                     return val
                                                 } else if (val.p_phoneno.includes(searchTerm)) {
                                                     return val
@@ -144,7 +120,7 @@ function PatientsLIsting() {
                                                     <TableCell component="th" scope="row">
                                                         {value.aadhar_card_no}
                                                     </TableCell>
-                                                    <TableCell>{value.p_name}</TableCell>
+                                                    <TableCell>{value.p_firstname}</TableCell>
                                                     <TableCell >{value.p_bloodgroup}</TableCell>
                                                     <TableCell >{value.p_city}</TableCell>
                                                     <TableCell >{value.p_state}</TableCell>

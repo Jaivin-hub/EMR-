@@ -56,7 +56,8 @@ export default function BasicTable({ List, searchTerm }) {
                     <TableHead>
                         <TableRow>
                             {/* <TableCell>Patient ID</TableCell> */}
-                            <TableCell >Patient name</TableCell>
+                            <TableCell >Patient Name</TableCell>
+                            <TableCell >Last Name</TableCell>
                             <TableCell >Adhar No</TableCell>
                             <TableCell >Patient DOB</TableCell>
                             <TableCell >City</TableCell>
@@ -70,7 +71,7 @@ export default function BasicTable({ List, searchTerm }) {
                         {List.filter((val) => {
                             if (searchTerm == '') {
                                 return val
-                            } else if (val.p_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            } else if (val.p_firstname.toLowerCase().includes(searchTerm.toLowerCase())) {
                                 return val
                             } else if (val.p_phoneno.includes(searchTerm)) {
                                 return val
@@ -83,8 +84,9 @@ export default function BasicTable({ List, searchTerm }) {
                             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {patient.p_name}
+                                    {patient.p_firstname}
                                 </TableCell>
+                                <TableCell >{patient.p_lastname}</TableCell>
                                 <TableCell >{patient.aadhar_card_no}</TableCell>
                                 <TableCell >{patient.p_dob}</TableCell>
                                 <TableCell >{patient.p_city}</TableCell>
