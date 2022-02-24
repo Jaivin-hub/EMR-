@@ -34,6 +34,7 @@ function DoctorView() {
     const [hospitalName, setHospitalName] = useState('')
     const [availableDay, setAvailableDay] = useState('')
     const [mainErr, setMainErr] = useState('')
+    const [specializationErr, setsPecializationErr] = useState('')
     const [inputDateFields, setInputDateFields] = useState([
         { doc_avail_day: 'Monday', doc_from_time: '10:00AM', doc_to_time: '02:00PM' },
     ])
@@ -312,6 +313,7 @@ function DoctorView() {
     const [specialization, setSpecialization] = useState('')
     const SpecializationHandler = (e) => {
         setSpecialization(e.target.value)
+        setsPecializationErr('')
     }
 
     const submitHandler = () => {
@@ -342,11 +344,26 @@ function DoctorView() {
                     setReload(true)
                 }
             })
-        } else (
-            setMainErr('Check all the fields that you entered!')
-        )
-
-
+        } else {
+            if (doctorName == "") {
+                setDoctorNameErr('This field is required')
+            }
+            if (qualification == "") {
+                setQualificationErr('This field is required')
+            }
+            if (specialization == "") {
+                setsPecializationErr('This field is required')
+            }
+            if (phone == "") {
+                setPhoneErr('This field is required')
+            }
+            if (email == "") {
+                setEmailError('This field is required')
+            }
+            if (password == "") {
+                setPasswordErr('This field is required')
+            }
+        }
     }
 
 
@@ -424,6 +441,7 @@ function DoctorView() {
                                         })}
                                     </Select>
                                 </FormControl>
+                                <p style={{ color: "red" }}>{specializationErr}</p>
                                 {/* <TextField variant="standard" id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" /> */}
                             </div>
                             <div className="col-md-3">

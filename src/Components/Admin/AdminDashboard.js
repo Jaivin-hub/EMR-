@@ -37,6 +37,7 @@ function TaskDashboard() {
     const [showPatientView, setShowPatientView] = useState(false)
     // const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
+    const [reload, setReload] = useState(false)
 
     const [hospitalList, setHospitalList] = useState([])
 
@@ -114,7 +115,7 @@ function TaskDashboard() {
         }).catch((err) => {
             console.log('error:', err)
         })
-    }, [])
+    }, [reload])
 
     // #################### Validating Name! ###########################
 
@@ -448,9 +449,11 @@ function TaskDashboard() {
     // #################### Validating Address1! ###########################
 
     const [state, setState] = useState('')
+    const [stateErr, setStateErr] = useState('')
 
     const dropDownHandler = (e) => {
         setState(e.target.value)
+        setStateErr('')
     }
 
     const addHospitalSubmitHandler = () => {
@@ -474,6 +477,8 @@ function TaskDashboard() {
             instance.post("/add_hospital", obj).then((response) => {
                 if (response) {
                     alert(response.data.msg)
+                    setReload(!reload)
+
                 }
                 // setValidateErr('')
                 // console.log('response of hospital', response)
@@ -484,7 +489,36 @@ function TaskDashboard() {
                 console.log('error', err)
             })
         } else {
-            setMainErr('Check all the fields that you entered!')
+            if (firstName == "") {
+                setFirstNameErr('This field is required')
+            }
+            if (email == "") {
+                setEmailError('This field is required')
+            }
+            if (state == "") {
+                setStateErr('This field is required')
+            }
+            if (postalCode == "") {
+                setPostalErr('This field is required')
+            }
+            if (phone == "") {
+                setPhoneErr('This field is required')
+            }
+            if (secondaryPhone == "") {
+                setSecondaryPhoneErr('This field is required')
+            }
+            if (password == "") {
+                setPasswordErr('This field is required')
+            }
+            if (city == "") {
+                setCityErr('This field is required')
+            }
+            if (address1 == "") {
+                setAddress1Err('This field is required')
+            }
+            if (address2 == "") {
+                setAddress2Err('This field is required')
+            }
         }
 
 
@@ -659,6 +693,7 @@ function TaskDashboard() {
                                                         })}
                                                     </Select>
                                                 </FormControl>
+                                                <p style={{ color: "red" }}>{stateErr}</p>
                                             </div>
                                             <div className="col-md-3">
                                                 <TextField
