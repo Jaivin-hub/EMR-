@@ -10,6 +10,7 @@ import Modal from './Modal'
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import SearchPage from './SearchPage';
 import moment from 'moment';
+import Pagenation from './Pagenation'
 
 
 
@@ -44,6 +45,10 @@ function PatientView() {
     const [appoinmentDate, setAppoinmentDate] = useState('')
     const [appointmentTime, setAppointmentTime] = useState('')
     const [bloodGroupErr, setBloodGroupErr] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerPage, setPostsPerPage] = useState(10)
+    const [openModal, setOpenModal] = useState(false)
+
 
     const dateChangeHandler = (e) => {
         const date = e.target.value
@@ -649,35 +654,36 @@ function PatientView() {
         }
     }
 
-
     // #################### Validating Address! ###########################
+
+    //Get current lists
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = patientList.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page 
+
+    const paginate = pageNumber => setCurrentPage(pageNumber)
+
+    const addNewPatientHandler = () => {
+        console.log('handle clicked')
+        setOpenModal(true)
+    }
+
 
 
     return (
-        // <div className="addPatient row mt-5 bg-primary navbar-light bg-light" style={{ height: '20em' }}>
-        //     <div className=" bg-primary">
-        //         ks
-        //     </div>
-        // </div>
         <div className="viewPage" >
             <h4>{scanResultFile}</h4>
-            <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            {/* <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <div className="row pt-4" >
                     <div className="col-md-2 "  >
                         <label htmlFor="" style={{ paddingLeft: '40%' }}>Add Patient</label>
                         <div className="row ">
-                            {/* <div className="col-md-6  d-flex justify-content-end">
-                                <button variant="contained" onClick={() => { }}>Scan Qr</button>
-
-                            </div>
-                            <div className="col-md-6">
-                                <button variant="contained" onClick={addPatientHandler}>UploadFile</button>
-
-                            </div> */}
                             <div className="col-md-12 d-flex justify-content-center">
                                 <Button variant="outlined" onClick={connectionHandler}>upload file</Button>
                                 <Button variant="outlined" onClick={connectionScanHandler} style={{ marginLeft: "2%" }}>Scan Qr</Button>
-
                             </div>
                         </div>
                     </div>
@@ -686,19 +692,6 @@ function PatientView() {
                 </div>
                 <div className="row text-center">
                     <div className="col-md-2">
-                        {/* {showScan?
-                        :
-                        } */}
-                        {/* {openScanner ?
-                            <QrReader
-                                delay={300}
-                                style={{ width: '100%' }}
-                                onError={handleErrWebCam}
-                                onScan={handleScanWebCam}
-                            />
-                            :
-                            <img onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', marginTop: '5%' }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
-                        } */}
                         {showUploadFile ?
                             <QrReader
                                 ref={qrRef}
@@ -740,11 +733,9 @@ function PatientView() {
                                         setAdharNo(e.target.value)
                                         adharInputChangeHandler(e.target.value, setAdharErr)
                                     }}
-
                                     onBlur={(e) => {
                                         adharInputBlurHandler(e.target.value, setAdharErr)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     value={AdharNo}
                                     label="Adharcard No"
                                 />
@@ -758,16 +749,13 @@ function PatientView() {
                                         setPatientName(e.target.value)
                                         patientNameInputChangeHandler(e.target.value, setPatientNameErr)
                                     }}
-
                                     onBlur={(e) => {
                                         patientNameInputBlurHandler(e.target.value, setPatientNameErr)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     value={patientName}
                                     label="Patient First Name"
                                 />
                                 <p style={{ color: "red" }}>{patientNameErr}</p>
-
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
@@ -777,16 +765,13 @@ function PatientView() {
                                         setPatientLastName(e.target.value)
                                         patientLastNameInputChangeHandler(e.target.value, setPatientLastNameErr)
                                     }}
-
                                     onBlur={(e) => {
                                         patientLastNameInputBlurHandler(e.target.value, setPatientLastNameErr)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     value={patientLastName}
                                     label="Patient Last Name"
                                 />
                                 <p style={{ color: "red" }}>{patientLastNameErr}</p>
-
                             </div>
                             <div className="col-md-3 mt-3">
                                 <TextField
@@ -796,7 +781,6 @@ function PatientView() {
                                         setPatientDOB(e.target.value)
                                         patientDOBInputChangeHandler(e.target.value, setPatientDOBErr)
                                     }}
-
                                     onBlur={(e) => {
                                         patientDOBBlurChangeHandler(e.target.value, setPatientDOBErr)
                                     }}
@@ -805,10 +789,8 @@ function PatientView() {
                                 />
                                 <p style={{ color: "red" }}>{patientDOBErr}</p>
                             </div>
-
                         </div>
                         <div className="row">
-
                             <div className="col-md-3 mt-3">
                                 <TextField
                                     variant="standard"
@@ -817,7 +799,6 @@ function PatientView() {
                                         setAddress(e.target.value)
                                         addressInputChangeHandler(e.target.value, setAddressErr)
                                     }}
-
                                     onBlur={(e) => {
                                         addressInputBlurHandler(e.target.value, setAddressErr)
                                     }}
@@ -834,7 +815,6 @@ function PatientView() {
                                         setDistrict(e.target.value)
                                         districtInputChangeHandler(e.target.value, setCityErr)
                                     }}
-
                                     onBlur={(e) => {
                                         districtInputBlurHandler(e.target.value, setCityErr)
                                     }}
@@ -851,7 +831,6 @@ function PatientView() {
                                         setState(e.target.value)
                                         stateInputChangeHandler(e.target.value, setStateErr)
                                     }}
-
                                     onBlur={(e) => {
                                         stateInputBlurHandler(e.target.value, setStateErr)
                                     }}
@@ -868,13 +847,9 @@ function PatientView() {
                                         setPhone(e.target.value)
                                         phoneInputChangeHandler(e.target.value, setPatientPhoneErr)
                                     }}
-
                                     onBlur={(e) => {
                                         phoneInputBlurHandler(e.target.value, setPatientPhoneErr)
                                     }}
-
-                                    // value={phone}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     label="Patient Phone Number"
                                 />
                                 <p style={{ color: "red" }}>{patientPhoneErr}</p>
@@ -894,9 +869,7 @@ function PatientView() {
                                     </Select>
                                 </FormControl>
                                 <p style={{ color: "red" }}>{bloodGroupErr}</p>
-
                             </div>
-
                             <div className="col-md-3 mt-3">
                                 <FormControl className={classes.formControl}>
                                     <InputLabel>Select Doctor</InputLabel>
@@ -911,16 +884,11 @@ function PatientView() {
                             </div>
                             <div className="col-md-3 mt-1" >
                                 <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
-                                {/* <p style={{ color: "red" }}>{cityErr}</p> */}
                             </div>
                             <div className="col-md-3 mt-1">
                                 <input type="time" onChange={(e) => timeChangeHandler(e)} />
-                                {/* <p style={{ color: "red" }}>{stateErr}</p> */}
                             </div>
                             <div className="col-md-3 mt-3">
-
-                                {/* <p style={{ color: "red" }}>{patientPhoneErr}</p> */}
-
                             </div>
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">
@@ -929,15 +897,11 @@ function PatientView() {
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
-
-                            {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
                         </div>
                     </div>
-
                 </div>
-
-            </div>
-            <div className="row mt-5">
+            </div> */}
+            <div className="row mt-2">
                 <div className="col-md-6">
                     <div className="row ">
 
@@ -945,8 +909,11 @@ function PatientView() {
 
                     </div>
                 </div>
-                <div className="col-md-6">
 
+                <div className="col-md-6">
+                    <div className="row ">
+                        <Button onClick={addPatientHandler}>Add Patient</Button>
+                    </div>
                 </div>
             </div>
             {patientList?.length >= 1 ?
@@ -978,36 +945,13 @@ function PatientView() {
                     </div>
                     {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
-                    <BasicTable searchTerm={searchTerm} List={patientList} />
-
-                    {/* <Table size="sm">
-                        <>
-                            <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Name</th>
-                                <th>Adhar No</th>
-                                <th>Patient DOB</th>
-                                <th>Patient Phone No</th>
-                                <th>Patient Blood Group</th>
-                                <th>Address</th>
-                                <th>Action</th>
-                            </tr>
-                        </>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-
-                        </tbody>
-                    </Table> */}
-                    {/* </div> */}
+                    <BasicTable searchTerm={searchTerm} List={currentPosts} />
+                    <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
+                </div>
+                : null}
+            {openModal ?
+                <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                    {/* <AddHospitalModal setOpenModal={setOpenModal} setReload={setReload} reload={reload} /> */}
                 </div>
                 : null}
         </div>

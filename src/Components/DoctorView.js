@@ -13,6 +13,7 @@ import Header from './Header'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import Pagenation from './Pagenation'
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -35,6 +36,8 @@ function DoctorView() {
     const [availableDay, setAvailableDay] = useState('')
     const [mainErr, setMainErr] = useState('')
     const [specializationErr, setsPecializationErr] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerPage, setPostsPerPage] = useState(10)
     const [inputDateFields, setInputDateFields] = useState([
         { doc_avail_day: 'Monday', doc_from_time: '10:00AM', doc_to_time: '02:00PM' },
     ])
@@ -366,6 +369,15 @@ function DoctorView() {
         }
     }
 
+    //Get current lists
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = doctorList.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page 
+
+    const paginate = pageNumber => setCurrentPage(pageNumber)
 
 
 
@@ -373,7 +385,7 @@ function DoctorView() {
 
         <div className="viewPage" >
 
-            <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            {/* <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <div className="row pt-4" >
                     <div className="col-md-1" style={{ marginLeft: '5%' }} >
                         Add Doctor
@@ -427,9 +439,6 @@ function DoctorView() {
                                 />
                                 <p className="" style={{ color: "red" }}>{qualificationErr}</p>
                             </div>
-                            {/* <div className="col-md-3">
-                                <TextField variant="standard" id="doc_address" onChange={(e) => { inputHandler(e) }} label="Address" />
-                            </div> */}
                             <div className="col-md-3">
                                 <FormControl className={classes.formControl}>
                                     <InputLabel>Specialization</InputLabel>
@@ -442,7 +451,6 @@ function DoctorView() {
                                     </Select>
                                 </FormControl>
                                 <p style={{ color: "red" }}>{specializationErr}</p>
-                                {/* <TextField variant="standard" id='doc_spec' onChange={(e) => { inputHandler(e) }} label="Specialization" /> */}
                             </div>
                             <div className="col-md-3">
                                 <TextField
@@ -456,7 +464,6 @@ function DoctorView() {
                                     onBlur={(e) => {
                                         phoneInputBlurHandler(e.target.value, setPhoneErr)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     label="Contact No"
                                 />
                                 <p style={{ color: "red" }}>{phoneErr}</p>
@@ -476,7 +483,6 @@ function DoctorView() {
                                     onBlur={(e) => {
                                         emailInputBlurHandler(e.target.value, setEmailError)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     label="Email ID"
                                 />
                                 <p style={{ color: "red" }}>{emailError}</p>
@@ -493,13 +499,12 @@ function DoctorView() {
                                     onBlur={(e) => {
                                         passwordInputBlurHandler(e.target.value, setPasswordErr)
                                     }}
-                                    // onChange={(e) => { inputHandler(e) }}
                                     label="Password"
                                 />
                                 <p style={{ color: "red" }}>{passwordErr}</p>
                             </div>
                         </div>
-                        {/* {inputDateFields.map((inputDateFields, index) => {
+                        {inputDateFields.map((inputDateFields, index) => {
                             return (
                                 <div key={index} className="row">
                                     <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
@@ -557,7 +562,7 @@ function DoctorView() {
                                     </div>
                                 </div>
                             )
-                        })} */}
+                        })}
 
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
@@ -565,12 +570,11 @@ function DoctorView() {
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
-                            {/* <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button> */}
                         </div>
                     </div>
 
                 </div>
-            </div>
+            </div> */}
             {doctorList?.length >= 1 ?
                 <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                     <div className="row pt-4" >
@@ -580,7 +584,8 @@ function DoctorView() {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <BasicTable List={doctorList} />
+                            <BasicTable List={currentPosts} />
+                            <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
                         </div>
 
                     </div>

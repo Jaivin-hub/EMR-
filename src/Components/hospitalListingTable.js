@@ -25,7 +25,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function hospitalListingTable({ List }) {
+export default function hospitalListingTable({ List, searchTerm }) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -36,11 +36,19 @@ export default function hospitalListingTable({ List }) {
                         <TableCell >State</TableCell>
                         <TableCell >City</TableCell>
                         <TableCell >Contact No</TableCell>
-                        <TableCell >Email ID</TableCell>
+                        <TableCell >Phone No</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {List?.map((value, index) => (
+                    {List?.filter((val) => {
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.name?.toLowerCase().includes(searchTerm?.toLowerCase())) {
+                            return val
+                        } else if (val.contact_1.includes(searchTerm)) {
+                            return val
+                        }
+                    }).map((value, index) => (
                         <TableRow
                             key={index}
                         // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

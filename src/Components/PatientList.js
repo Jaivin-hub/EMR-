@@ -29,10 +29,10 @@ const rows = [
 
 export default function BasicTable({ List, searchTerm }) {
     const navigate = useNavigate();
-    // const [patientList, setPatientList] = useState([])
     const HospitalId = localStorage.getItem('HospitalId')
     const [openModal, setOpenModal] = useState(false)
     const [patientId, setPatientId] = useState('')
+   
 
     console.log('List', List)
 
@@ -42,8 +42,6 @@ export default function BasicTable({ List, searchTerm }) {
     const AppointmentsHandler = (id) => {
         setPatientId(id)
         setOpenModal(true);
-        // navigate('/takeAppointment', { state: { patientId: id } });
-
     }
 
     return (
@@ -55,7 +53,6 @@ export default function BasicTable({ List, searchTerm }) {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            {/* <TableCell>Patient ID</TableCell> */}
                             <TableCell >Patient Name</TableCell>
                             <TableCell >Last Name</TableCell>
                             <TableCell >Adhar No</TableCell>
@@ -81,7 +78,6 @@ export default function BasicTable({ List, searchTerm }) {
                         }).map((patient, index) => (
                             <TableRow
                                 key={index}
-                            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
                                     {patient.p_firstname}
