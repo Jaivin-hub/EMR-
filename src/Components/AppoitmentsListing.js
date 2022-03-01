@@ -63,12 +63,9 @@ function AppoitmentsListing({ setPendingList }) {
             const arr = res.data.appointment
             setAppointments(arr)
             setPendingList(arr)
-            appointments.sort(function (a, b) {
-                return a.app_time.localeCompare(b.app_time);
-            });
+           
 
         })
-        // }
     }
 
     const fetchAppointmentWithDate = (dateData) => {
@@ -78,10 +75,6 @@ function AppoitmentsListing({ setPendingList }) {
 
         }
         instance.post('/list_appointment', obj).then((res) => {
-            res.data.appointment.map((item, index) => {
-                item.app_time.moment().locale()
-                console.log('-----------', item)
-            })
             setAppointments(res.data.appointment)
             setPendingList(res.data.appointment)
         })
@@ -136,7 +129,7 @@ function AppoitmentsListing({ setPendingList }) {
 
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12" style={{ position: 'relative' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>

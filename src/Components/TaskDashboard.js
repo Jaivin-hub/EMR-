@@ -17,6 +17,8 @@ import instance from '../config/api'
 import moment from 'moment';
 import AppoitmentsListing from './AppoitmentsListing'
 import SettingsView from './SettingsView'
+import AddPatientModal from './AddPatientModal'
+import AddDoctorModal from './Modals/AddDoctorModal'
 
 
 
@@ -30,6 +32,9 @@ function TaskDashboard() {
     const [showSettingsView, setShowSettingsView] = useState(false)
     const hospitalId = localStorage.getItem('HospitalId')
     const hospitalName = localStorage.getItem('HospitalName')
+    const [openModal, setOpenModal] = useState(false)
+    const [reload, setReload] = useState(false)
+
 
 
 
@@ -104,29 +109,23 @@ function TaskDashboard() {
         if (e.value == 'Add Patient') {
             setShowPatientView(true)
             setShowDoctorView(false)
-            setShowAppointmentView(false)
-            setShowHospitalView(false)
-            setShowSettingsView(false)
+            // setShowAppointmentView(false)
+            // setShowHospitalView(false)
+            // setShowSettingsView(false)
         } else if (e.value == 'Add Doctor') {
             setShowDoctorView(true)
             setShowPatientView(false)
-            setShowAppointmentView(false)
-            setShowHospitalView(false)
-            setShowSettingsView(false)
-            setShowSettingsView(false)
+            // setShowAppointmentView(false)
+            // setShowHospitalView(false)
+            // setShowSettingsView(false)
+            // setShowSettingsView(false)
         } else if (e.value == 'Appointments') {
             setShowDoctorView(false)
             setShowPatientView(false)
             setShowAppointmentView(true)
             setShowHospitalView(false)
             setShowSettingsView(false)
-        } else if (e.value == 'Add Hospital') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowAppointmentView(false)
-            setShowHospitalView(true)
-            setShowSettingsView(false)
-        } else if (e.value == 'Settings') {
+        }else if (e.value == 'Settings') {
             setShowSettingsView(true)
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -200,24 +199,32 @@ function TaskDashboard() {
                             </div>
                         </div>
                     </div>
-
+                    {showAppointmentView ?
+                        <div >
+                            <AppoitmentsListing setPendingList={setPendingList} />
+                        </div>
+                        : null}
+                        {showSettingsView ?
+                        <SettingsView />
+                        : null}
                     {showPatientView ?
-                        <PatientView />
+                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                            <AddPatientModal setOpenModal={setShowPatientView} setReload={setReload} reload={reload} />
+                        </div>
                         : null}
                     {showDoctorView ?
-                        <DoctorView />
+                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                            <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
+                        </div>
+                        // <DoctorView />
                         : null}
                     {showHospitalView ?
                         <HospitalView />
                         : null}
 
-                    {showAppointmentView ?
-                        <AppoitmentsListing setPendingList={setPendingList} />
-                        : null}
 
-                        {showSettingsView?
-                        <SettingsView />
-                        : null}
+
+                    
                 </div>
             </div>
         </div>

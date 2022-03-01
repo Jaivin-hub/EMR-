@@ -315,7 +315,8 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
             instance.post('/add_doctor', obj).then((response) => {
                 if (response) {
                     setMainErr('')
-                    setReload(true)
+                    setReload(!reload)
+                    setOpenModal(false)
                 }
             })
         } else {
