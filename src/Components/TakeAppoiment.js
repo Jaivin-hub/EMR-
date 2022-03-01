@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SearchPage from './SearchPage';
+import Pagenation from './Pagenation';
 
 
 function TakeAppoiment() {
@@ -21,6 +22,8 @@ function TakeAppoiment() {
     const [appoinmentDate, setAppoinmentDate] = useState('Monday')
     const [appointmentTime, setAppointmentTime] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerPage, setPostsPerPage] = useState(10)
 
 
     const HospitalId = localStorage.getItem('HospitalId')
@@ -55,7 +58,12 @@ function TakeAppoiment() {
 
     }
 
-    console.log('appoinmentDate', appoinmentDate, appointmentTime)
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = doctorList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber)
 
 
 
@@ -103,7 +111,7 @@ function TakeAppoiment() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {doctorList?.filter((val) => {
+                                            {currentPosts?.filter((val) => {
                                                 if (searchTerm == '') {
                                                     return val
                                                 } else if (val.doc_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -129,9 +137,11 @@ function TakeAppoiment() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                {doctorList?.length >= 10 ?
+                                    <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
+                                    : null}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

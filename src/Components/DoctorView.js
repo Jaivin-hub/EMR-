@@ -599,23 +599,27 @@ function DoctorView() {
                     </div>
                 </div>
             </div>
-            {doctorList?.length >= 1 ?
-                <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                    <div className="row pt-4" >
-                        {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
+            <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                {(doctorList?.length >= 1) ?
+                    <>
+                        <div className="row pt-4" >
+                            {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
         Doctor List
     </div> */}
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <BasicTable List={currentPosts} searchTerm={searchTerm} />
-                            <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
                         </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <BasicTable List={currentPosts} searchTerm={searchTerm} />
+                            </div>
 
-                    </div>
+                        </div>
+                    </>
 
-                </div>
-                : null}
+                    : null}
+                {doctorList?.length >=10 ?
+                    <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
+                    : null}
+            </div>
             {openModal ?
                 <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                     <AddDoctorModal setOpenModal={setOpenModal} setReload={setReload} reload={reload} />

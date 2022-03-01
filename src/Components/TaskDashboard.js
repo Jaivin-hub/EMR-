@@ -23,13 +23,13 @@ import SettingsView from './SettingsView'
 
 function TaskDashboard() {
 
-    const [hospitalName, setHospitalName] = useState('')
     const [showPatientView, setShowPatientView] = useState(false)
     const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
     const [showHospitalView, setShowHospitalView] = useState(false)
     const [showSettingsView, setShowSettingsView] = useState(false)
     const hospitalId = localStorage.getItem('HospitalId')
+    const hospitalName = localStorage.getItem('HospitalName')
 
 
 
@@ -175,7 +175,7 @@ function TaskDashboard() {
                 <div className="mainContainer " style={{ margin: '2%' }}>
                     <div className="row">
                         <div className="col-md-6">
-                            <h5 className=""><strong>{hospitalName} Hospitals</strong></h5>
+                            <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
                         </div>
                         <div className="col-md-6">
                             <div className="row">

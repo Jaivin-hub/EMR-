@@ -70,7 +70,6 @@ function PatientsLIsting() {
     const paginate = pageNumber => setCurrentPage(pageNumber)
 
 
-    console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
     return (
         <div className="div">
@@ -158,7 +157,10 @@ function PatientsLIsting() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                {patientList?.length >= 10 ?
+
                                 <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
+                                :null}
                             </div>
                         </div>
 

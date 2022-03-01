@@ -727,8 +727,10 @@ function PatientView() {
                     {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
                     <BasicTable searchTerm={searchTerm} List={currentPosts} />
-                    <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
                 </div>
+                : null}
+            {patientList.length >= 10 ?
+                <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
                 : null}
             {openModal ?
                 <div className="centered loginWrapper d-flex justify-content-center align-items-center">

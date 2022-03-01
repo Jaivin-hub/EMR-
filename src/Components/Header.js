@@ -43,7 +43,7 @@ function Header() {
                             <Nav.Link className="navMenu1">Hospitals</Nav.Link>
                             :
                             <>
-                                <Nav.Link onClick={() => { navigateHandler('appointments') }} className="navMenu1">Appointments</Nav.Link>
+                                <Nav.Link onClick={() => { navigateHandler('appointments') }} >Appointments</Nav.Link>
                                 <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                                 <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
                                 <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
@@ -51,7 +51,6 @@ function Header() {
 
                             </>
                         }
-
                     </Nav>
                     <Nav className="ml-auto" style={{ marginLeft: "10%" }}>
                         {pathname == '/project/emr/adminDashboard' ?
@@ -59,7 +58,7 @@ function Header() {
                             // <Nav.Link className="navMenu1">Hospitals</Nav.Link>
                             :
                             <>
-                                
+
                                 <Nav.Link className="ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link>
 
                             </>
