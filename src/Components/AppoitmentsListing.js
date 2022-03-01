@@ -20,14 +20,14 @@ import '../assets/css/appointments.css'
 // import TabPanel from '@mui/lab/TabPanel';
 
 
-function AppoitmentsListing({ setPendingList }) {
-    const [appointments, setAppointments] = useState([])
+function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointments}) {
+    // const [appointments, setAppointments] = useState([])
     const hospitalId = localStorage.getItem('HospitalId')
     const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
     const [hospitalName, setHospitalName] = useState('')
 
     useEffect(() => {
-        fetchAppointment()
+        // fetchAppointment()
         const current = new Date();
         const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
         setToday(date)
@@ -36,37 +36,37 @@ function AppoitmentsListing({ setPendingList }) {
     console.log('appointmentCurrentDate', appointmentCurrentDate)
 
 
-    const fetchAppointment = () => {
-        const Data = localStorage.getItem('HospitalName')
-        setHospitalName(Data)
-        var today = new Date();
-        var dd = today.getDate();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        var mm = today.getMonth() + 1;
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        var year = today.getFullYear();
-        const date_format = dd + "-" + mm + "-" + year
-        setAppointmentCurrentDate(date_format)
+    // const fetchAppointment = () => {
+    //     const Data = localStorage.getItem('HospitalName')
+    //     setHospitalName(Data)
+    //     var today = new Date();
+    //     var dd = today.getDate();
+    //     if (dd < 10) {
+    //         dd = '0' + dd;
+    //     }
+    //     var mm = today.getMonth() + 1;
+    //     if (mm < 10) {
+    //         mm = '0' + mm;
+    //     }
+    //     var year = today.getFullYear();
+    //     const date_format = dd + "-" + mm + "-" + year
+    //     setAppointmentCurrentDate(date_format)
 
-        const obj = {
-            _hos_id: hospitalId,
-            app_date: date_format
+    //     const obj = {
+    //         _hos_id: hospitalId,
+    //         app_date: date_format
 
-        }
-        console.log('obj', obj)
+    //     }
+    //     console.log('obj', obj)
 
-        instance.post('/list_appointment', obj).then((res) => {
-            const arr = res.data.appointment
-            setAppointments(arr)
-            setPendingList(arr)
-           
+    //     instance.post('/list_appointment', obj).then((res) => {
+    //         const arr = res.data.appointment
+    //         setAppointments(arr)
+    //         setPendingList(arr)
 
-        })
-    }
+
+    //     })
+    // }
 
     const fetchAppointmentWithDate = (dateData) => {
         const obj = {
@@ -156,7 +156,6 @@ function AppoitmentsListing({ setPendingList }) {
                                             <TableCell >{value.app_time}</TableCell>
                                             <TableCell >{value._doc_id.doc_name}</TableCell>
                                             <TableCell >{value._doc_id.doc_spec}</TableCell>
-
                                         </TableRow>
                                     ))}
                                 </TableBody>

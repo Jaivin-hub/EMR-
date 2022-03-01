@@ -101,7 +101,7 @@ function TakeAppoiment() {
             console.log('error', err)
         })
         fetchAppointment()
-    }, [])
+    }, [reload])
 
     const dropDownHandler = (e) => {
         console.log(e.value)

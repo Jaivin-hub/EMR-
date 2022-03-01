@@ -125,7 +125,7 @@ function TaskDashboard() {
             setShowAppointmentView(true)
             setShowHospitalView(false)
             setShowSettingsView(false)
-        }else if (e.value == 'Settings') {
+        } else if (e.value == 'Settings') {
             setShowSettingsView(true)
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -133,6 +133,41 @@ function TaskDashboard() {
             setShowHospitalView(false)
         }
     }
+
+    const fetchAppointment = () => {
+        const Data = localStorage.getItem('HospitalName')
+        var today = new Date();
+        var dd = today.getDate();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        var mm = today.getMonth() + 1;
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var year = today.getFullYear();
+        const date_format = dd + "-" + mm + "-" + year
+        setAppointmentCurrentDate(date_format)
+
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: date_format
+
+        }
+        console.log('obj', obj)
+
+        instance.post('/list_appointment', obj).then((res) => {
+            const arr = res.data.appointment
+            setAppointments(arr)
+            setPendingList(arr)
+
+
+        })
+    }
+
+    useEffect(() => {
+        fetchAppointment()
+    }, [reload])
 
     // console.log('appointmentCurrentDate', appointmentCurrentDate)
 
@@ -189,7 +224,6 @@ function TaskDashboard() {
                                                 :
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
-                                            {/* <input type="text" value={pendingAppointments} /> */}
                                         </div>
                                         <div className="col-md-5 mt-1">
                                             <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" />
@@ -201,10 +235,10 @@ function TaskDashboard() {
                     </div>
                     {showAppointmentView ?
                         <div >
-                            <AppoitmentsListing setPendingList={setPendingList} />
+                            <AppoitmentsListing setAppointments={setAppointments} appointments={appointments} setPendingList={setPendingList} reload={reload} />
                         </div>
                         : null}
-                        {showSettingsView ?
+                    {showSettingsView ?
                         <SettingsView />
                         : null}
                     {showPatientView ?
@@ -216,7 +250,6 @@ function TaskDashboard() {
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                             <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
                         </div>
-                        // <DoctorView />
                         : null}
                     {showHospitalView ?
                         <HospitalView />
@@ -224,7 +257,7 @@ function TaskDashboard() {
 
 
 
-                    
+
                 </div>
             </div>
         </div>

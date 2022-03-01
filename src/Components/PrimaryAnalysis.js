@@ -40,6 +40,9 @@ function PrimaryAnalysis() {
         }
         instance.post('patient_primary_analysis', obj).then((response) => {
             // console.log('res--ponse--', response);
+            if (response) {
+                alert(response.data.msg)
+            }
         })
     }
 
@@ -65,39 +68,6 @@ function PrimaryAnalysis() {
 
         })
     }
-
-    //     List Patient Primary Analysis
-    // URL: http://13.234.177.61/api3/list_patient_primary_analysis
-
-    // POST Value
-    // {
-    //     "_hos_id":"620a4845db8b9874e8e7466c",
-    //     "_pat_id":"62145ba93fcb7e4074651f25"
-    // }
-
-    // Result Value
-    // {
-    //     "status": 200,
-    //     "patientAnalysis": [
-    //         {
-    //             "_id": "621c80932e5feb973137cb3c",
-    //             "_hos_id": "620a4845db8b9874e8e7466c",
-    //             "_pat_id": "62145ba93fcb7e4074651f25",
-    //             "height": "176",
-    //             "weight": "101",
-    //             "diabetes": true,
-    //             "fasting": "130",
-    //             "after_food": "201",
-    //             "bp": true,
-    //             "lower_value": "70",
-    //             "upper_value": "110",
-    //             "allergic_food": "No food allergi",
-    //             "allergic_medicine": "No medicine allergi",
-    //             "__v": 0
-    //         }
-    //     ]
-    // }
-
     console.log('patientHeight', patientHeight)
 
 
