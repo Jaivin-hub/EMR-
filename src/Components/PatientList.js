@@ -13,6 +13,8 @@ import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal'
 import { IoArrowForwardOutline } from 'react-icons/io5'
+import { AiFillPlusCircle } from 'react-icons/ai'
+import AddAppointmentsModal from './Modals/AddAppointmentsModal'
 
 
 
@@ -28,7 +30,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable({ List, searchTerm }) {
+export default function BasicTable({ List, searchTerm,setAppointmentPatientId ,setAppointmentsModalOpen}) {
     const navigate = useNavigate();
     const HospitalId = localStorage.getItem('HospitalId')
     const [openModal, setOpenModal] = useState(false)
@@ -50,11 +52,19 @@ export default function BasicTable({ List, searchTerm }) {
 
     }
 
+    const appointmentModalHandler = (id) => {
+        console.log('clicked')
+        setPatientId(id)
+        setAppointmentsModalOpen(true)
+        setAppointmentPatientId(id)
+    }
+
     return (
         <>
             {openModal ?
                 <Modal closeModal={setOpenModal} patientId={patientId} />
                 : null}
+                
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -68,7 +78,8 @@ export default function BasicTable({ List, searchTerm }) {
                             <TableCell >Patient Phone No</TableCell>
                             <TableCell >Patient Blood Group</TableCell>
                             <TableCell >Address</TableCell>
-                            <TableCell >Primary analysis</TableCell>
+                            {/* <TableCell >Take Appointments</TableCell> */}
+                            <TableCell >Primary Analysis</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -97,17 +108,26 @@ export default function BasicTable({ List, searchTerm }) {
                                 <TableCell >{patient.p_phoneno}</TableCell>
                                 <TableCell >{patient.p_bloodgroup}</TableCell>
                                 <TableCell >{patient.p_address_1}</TableCell>
-                                <TableCell >
+
+                                {/* <TableCell className="text-center">
+                                    <AiFillPlusCircle
+                                        onClick={() => { appointmentModalHandler(patient._id) }}
+                                        cursor="pointer"
+                                    />
+                                </TableCell> */}
+                                <TableCell className="text-center">
                                     <IoArrowForwardOutline
                                         onClick={() => { primaryAnalysisHandler(patient._id) }}
                                         cursor="pointer"
                                     />
                                 </TableCell>
+
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            
 
         </>
     );

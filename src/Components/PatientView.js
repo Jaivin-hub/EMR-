@@ -12,6 +12,7 @@ import SearchPage from './SearchPage';
 import moment from 'moment';
 import Pagenation from './Pagenation'
 import AddPatientModal from './AddPatientModal';
+import AddAppointmentsModal from './Modals/AddAppointmentsModal';
 
 
 
@@ -49,6 +50,9 @@ function PatientView() {
     const [currentPage, setCurrentPage] = useState(1)
     const [postsPerPage, setPostsPerPage] = useState(10)
     const [openModal, setOpenModal] = useState(false)
+    const [appointmentPatientId, setAppointmentPatientId] = useState('')
+    const [appointmentModalOpen, setAppointmentsModalOpen] = useState(false)
+
 
 
     const dateChangeHandler = (e) => {
@@ -118,56 +122,6 @@ function PatientView() {
             setOpenScanner(false)
         }
     }
-
-    // // #################### Validating Name! ###########################
-
-    // const [patientNameErr, setPatientNameErr] = useState('')
-
-
-    // const patientNameInputBlurHandler = (patientName, setPatientNameErr) => {
-    //     if (patientName === '') {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.slice(-1) === ' ') {
-    //         setPatientNameErr('should not end with space.')
-    //         return false
-    //     } else {
-    //         setPatientNameErr('')
-    //         return true
-    //     }
-    // }
-
-
-    // const patientNameInputChangeHandler = (patientName, setPatientNameErr) => {
-    //     if (patientName.length === 0) {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.charAt(0) === ' ') {
-    //         setPatientNameErr('should not start with space.')
-    //         return false
-    //     } else if (patientName.includes('  ')) {
-    //         setPatientNameErr('should not contain consecutive spaces.')
-    //         return false
-    //     } else if (/\d/.test(patientName)) {
-    //         setPatientNameErr('should not contain numbers.')
-    //         return false
-    //     } else if (!patientName.match(/^[a-zA-Z ]+$/)) {
-    //         setPatientNameErr('Invalid charecter!')
-    //         return false
-    //     } else if (patientName === '') {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.slice(-1) === ' ') {
-    //         setPatientNameErr('should not end with space.')
-    //         return false
-    //     } else {
-    //         setPatientNameErr('')
-    //         return true
-    //     }
-    // }
-
-    // // #################### Validating Name! ###########################
-
 
     const handleErrFile = (err) => {
         console.log(err)
@@ -726,11 +680,14 @@ function PatientView() {
                     </div>
                     {/* <div className="col-md-12 mt-4" style={{ marginLeft: '5%', marginRight: '3%', width: '90%', borderRadius: '5px', borderColor: '1px solid black' }}> */}
 
-                    <BasicTable searchTerm={searchTerm} List={currentPosts} />
+                    <BasicTable setAppointmentsModalOpen={setAppointmentsModalOpen} setAppointmentPatientId={setAppointmentPatientId} searchTerm={searchTerm} List={currentPosts} />
                 </div>
                 : null}
             {patientList.length >= 10 ?
                 <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
+                : null}
+            {appointmentModalOpen ?
+                <AddAppointmentsModal setAppointmentsModalOpen={setAppointmentsModalOpen} patientId={appointmentPatientId} />
                 : null}
             {openModal ?
                 <div className="centered loginWrapper d-flex justify-content-center align-items-center">

@@ -78,6 +78,10 @@ function AppoitmentsListing({ setPendingList }) {
 
         }
         instance.post('/list_appointment', obj).then((res) => {
+            res.data.appointment.map((item, index) => {
+                item.app_time.moment().locale()
+                console.log('-----------', item)
+            })
             setAppointments(res.data.appointment)
             setPendingList(res.data.appointment)
         })
