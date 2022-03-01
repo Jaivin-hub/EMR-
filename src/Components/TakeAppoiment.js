@@ -12,6 +12,7 @@ import { Button } from '@mui/material'
 import { useLocation } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import SearchPage from './SearchPage';
 
 
 function TakeAppoiment() {
@@ -19,6 +20,8 @@ function TakeAppoiment() {
     const [doctorList, setDoctorList] = useState([])
     const [appoinmentDate, setAppoinmentDate] = useState('Monday')
     const [appointmentTime, setAppointmentTime] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
+
 
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
@@ -54,7 +57,7 @@ function TakeAppoiment() {
 
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
-  
+
 
 
     return (
@@ -68,6 +71,18 @@ function TakeAppoiment() {
                 </div>
                 <div className="mainContainer " style={{ margin: '2%' }}>
                     <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
+                    <div className="row mt-5">
+                        <div className="col-md-6">
+                            <div className="row ">
+
+                                <SearchPage setSearchTerm={setSearchTerm} />
+
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+
+                        </div>
+                    </div>
                     <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                         <div className="row pt-4" >
                             {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
@@ -76,43 +91,39 @@ function TakeAppoiment() {
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                                {/* <BasicTable List={doctorList} /> */}
                                 <TableContainer component={Paper}>
                                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                         <TableHead>
                                             <TableRow>
-                                                {/* <TableCell>Patient ID</TableCell> */}
                                                 <TableCell >Name</TableCell>
                                                 <TableCell >Qualification</TableCell>
-                                                {/* <TableCell >Address</TableCell> */}
                                                 <TableCell >Specialization</TableCell>
                                                 <TableCell >Contact No</TableCell>
                                                 <TableCell >Email ID</TableCell>
-                                                {/* <TableCell >Date</TableCell> */}
-                                                {/* <TableCell >Time</TableCell> */}
-                                                {/* <TableCell >Appointments</TableCell> */}
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {doctorList?.map((value, index) => (
+                                            {doctorList?.filter((val) => {
+                                                if (searchTerm == '') {
+                                                    return val
+                                                } else if (val.doc_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                    return val
+                                                } else if (val.doc_contact?.includes(searchTerm)) {
+                                                    return val
+                                                } else if (val.doc_spec?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                    return val
+                                                }
+                                            }).map((value, index) => (
                                                 <TableRow
                                                     key={index}
-                                                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
                                                     <TableCell component="th" scope="row">
                                                         {value.doc_name}
                                                     </TableCell>
                                                     <TableCell >{value.doc_qualification}</TableCell>
-                                                    {/* <TableCell >{value.doc_address}</TableCell> */}
                                                     <TableCell >{value.doc_spec}</TableCell>
                                                     <TableCell >{value.doc_contact}</TableCell>
                                                     <TableCell >{value.doc_email}</TableCell>
-
-                                                    {/* <TableCell ><Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /></TableCell> */}
-
-                                                    {/* <TableCell ><input onChange={(e) => { dateChangeHandler(e) }} id='app_date' type="date" /></TableCell> */}
-                                                    {/* <TableCell ><input onChange={(e) => timeChangeHandler(e)} id="app_time" type="time" /></TableCell> */}
-                                                    {/* <TableCell ><Button variant="outlined" onClick={() => { appointmentsHandler(value._id) }}>Appointment</Button></TableCell> */}
                                                 </TableRow>
                                             ))}
                                         </TableBody>

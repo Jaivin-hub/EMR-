@@ -13,13 +13,20 @@ import { useLocation } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SearchPage from './SearchPage'
+import { IoArrowForwardOutline } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom';
+import Pagenation from './Pagenation';
+
 
 function PatientsLIsting() {
+    const navigate = useNavigate();
     const [hospitalName, setHospitalName] = useState('')
     const [patientList, setPatientList] = useState([])
     const [appoinmentDate, setAppoinmentDate] = useState('Monday')
     const [appointmentTime, setAppointmentTime] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerPage, setPostsPerPage] = useState(10)
 
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
@@ -31,17 +38,13 @@ function PatientsLIsting() {
     console.log('searchTerm', searchTerm)
 
     useEffect(() => {
-        console.log('first mounting')
         const Data = localStorage.getItem('HospitalName')
         setHospitalName(Data)
         console.log('Data', Data)
         const obj = {
             _hos_id: HospitalId
         }
-        console.log('mounting')
-        // http://13.234.177.61/api3/list_patients
         instance.post('/list_patients', obj).then((response) => {
-            console.log('list response', response)
             const PatientData = response.data.patientList
             setPatientList(PatientData)
         }).catch((err) => {
@@ -54,6 +57,18 @@ function PatientsLIsting() {
         setAppoinmentDate(e.value)
 
     }
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = patientList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const primaryAnalysisHandler = (id) => {
+        console.log('clicked', id)
+        navigate('/PrimaryAnalysis', { state: id });
+
+    }
+    const paginate = pageNumber => setCurrentPage(pageNumber)
+
 
     console.log('appoinmentDate', appoinmentDate, appointmentTime)
 
@@ -101,10 +116,12 @@ function PatientsLIsting() {
                                                 <TableCell >Patient State</TableCell>
                                                 <TableCell >Patient Age</TableCell>
                                                 <TableCell >Patient Phoneno</TableCell>
+                                                <TableCell >Primary analysis</TableCell>
+
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {patientList?.filter((val) => {
+                                            {currentPosts?.filter((val) => {
                                                 if (searchTerm == '') {
                                                     return val
                                                 } else if (val.p_firstname?.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -129,11 +146,19 @@ function PatientsLIsting() {
                                                     {/* <TableCell >{value.doc_email}</TableCell> */}
                                                     <TableCell >{value.p_dob}</TableCell>
                                                     <TableCell >{value.p_phoneno}</TableCell>
+                                                    <TableCell >
+                                                        <IoArrowForwardOutline
+                                                            onClick={() => { primaryAnalysisHandler(value._id) }}
+                                                            cursor="pointer"
+                                                        />
+                                                    </TableCell>
+
                                                 </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
                             </div>
                         </div>
 

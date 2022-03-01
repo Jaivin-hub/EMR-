@@ -26,49 +26,17 @@ function AppoitmentsListing({ setPendingList }) {
     const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
     const [hospitalName, setHospitalName] = useState('')
 
+    useEffect(() => {
+        fetchAppointment()
+        const current = new Date();
+        const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+        setToday(date)
+    }, [])
 
+    console.log('appointmentCurrentDate', appointmentCurrentDate)
 
 
     const fetchAppointment = () => {
-
-        const obj = {
-            _hos_id: hospitalId,
-            app_date: appointmentCurrentDate
-
-        }
-        console.log('obj---', obj)
-        instance.post('/list_appointment', obj).then((res) => {
-            setAppointments(res.data.appointment)
-            setPendingList(res.data.appointment)
-        })
-        // }
-    }
-
-    const fetchAppointmentWithDate = (dateData) => {
-        const obj = {
-            _hos_id: hospitalId,
-            app_date: dateData
-
-        }
-        console.log('obj---', obj)
-        instance.post('/list_appointment', obj).then((res) => {
-            setAppointments(res.data.appointment)
-            setPendingList(res.data.appointment)
-        })
-    }
-
-
-    const appointmentsDateHandler = (e) => {
-        console.log('clicked')
-        console.log(e.target.value)
-        const date = e.target.value
-        const dateData = moment(date).format('DD-MM-YYYY');
-        // setAppointmentCurrentDate(dateData)
-        fetchAppointmentWithDate(dateData)
-    }
-
-    useEffect(() => {
-        console.log('first mounting')
         const Data = localStorage.getItem('HospitalName')
         setHospitalName(Data)
         var today = new Date();
@@ -82,10 +50,52 @@ function AppoitmentsListing({ setPendingList }) {
         }
         var year = today.getFullYear();
         const date_format = dd + "-" + mm + "-" + year
-        console.log('date_format', date_format)
         setAppointmentCurrentDate(date_format)
-        fetchAppointment()
-    }, [])
+
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: date_format
+
+        }
+        console.log('obj', obj)
+
+        instance.post('/list_appointment', obj).then((res) => {
+            const arr = res.data.appointment
+            setAppointments(arr)
+            setPendingList(arr)
+            appointments.sort(function (a, b) {
+                return a.app_time.localeCompare(b.app_time);
+            });
+
+        })
+        // }
+    }
+
+    const fetchAppointmentWithDate = (dateData) => {
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: dateData
+
+        }
+        instance.post('/list_appointment', obj).then((res) => {
+            setAppointments(res.data.appointment)
+            setPendingList(res.data.appointment)
+        })
+    }
+
+
+    const appointmentsDateHandler = (e) => {
+        const date = e.target.value
+        setToday(e.target.value)
+        const dateData = moment(date).format('DD-MM-YYYY');
+        // setAppointmentCurrentDate(dateData)
+        fetchAppointmentWithDate(dateData)
+    }
+
+    const [today, setToday] = useState()
+
+
+
 
     const [value, setValue] = React.useState('1');
 
@@ -98,45 +108,26 @@ function AppoitmentsListing({ setPendingList }) {
     }
 
 
+    var curr = new Date();
+    curr.setDate(curr.getDate());
+    var date = curr.toISOString().substr(0, 10);
+    // <input id="dateRequired" type="date" name="dateRequired" defaultValue={date} />
+
+
+
+
+
+    // const current = new Date();
+    // const cuttentDate = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+    // console.log('cuttentDate', cuttentDate)
+
+
     return (
         <>
-            {/* 
-            <Nav justify variant="tabs" defaultActiveKey="/home">
-                <Nav.Item>
-                    <Nav.Link href="/home">Active</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="link-1">Loooonger NavLink</Nav.Link>
-                </Nav.Item>
-            </Nav> */}
-            {/* <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab label="Item One" value="1" />
-                        <Tab label="Item Two" value="2" />
-                        <Tab label="Item Three" value="3" />
-                    </TabList>
-                </Box>
-                <TabPanel value="1">Item One</TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-            </TabContext> */}
-            {/* <div className="row">
-                <div className="col-md-6">
-                    <Button >
-                    </Button>
-                    
-                    </div>
-                    <div className="col-md-6">
-                    <Button style={{ backgroundColor: "red" }}>
-                    All Appointment List
-                    </Button>
-                    </div>
-                </div> */}
-
-            {/* Todays Appointment List */}
             <div className="addPatient navbar-light mt-4" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                <input className="mt-4" style={{marginLeft:'1%'}} type="date" onChange={appointmentsDateHandler} />
+                <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
+                    appointmentsDateHandler(e)
+                }} />
                 <div className="row pt-3 " >
 
                 </div>
@@ -146,7 +137,6 @@ function AppoitmentsListing({ setPendingList }) {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        {/* <TableCell>Patient ID</TableCell> */}
                                         <TableCell >Patient Name</TableCell>
                                         <TableCell >Age</TableCell>
                                         <TableCell >Appointment date</TableCell>
@@ -154,15 +144,12 @@ function AppoitmentsListing({ setPendingList }) {
                                         <TableCell >Doctor Name</TableCell>
                                         <TableCell >Specialization</TableCell>
                                         {/* <TableCell >Actions</TableCell> */}
-
-
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {appointments?.map((value, index) => (
                                         <TableRow
                                             key={index}
-                                        // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
                                                 {value._pat_id.p_firstname}

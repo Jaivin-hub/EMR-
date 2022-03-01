@@ -1,21 +1,12 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, forwardRef } from 'react'
+import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import datePickerImg from '../../assets/imgs/image 8.png'
+import instance from '../../config/api'
+import uploadImg from '../../assets/imgs/image 7.png'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
-import uploadImg from '../assets/imgs/image 7.png'
-import datePickerImg from '../assets/imgs/image 8.png'
-import { AiOutlineClockCircle } from 'react-icons/ai'
-import DatePicker from 'react-datepicker';
-import { ApiHelper } from '../Helper/Apihelper'
-import instance, { API } from '../config/api'
-import Datepicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import BasicTable from './Table'
-import Header from './Header'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
-import Pagenation from './Pagenation'
-import AddDoctorModal from './Modals/AddDoctorModal'
-import SearchPage from './SearchPage'
+
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -23,9 +14,8 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-// import TimePicker from 'react-time-picker';
+function AddDoctorModal({ setOpenModal, setReload, reload }) {
 
-function DoctorView() {
 
     const HospitalId = localStorage.getItem('HospitalId')
     const classes = useStyles()
@@ -33,15 +23,12 @@ function DoctorView() {
     const [date, setDate] = useState({})
     const [value, onChange] = useState('10:00');
     const [doctorList, setDoctorList] = useState([])
-    const [reload, setReload] = useState(false)
     const [hospitalName, setHospitalName] = useState('')
     const [availableDay, setAvailableDay] = useState('')
     const [mainErr, setMainErr] = useState('')
     const [specializationErr, setsPecializationErr] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [postsPerPage, setPostsPerPage] = useState(10)
-    const [openModal, setOpenModal] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
     const [inputDateFields, setInputDateFields] = useState([
         { doc_avail_day: 'Monday', doc_from_time: '10:00AM', doc_to_time: '02:00PM' },
     ])
@@ -84,26 +71,6 @@ function DoctorView() {
         console.log(newData)
         setInputDateFields(newData)
     }
-
-    useEffect(() => {
-        const obj = {
-            _hos_id: HospitalId
-        }
-        // instance.post()
-        instance.post('/list_doctors', obj).then((response) => {
-            const doctorData = response.data.doctors
-            setDoctorList(doctorData)
-        }).catch((err) => {
-            console.log('error', err)
-        })
-    }, [reload])
-
-    useEffect(() => {
-        const Data = localStorage.getItem('HospitalName')
-        setHospitalName(Data)
-    }, [])
-
-
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <img
@@ -372,39 +339,24 @@ function DoctorView() {
             }
         }
     }
-
-    //Get current lists
-
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = doctorList.slice(indexOfFirstPost, indexOfLastPost);
-
-    // Change page 
-
-    const paginate = pageNumber => setCurrentPage(pageNumber)
-
-    const doctorModalHandler = () => {
-        console.log('handle clicked')
-        setOpenModal(true)
-    }
-
-
-
     return (
-
-        <div className="viewPage" >
-
-            {/* <div className="addPatient navbar-light mt-5" style={{ height: "", backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                <div className="row pt-4" >
-                    <div className="col-md-1" style={{ marginLeft: '5%' }} >
+        <div className="Modal_Container">
+            <div className="row">
+                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-12  d-flex justify-content-end align-items-end">
+                    <h1>x</h1>
+                </div>
+            </div>
+            <div className="addPatient navbar-light " style={{ height: "", backgroundColor: "#FFFFFF", border: '' }}>
+                <div className="row  text-center" >
+                    <div className="col-md-2"  >
                         Add Doctor
                     </div>
                 </div>
                 <div className="row text-center">
-                    <div className="col-md-2">
-                        <div className="uploadDiv mt-4" style={{ width: '60%', height: "12em", marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
+                    <div className="col-md-2 item-center">
+                        <div className="uploadDiv mt-4" style={{ borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
                             <img width="80%" height="" src={uploadImg} alt="" />
-                            <label className="mt-3" style={{ color: '#0298D5' }}>Upload Image</label>
+                            <label className="mt-3" style={{ color: '#0298D5', width: '80%' }}>Upload Image</label>
                         </div>
                     </div>
                     <div className="col-md-10">
@@ -513,7 +465,7 @@ function DoctorView() {
                                 <p style={{ color: "red" }}>{passwordErr}</p>
                             </div>
                         </div>
-                        {inputDateFields.map((inputDateFields, index) => {
+                        {/* {inputDateFields.map((inputDateFields, index) => {
                             return (
                                 <div key={index} className="row">
                                     <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
@@ -528,13 +480,13 @@ function DoctorView() {
                                                 <div className="row" style={{ marginLeft: "5%" }}>
                                                     Time From
                                                 </div>
-                                                <input id="doc_from_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%",height:'3em',  position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
+                                                <input id="doc_from_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%", height: '3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
                                             </div>
                                             <div className="col-md-3">
                                                 <div className="row" style={{ marginLeft: "5%" }}>
                                                     Time To
                                                 </div>
-                                                <input id="doc_to_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%",height:'3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
+                                                <input id="doc_to_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%", height: '3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
                                             </div>
                                             <div className="col-md-3">
 
@@ -571,7 +523,7 @@ function DoctorView() {
                                     </div>
                                 </div>
                             )
-                        })}
+                        })} */}
 
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
@@ -583,47 +535,9 @@ function DoctorView() {
                     </div>
 
                 </div>
-            </div> */}
-            <div className="row mt-2">
-                <div className="col-md-6">
-                    <div className="row ">
-
-                        <SearchPage setSearchTerm={setSearchTerm} />
-
-                    </div>
-                </div>
-
-                <div className="col-md-6">
-                    <div className="row ">
-                        <Button onClick={doctorModalHandler}>Add Doctor</Button>
-                    </div>
-                </div>
             </div>
-            {doctorList?.length >= 1 ?
-                <div className="addPatient navbar-light mt-5" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                    <div className="row pt-4" >
-                        {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
-        Doctor List
-    </div> */}
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <BasicTable List={currentPosts} searchTerm={searchTerm} />
-                            <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
-                        </div>
-
-                    </div>
-
-                </div>
-                : null}
-            {openModal ?
-                <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                    <AddDoctorModal setOpenModal={setOpenModal} setReload={setReload} reload={reload} />
-                </div>
-                : null}
         </div>
-
     )
 }
 
-export default DoctorView
+export default AddDoctorModal

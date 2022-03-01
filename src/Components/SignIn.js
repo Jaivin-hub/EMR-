@@ -111,6 +111,7 @@ function SignIn() {
                         const id = response.data.hospital[0]._id
                         localStorage.setItem('HospitalName', Data)
                         localStorage.setItem('HospitalId', id)
+                        localStorage.setItem('handleLogin',true)
                         navigate('/taskDashboard');
                     } else if (response.data.msg == 'Email or Password is invalid') {
                         setMainErr(response.data.msg)

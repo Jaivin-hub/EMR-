@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal'
+import { IoArrowForwardOutline } from 'react-icons/io5'
 
 
 
@@ -32,7 +33,7 @@ export default function BasicTable({ List, searchTerm }) {
     const HospitalId = localStorage.getItem('HospitalId')
     const [openModal, setOpenModal] = useState(false)
     const [patientId, setPatientId] = useState('')
-   
+
 
     console.log('List', List)
 
@@ -42,6 +43,11 @@ export default function BasicTable({ List, searchTerm }) {
     const AppointmentsHandler = (id) => {
         setPatientId(id)
         setOpenModal(true);
+    }
+    const primaryAnalysisHandler = (id) => {
+        console.log('clicked', id)
+        navigate('/PrimaryAnalysis', { state: id });
+
     }
 
     return (
@@ -62,6 +68,7 @@ export default function BasicTable({ List, searchTerm }) {
                             <TableCell >Patient Phone No</TableCell>
                             <TableCell >Patient Blood Group</TableCell>
                             <TableCell >Address</TableCell>
+                            <TableCell >Primary analysis</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -90,6 +97,12 @@ export default function BasicTable({ List, searchTerm }) {
                                 <TableCell >{patient.p_phoneno}</TableCell>
                                 <TableCell >{patient.p_bloodgroup}</TableCell>
                                 <TableCell >{patient.p_address_1}</TableCell>
+                                <TableCell >
+                                    <IoArrowForwardOutline
+                                        onClick={() => { primaryAnalysisHandler(patient._id) }}
+                                        cursor="pointer"
+                                    />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

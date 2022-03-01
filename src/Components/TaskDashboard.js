@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import instance from '../config/api'
 import moment from 'moment';
 import AppoitmentsListing from './AppoitmentsListing'
+import SettingsView from './SettingsView'
 
 
 
@@ -27,6 +28,7 @@ function TaskDashboard() {
     const [showDoctorView, setShowDoctorView] = useState(false)
     const [showAppointmentView, setShowAppointmentView] = useState(true)
     const [showHospitalView, setShowHospitalView] = useState(false)
+    const [showSettingsView, setShowSettingsView] = useState(false)
     const hospitalId = localStorage.getItem('HospitalId')
 
 
@@ -36,7 +38,7 @@ function TaskDashboard() {
 
 
     const options = [
-        'Appointments', 'Add Patient', 'Add Doctor'
+        'Appointments', 'Add Patient', 'Add Doctor', 'Settings'
     ];
     const defaultOption = options[0];
 
@@ -104,24 +106,32 @@ function TaskDashboard() {
             setShowDoctorView(false)
             setShowAppointmentView(false)
             setShowHospitalView(false)
-
+            setShowSettingsView(false)
         } else if (e.value == 'Add Doctor') {
             setShowDoctorView(true)
             setShowPatientView(false)
             setShowAppointmentView(false)
             setShowHospitalView(false)
-
+            setShowSettingsView(false)
+            setShowSettingsView(false)
         } else if (e.value == 'Appointments') {
             setShowDoctorView(false)
             setShowPatientView(false)
             setShowAppointmentView(true)
             setShowHospitalView(false)
-
+            setShowSettingsView(false)
         } else if (e.value == 'Add Hospital') {
             setShowDoctorView(false)
             setShowPatientView(false)
             setShowAppointmentView(false)
             setShowHospitalView(true)
+            setShowSettingsView(false)
+        } else if (e.value == 'Settings') {
+            setShowSettingsView(true)
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowAppointmentView(false)
+            setShowHospitalView(false)
         }
     }
 
@@ -176,7 +186,7 @@ function TaskDashboard() {
                                     <div className="row">
                                         <div className="col-md-7 d-flex">
                                             {pendingList?.length >= 1 ?
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " +  pendingCount} />
+                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + pendingCount} />
                                                 :
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
@@ -203,6 +213,10 @@ function TaskDashboard() {
 
                     {showAppointmentView ?
                         <AppoitmentsListing setPendingList={setPendingList} />
+                        : null}
+
+                        {showSettingsView?
+                        <SettingsView />
                         : null}
                 </div>
             </div>

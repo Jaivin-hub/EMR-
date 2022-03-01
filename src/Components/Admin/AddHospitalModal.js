@@ -434,13 +434,13 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         }
     }
     return (
-        <div className="hospitalModalContainer">
+        <div className="Modal_Container">
             <div className="row">
                 <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-12  d-flex justify-content-end align-items-end">
                     <h1>x</h1>
                 </div>
             </div>
-            <div className="addPatient navbar-light " style={{ height: "", backgroundColor: "#FFFFFF", }}>
+            <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", }}>
                 <div className="row pt-4" >
                     <div className="col-md-2 d-flex justify-content-center">
                         Add Hospitals

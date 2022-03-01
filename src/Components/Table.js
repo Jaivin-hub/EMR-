@@ -21,25 +21,12 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable({ List }) {
-
-    // const [patientList, setPatientList] = useState([])
-
-    // useEffect(() => {
-    //     console.log('mounting')
-    //     ApiHelper.get(API.listPatients).then((response) => {
-    //         setPatientList(response.data.patientList)
-    //     }).catch((err) => {
-    //         console.log('error', err)
-    //     })
-    // }, [])
-
+export default function BasicTable({ List, searchTerm }) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        {/* <TableCell>Patient ID</TableCell> */}
                         <TableCell >Name</TableCell>
                         <TableCell >Qualification</TableCell>
                         <TableCell >Specialization</TableCell>
@@ -48,10 +35,17 @@ export default function BasicTable({ List }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {List?.map((value, index) => (
+                    {List?.filter((val) => {
+                        if (searchTerm == "") {
+                            return val
+                        } else if (val.doc_name?.toLowerCase().includes(searchTerm?.toLowerCase())) {
+                            return val
+                        } else if (val.doc_email?.includes(searchTerm)) {
+                            return val
+                        }
+                    }).map((value, index) => (
                         <TableRow
                             key={index}
-                        // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
                                 {value.doc_name}
@@ -60,7 +54,6 @@ export default function BasicTable({ List }) {
                             <TableCell >{value.doc_spec}</TableCell>
                             <TableCell >{value.doc_contact}</TableCell>
                             <TableCell >{value.doc_email}</TableCell>
-
                         </TableRow>
                     ))}
                 </TableBody>
