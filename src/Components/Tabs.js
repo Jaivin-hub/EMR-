@@ -46,7 +46,7 @@ function Tabs() {
     const fetchMedicineList = () => {
         const obj = {
             _hos_id: hospitalId,
-            IsActive: true
+            isActive: true
         }
         console.log(obj)
         instance.post('/list_medicine', obj).then((res) => {
@@ -300,8 +300,8 @@ function Tabs() {
                                 </div>
                                 <div className="col-md-3 mt-4">
                                     <Button className="btn btn-primary" onClick={submitHandler}>ADD</Button>
-                                    
-        
+
+
                                 </div>
                             </div>
                         </div>
@@ -310,9 +310,9 @@ function Tabs() {
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell >med_name</TableCell>
-                                            <TableCell >s_med_name</TableCell>
-                                            <TableCell >med_type</TableCell>
+                                            <TableCell >Medicine name</TableCell>
+                                            <TableCell >Scientific name</TableCell>
+                                            <TableCell >Medicine type</TableCell>
                                             {/* <TableCell >Contact No</TableCell>
                                             <TableCell >Email ID</TableCell> */}
                                         </TableRow>
