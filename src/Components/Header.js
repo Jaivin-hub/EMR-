@@ -47,6 +47,7 @@ function Header() {
                                 <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                                 <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
                                 <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
+                                {/* <Nav.Link className="   ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link> */}
 
                             </>
                         }
@@ -54,22 +55,16 @@ function Header() {
                     </Nav>
                     <Nav className="ml-auto" style={{ marginLeft: "10%" }}>
                         {pathname == '/project/emr/adminDashboard' ?
-                            // null
-                            <Nav.Link className="navMenu1">Hospitals</Nav.Link>
+                            null
+                            // <Nav.Link className="navMenu1">Hospitals</Nav.Link>
                             :
                             <>
-
+                                
                                 <Nav.Link className="ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link>
 
                             </>
                         }
 
-                    </Nav>
-                    <Nav className="ml-auto" >
-                        {/* <input type="text" placeholder="search" style={{ backgroundColor: 'rgba(196, 196, 196, 0.2)', borderColor: 'rgba(196, 196, 196, 0.2)', width: "100%" }} />
-                        <img src={Notification} alt="" style={{width:'10%',height:'10%',marginTop:"2%"}} /> */}
-                        {/* <Nav.Link href="#link" className="navMenu3">Patients</Nav.Link>
-                        <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

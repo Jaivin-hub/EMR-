@@ -51,7 +51,7 @@ function Tabs() {
         console.log(obj)
         instance.post('/list_medicine', obj).then((res) => {
             console.log('medicine response', res)
-            setMedicineList(res.data?.medicines)
+            setMedicineList(res?.data.medicines)
         }).catch((err) => {
             console.log('error', err)
         })
@@ -207,7 +207,7 @@ function Tabs() {
 
             </div>
 
-            <div className="content-tabs">
+            <div className="content-tabs" >
                 <div className={toggleState === 1 ? "content  active-content" : "content"}>
                     {/* <h2>Content 1</h2>
                     <hr />
@@ -251,7 +251,7 @@ function Tabs() {
                     </p> */}
                 </div>
 
-                <div className={toggleState === 3 ? "content  active-content" : "content"}>
+                <div className={toggleState === 3 ? "content  active-content" : "content"} >
                     <h4><strong>Medicine details</strong></h4>
                     <div className="row mt-5">
                         <div className="col-md-6">
@@ -300,6 +300,8 @@ function Tabs() {
                                 </div>
                                 <div className="col-md-3 mt-4">
                                     <Button className="btn btn-primary" onClick={submitHandler}>ADD</Button>
+                                    
+        
                                 </div>
                             </div>
                         </div>

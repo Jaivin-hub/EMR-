@@ -324,7 +324,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const addPatientHandler = () => {
         console.log('function calling')
         const { bloodBloodGroup, patientPhoneNo } = patientData
-        // if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
+        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
                 p_firstname: patientName,
@@ -355,39 +355,39 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             }).catch((err) => {
                 console.log('error', err)
             })
-        // } else {
-        //     if (patientName == '') {
-        //         setPatientNameErr('This field is required')
-        //     }
-        //     if (AdharNo == "") {
-        //         setAdharErr('This field is required')
-        //     }
-        //     if (patientLastName == "") {
-        //         setPatientLastNameErr('This field is required')
-        //     }
-        //     if (patientDOB == "") {
-        //         setPatientDOBErr('This field is required')
-        //     }
-        //     if (address == "") {
-        //         setAddressErr('This field is required')
-        //     }
-        //     if (district == "") {
-        //         setCityErr('This field is required')
-        //     }
-        //     if (state == "") {
-        //         setStateErr('This field is required')
-        //     }
-        //     if (Phone == '') {
-        //         setPatientPhoneErr('This field is required')
-        //     } if (patientBloodGroup == "") {
-        //         setBloodGroupErr('This field is required')
-        //     }
+        } else {
+            if (patientName == '') {
+                setPatientNameErr('This field is required')
+            }
+            if (AdharNo == "") {
+                setAdharErr('This field is required')
+            }
+            if (patientLastName == "") {
+                setPatientLastNameErr('This field is required')
+            }
+            if (patientDOB == "") {
+                setPatientDOBErr('This field is required')
+            }
+            if (address == "") {
+                setAddressErr('This field is required')
+            }
+            if (district == "") {
+                setCityErr('This field is required')
+            }
+            if (state == "") {
+                setStateErr('This field is required')
+            }
+            if (Phone == '') {
+                setPatientPhoneErr('This field is required')
+            } if (patientBloodGroup == "") {
+                setBloodGroupErr('This field is required')
+            }
 
 
 
             // setMainErr('Check all the fields that you entered!')
             console.log('else case')
-        // }
+        }
 
     }
 

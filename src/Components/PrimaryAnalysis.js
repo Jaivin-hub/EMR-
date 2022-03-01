@@ -130,7 +130,7 @@ function PrimaryAnalysis() {
                             {/* <div className="col-md-1" style={{ marginLeft: '5%' }} >
                 Doctor List
             </div> */}
-                        <h4 style={{ marginLeft: '3%'}}><strong>Primary Analysis</strong></h4>
+                            <h4 style={{ marginLeft: '3%' }}><strong>Primary Analysis</strong></h4>
                         </div>
 
                         <div className="row p-5">
@@ -292,8 +292,9 @@ function PrimaryAnalysis() {
                                 />
                                 {/* <p style={{ color: "red" }}>{patientLastNameErr}</p> */}
                             </div>
-                            <div className="col-md-3 mt-4">
-                                <Button variant="outlined" onClick={submitHandler}>Add Details</Button>
+                            <div className="col-md-3 mt-2">
+                                <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>Add Details</button>
+                                {/* <Button variant="outlined" onClick={submitHandler}>Add Details</Button> */}
                             </div>
                         </div>
 
