@@ -89,36 +89,19 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
         fetchAppointmentWithDate(dateData)
     }
 
+    const [value, setValue] = React.useState('1');
     const [today, setToday] = useState()
 
 
 
 
-    const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const actionHandler = () => {
-
-    }
-
-
     var curr = new Date();
     curr.setDate(curr.getDate());
     var date = curr.toISOString().substr(0, 10);
-    // <input id="dateRequired" type="date" name="dateRequired" defaultValue={date} />
-
-
-
-
-
-    // const current = new Date();
-    // const cuttentDate = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-    // console.log('cuttentDate', cuttentDate)
-
-
     return (
         <>
             <div className="addPatient navbar-light mt-4" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
@@ -129,7 +112,7 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
 
                 </div>
                 <div className="row">
-                    <div className="col-md-12" style={{ position: 'relative' }}>
+                    <div className="col-md-12">
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>

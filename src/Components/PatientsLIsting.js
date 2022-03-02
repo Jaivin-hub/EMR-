@@ -21,6 +21,7 @@ import AddPatientModal from './AddPatientModal';
 import AddDoctorModal from './Modals/AddDoctorModal';
 import SettingsView from './SettingsView';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
+import AppointmentsModal from './Modals/AppointmentsModal';
 
 
 function PatientsLIsting() {
@@ -31,7 +32,7 @@ function PatientsLIsting() {
     const [appointmentTime, setAppointmentTime] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(10)
+    const [postsPerPage, setPostsPerPage] = useState(5)
     const [pendingList, setPendingList] = useState([])
     const [showPatientView, setShowPatientView] = useState(false)
     const [showDoctorView, setShowDoctorView] = useState(false)
@@ -41,6 +42,7 @@ function PatientsLIsting() {
     const [reload, setReload] = useState(false)
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [patientId, setPatientId] = useState('')
+    const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
 
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
@@ -69,15 +71,11 @@ function PatientsLIsting() {
         }
         var year = today.getFullYear();
         const date_format = dd + "-" + mm + "-" + year
-        // setAppointmentCurrentDate(date_format)
-
         const obj = {
             _hos_id: HospitalId,
             app_date: date_format
 
         }
-        console.log('obj', obj)
-
         instance.post('/list_appointment', obj).then((res) => {
             const arr = res.data.appointment
             // setAppointments(arr)
@@ -89,7 +87,6 @@ function PatientsLIsting() {
     useEffect(() => {
         const Data = localStorage.getItem('HospitalName')
         setHospitalName(Data)
-        console.log('Data', Data)
         const obj = {
             _hos_id: HospitalId
         }
@@ -149,19 +146,21 @@ function PatientsLIsting() {
     const currentPosts = patientList.slice(indexOfFirstPost, indexOfLastPost);
 
     const primaryAnalysisHandler = (id) => {
-        console.log('clicked', id)
         setPatientId(id)
-        // navigate('/PrimaryAnalysis', { state: id });
         setShowPrimaryAnalysis(true)
-
     }
     const paginate = pageNumber => setCurrentPage(pageNumber)
     const pendingCount = pendingList?.length
 
+    const newAppointmentsHandler = (id) => {
+        setPatientId(id)
+        setShowNewAppointmentsModal(true)
+    }
+
 
 
     return (
-        <div className="div">
+        <div className="div w-screen h-screen fixed">
             <Header />
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="row">
@@ -263,7 +262,7 @@ function PatientsLIsting() {
                                                             {/* <Button>New Appointment</Button> */}
                                                         </TableCell>
                                                         <TableCell >
-                                                            <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { primaryAnalysisHandler(value._id) }}>New Appointment</button>
+                                                            <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { newAppointmentsHandler(value._id) }}>New Appointment</button>
                                                             {/* <Button >New Appointment</Button> */}
                                                         </TableCell>
 
@@ -282,7 +281,6 @@ function PatientsLIsting() {
                         </div>
                         : null}
                 </div>
-
                 {showSettingsView ?
                     <SettingsView />
                     : null}
@@ -300,6 +298,11 @@ function PatientsLIsting() {
                 {showPrimaryAnalysis ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                         <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} setReload={setReload} reload={reload} />
+                    </div>
+                    : null}
+                {showNewAppointmentsModal ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <AppointmentsModal patientId={patientId} setShowNewAppointmentsModal={setShowNewAppointmentsModal} setReload={setReload} reload={reload} />
                     </div>
                     : null}
             </div>

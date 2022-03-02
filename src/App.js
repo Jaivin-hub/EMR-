@@ -12,6 +12,7 @@ import PatientsLIsting from './Components/PatientsLIsting'
 import Admin_login from "./Components/Admin/Admin_login";
 import AdminDashboard from './Components/Admin/AdminDashboard'
 import PrimaryAnalysis from './Components/PrimaryAnalysis'
+import './index.css'
 function App() {
   const verification = localStorage.getItem('handleLogin')
   return (

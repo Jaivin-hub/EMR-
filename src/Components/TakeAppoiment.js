@@ -157,7 +157,7 @@ function TakeAppoiment() {
 
 
     return (
-        <div className="div">
+        <div className="div w-screen h-screen fixed">
             <Header />
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
                 <div className="row">
