@@ -20,6 +20,7 @@ import AppoitmentsListing from './AppoitmentsListing';
 import AddPatientModal from './AddPatientModal';
 import AddDoctorModal from './Modals/AddDoctorModal';
 import SettingsView from './SettingsView';
+import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 
 
 function PatientsLIsting() {
@@ -38,6 +39,8 @@ function PatientsLIsting() {
     const [showHospitalView, setShowHospitalView] = useState(false)
     const [showSettingsView, setShowSettingsView] = useState(false)
     const [reload, setReload] = useState(false)
+    const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
+    const [patientId, setPatientId] = useState('')
 
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
@@ -147,7 +150,9 @@ function PatientsLIsting() {
 
     const primaryAnalysisHandler = (id) => {
         console.log('clicked', id)
-        navigate('/PrimaryAnalysis', { state: id });
+        setPatientId(id)
+        // navigate('/PrimaryAnalysis', { state: id });
+        setShowPrimaryAnalysis(true)
 
     }
     const paginate = pageNumber => setCurrentPage(pageNumber)
@@ -291,6 +296,11 @@ function PatientsLIsting() {
                         <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
                     </div>
                     // <DoctorView />
+                    : null}
+                {showPrimaryAnalysis ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} setReload={setReload} reload={reload} />
+                    </div>
                     : null}
             </div>
         </div>
