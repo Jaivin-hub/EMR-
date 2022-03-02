@@ -251,16 +251,9 @@ function PatientsLIsting() {
                                                         {/* <TableCell >{value.doc_email}</TableCell> */}
                                                         <TableCell >{value.p_dob}</TableCell>
                                                         <TableCell >{value.p_phoneno}</TableCell>
-                                                        <TableCell >
-                                                            {/* <IoArrowForwardOutline
-                                                                onClick={() => { primaryAnalysisHandler(value._id) }}
-                                                                cursor="pointer"
-                                                            /> */}
+                                                        {/* <TableCell >
                                                             <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { primaryAnalysisHandler(value._id) }}>Primary Analysis</button>
-
-                                                            {/* <Button onClick={() => { primaryAnalysisHandler(value._id) }}>Primary Analysis</Button> */}
-                                                            {/* <Button>New Appointment</Button> */}
-                                                        </TableCell>
+                                                        </TableCell> */}
                                                         <TableCell >
                                                             <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { newAppointmentsHandler(value._id) }}>New Appointment</button>
                                                             {/* <Button >New Appointment</Button> */}

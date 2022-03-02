@@ -12,6 +12,8 @@ import instance from '../config/api'
 import moment from 'moment';
 import { Tab, Nav, Tabs, Form, Button, Accordion } from 'react-bootstrap';
 import '../assets/css/appointments.css'
+import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
+
 
 // import Box from '@mui/material/Box';
 // import Tab from '@mui/material/Tab';
@@ -20,11 +22,17 @@ import '../assets/css/appointments.css'
 // import TabPanel from '@mui/lab/TabPanel';
 
 
-function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointments}) {
+function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, appointments, setAppointments,setPatientId }) {
     // const [appointments, setAppointments] = useState([])
     const hospitalId = localStorage.getItem('HospitalId')
     const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
     const [hospitalName, setHospitalName] = useState('')
+    // const [patientId, setPatientId] = useState('')
+    
+    // const [reload, setReload] = useState(false)
+
+
+
 
     useEffect(() => {
         // fetchAppointment()
@@ -92,8 +100,12 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
     const [value, setValue] = React.useState('1');
     const [today, setToday] = useState()
 
+    console.log('appointments', appointments)
 
-
+    const primaryAnalysisHandler = (id) => {
+        setPatientId(id)
+        setShowPrimaryAnalysis(true)
+    }
 
 
     const handleChange = (event, newValue) => {
@@ -108,11 +120,14 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
                 <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
                     appointmentsDateHandler(e)
                 }} />
+
                 <div className="row pt-3 " >
 
                 </div>
+
                 <div className="row">
                     <div className="col-md-12">
+
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
@@ -123,7 +138,7 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
                                         <TableCell >Appointment Time</TableCell>
                                         <TableCell >Doctor Name</TableCell>
                                         <TableCell >Specialization</TableCell>
-                                        {/* <TableCell >Actions</TableCell> */}
+                                        <TableCell >Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -139,11 +154,16 @@ function AppoitmentsListing({ setPendingList, reload, appointments ,setAppointme
                                             <TableCell >{value.app_time}</TableCell>
                                             <TableCell >{value._doc_id.doc_name}</TableCell>
                                             <TableCell >{value._doc_id.doc_spec}</TableCell>
+                                            <TableCell >
+                                                <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }}
+                                                    onClick={() => { primaryAnalysisHandler(value._pat_id._id) }}>Primary Analysis</button>
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                       
                     </div>
 
                 </div>

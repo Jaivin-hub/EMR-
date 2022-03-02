@@ -341,18 +341,16 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
         }
     }
     return (
-        <div className="Modal_Container">
+        <div className="Modal_Container" style={{ maxWidth: '90%' }}>
             <div className="row">
-                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-12  d-flex justify-content-end align-items-end">
-                    <h1>x</h1>
+                <div className="col-md-8 ">
+                    <h4 className="underline"><strong>Add Doctor</strong></h4>
+                </div>
+                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
+                    <h4>x</h4>
                 </div>
             </div>
             <div className="addPatient navbar-light " style={{ height: "", backgroundColor: "#FFFFFF", border: '' }}>
-                <div className="row  text-center" >
-                    <div className="col-md-2"  >
-                        Add Doctor
-                    </div>
-                </div>
                 <div className="row text-center">
                     <div className="col-md-2 item-center">
                         <div className="uploadDiv mt-4" style={{ borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>

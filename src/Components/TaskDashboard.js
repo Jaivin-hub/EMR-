@@ -9,6 +9,7 @@ import AppoitmentsListing from './AppoitmentsListing'
 import SettingsView from './SettingsView'
 import AddPatientModal from './AddPatientModal'
 import AddDoctorModal from './Modals/AddDoctorModal'
+import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 
 
 
@@ -24,6 +25,9 @@ function TaskDashboard() {
     const hospitalName = localStorage.getItem('HospitalName')
     const [openModal, setOpenModal] = useState(false)
     const [reload, setReload] = useState(false)
+    const [patientId, setPatientId] = useState('')
+    const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
+
 
 
 
@@ -138,20 +142,26 @@ function TaskDashboard() {
                             </div>
                         </div>
                     </div>
-                    
+
                     {showAppointmentView ?
                         <div className="">
-                            <AppoitmentsListing setAppointments={setAppointments} appointments={appointments} setPendingList={setPendingList} reload={reload} />
+                            <AppoitmentsListing
+                                setAppointments={setAppointments}
+                                appointments={appointments}
+                                setShowPrimaryAnalysis={setShowPrimaryAnalysis}
+                                setPatientId={setPatientId}
+                                setPendingList={setPendingList}
+                                reload={reload} />
                         </div>
                         : null}
-                        {showDoctorView ?
+                    {showDoctorView ?
                         <div className="">
                             <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                                 <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
                             </div>
                         </div>
                         : null}
-                        
+
                     {showSettingsView ?
                         <SettingsView />
                         : null}
@@ -160,11 +170,15 @@ function TaskDashboard() {
                             <AddPatientModal setOpenModal={setShowPatientView} setReload={setReload} reload={reload} />
                         </div>
                         : null}
-
                     {showHospitalView ?
                         <HospitalView />
                         : null}
-                    
+                         {showPrimaryAnalysis ?
+                            <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                                <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
+                            </div>
+                            : null}
+
 
 
                 </div>

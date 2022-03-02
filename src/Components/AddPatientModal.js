@@ -663,23 +663,24 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
 
     return (
-        <div className="Modal_Container">
+        <div className="Modal_Container" style={{ maxWidth: '90%' }}>
             <div className="row">
-                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-12  d-flex justify-content-end align-items-end">
-                    <h1>x</h1>
+                <div className="col-md-8 ">
+                    <h4 className="underline"><strong>Add Patient</strong></h4>
+                </div>
+                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
+                    <h4>x</h4>
                 </div>
             </div>
             <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '' }}>
                 <div className="row" >
-                    <div className="col-md-2  text-center"  >
-                        <label htmlFor="" >Add Patient</label>
+                    <div className="col-md-6 "  >
                         <div className="row ">
-                            <div className="col-md-12 d-flex justify-content-center">
+                            <div className="col-md-12 d-flex ">
                                 <Button variant="outlined" onClick={connectionHandler}>upload file</Button>
                                 <Button variant="outlined" onClick={connectionScanHandler} style={{ marginLeft: "2%" }}>Scan Qr</Button>
                             </div>
                         </div>
-
                     </div>
                     <div className="col-md-2">
                     </div>
