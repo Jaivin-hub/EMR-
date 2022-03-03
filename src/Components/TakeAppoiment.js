@@ -148,7 +148,7 @@ function TakeAppoiment() {
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = doctorList.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = doctorList?.slice(indexOfFirstPost, indexOfLastPost);
 
     const paginate = pageNumber => setCurrentPage(pageNumber)
     const pendingCount = pendingList?.length

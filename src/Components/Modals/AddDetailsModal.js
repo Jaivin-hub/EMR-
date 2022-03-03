@@ -10,7 +10,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                 setShowAddDetailsModal(false)
             }}>
                 <div className="col-md-9 font-bold">
-                <i className="fa-solid fa-user-doctor"></i>
+                    {/* <FontAwesomeIcon icon="fa-solid fa-user-doctor" /> */}
                     Add Doctor
                 </div>
                 <div className="col-md-3">
@@ -25,6 +25,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     setShowAddDetailsModal(false)
                 }}>
                 <div className="col-md-9 font-bold">
+                    {/* <FontAwesomeIcon icon="fa-solid fa-user-tie-hair-long" /> */}
                     Add Patients
                 </div>
                 <div className="col-md-3">
@@ -35,6 +36,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
             </div>
             <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('Add Medicines') }}>
                 <div className="col-md-9 font-bold">
+                    {/* <FontAwesomeIcon icon="fa-solid fa-syringe" /> */}
                     Add Medicines
                 </div>
                 <div className="col-md-3">
@@ -45,6 +47,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
             </div>
             <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('Add Lab Procedures') }}>
                 <div className="col-md-9 font-bold">
+                    {/* <FontAwesomeIcon icon="fa-solid fa-flask" /> */}
                     Add Lab Procedures
                 </div>
                 <div className="col-md-3">

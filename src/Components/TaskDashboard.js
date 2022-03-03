@@ -161,15 +161,14 @@ function TaskDashboard() {
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3">
-                                            <button onClick={() => { setShowAddDetailsModal(true) }} type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
+                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer"onClick={() => { setShowAddDetailsModal(true) }}>
+                                            <button  type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
                                             <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
 
                                             {/* <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
                                     </div>
                                     <div className="ml-20 ">
-
                                         {showAddDetailsModal ?
                                             <AddDetailsModal
                                                 changeContentHandler={changeContentHandler}
