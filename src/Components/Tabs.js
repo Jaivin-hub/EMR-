@@ -38,6 +38,9 @@ function Tabs() {
     const hospitalId = localStorage.getItem('HospitalId')
     const [medicineList, setMedicineList] = useState([])
     const [reload, setreload] = useState(false)
+    const [inputFields, setInputFields] = useState([
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', qty: '', comments: '' },
+    ])
 
     useEffect(() => {
         fetchMedicineList()
@@ -175,7 +178,15 @@ function Tabs() {
 
     // #################### Validating ScientificName! ###########################
 
+    const addInputFieldHandler = () => {
+        setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', qty: '', comments: '' }])
+    }
 
+    const removeInputFieldHandler = (index) => {
+        const newData = [...inputFields]
+        newData.splice(index, 1)
+        setInputFields(newData)
+    }
 
     return (
         <div className="">
@@ -184,13 +195,13 @@ function Tabs() {
                     className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
                     onClick={() => toggleTab(1)}
                 >
-                    Dosage
+                    Prescription
                 </button>
                 <button
                     className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                     onClick={() => toggleTab(2)}
                 >
-                    Category
+                    Investigation
                 </button>
                 <button
                     className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
@@ -209,39 +220,87 @@ function Tabs() {
 
             <div className="content-tabs" >
                 <div className={toggleState === 1 ? "content  active-content" : "content"}>
-                    {/* <h2>Content 1</h2>
-                    <hr />
 
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="row">
-                                <div className="col-md-3">
 
-                                    <input type="text" placeholder="Whight" />
-                                </div>
-                                <div className="col-md-9">
-                                    <input type="text" placeholder="" />
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >SI No</TableCell>
+                                    <TableCell >Medicine Name</TableCell>
+                                    <TableCell >Pharmacological Name</TableCell>
+                                    <TableCell >Type</TableCell>
+                                    <TableCell >Dosage</TableCell>
+                                    <TableCell >Duration</TableCell>
+                                    <TableCell >Oty</TableCell>
+                                    <TableCell >Comments</TableCell>
 
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-3">
 
-                                    <input type="text" placeholder="Height" />
-                                </div>
-                                <div className="col-md-9">
-                                    <input type="text" placeholder="" />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {inputFields.map((value, index) => {
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableCell >
+                                                {index+1}
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" className='border-2' />
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" className='border-2' />
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" className='border-2' />
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" className='border-2' />
+                                            </TableCell>
+                                            <TableCell className="space-x-2 ">
+                                                <div className="d-flex">
 
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-
-                        </div>
-
-                    </div> */}
+                                                <input type="text" className='border-2 w-16' />
+                                                <input type="text" className='border-2 w-32' />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" className='border-2' />
+                                            </TableCell>
+                                            <TableCell >
+                                                <div className="d-flex">
+                                                    <textarea className="border-2" name="" id="" cols="30" rows="2"></textarea>
+                                                    {(inputFields.length - 1 === index) ?
+                                                        (<button type="button"
+                                                            className="inline-block
+                                                            rounded-sm bg-blue-300 text-white
+                                                            leading-normal uppercase shadow-md hover:bg-blue-400
+                                                            hover:shadow-lg focus:bg-blue-400 focus:shadow-lg
+                                                            focus:outline-none focus:ring-0 active:bg-blue-600
+                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2" 
+                                                            onClick={addInputFieldHandler}>
+                                                            +
+                                                        </button>)
+                                                        :
+                                                        (<button type="button"
+                                                            className="inline-block
+                                                            rounded-sm bg-red-400 text-white
+                                                            leading-normal uppercase shadow-md hover:bg-red-400
+                                                            hover:shadow-lg focus:bg-red-400 focus:shadow-lg
+                                                            focus:outline-none focus:ring-0 active:bg-red-600
+                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2" 
+                                                            onClick={() => { removeInputFieldHandler(index) }}>
+                                                            -
+                                                        </button>)}
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </div>
-
                 <div className={toggleState === 2 ? "content  active-content" : "content"}>
                     {/* <h2>Content 2</h2>
                     <hr />
@@ -305,7 +364,7 @@ function Tabs() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
@@ -313,8 +372,6 @@ function Tabs() {
                                             <TableCell >Medicine name</TableCell>
                                             <TableCell >Scientific name</TableCell>
                                             <TableCell >Medicine type</TableCell>
-                                            {/* <TableCell >Contact No</TableCell>
-                                            <TableCell >Email ID</TableCell> */}
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -327,14 +384,12 @@ function Tabs() {
                                                 </TableCell>
                                                 <TableCell >{value.s_med_name}</TableCell>
                                                 <TableCell >{value.med_type}</TableCell>
-                                                {/* <TableCell >{value.doc_contact}</TableCell>
-                                                <TableCell >{value.doc_email}</TableCell> */}
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>

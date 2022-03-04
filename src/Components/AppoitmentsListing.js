@@ -12,6 +12,7 @@ import instance from '../config/api'
 import moment from 'moment';
 import { Tab, Nav, Tabs, Form, Button, Accordion } from 'react-bootstrap';
 import '../assets/css/appointments.css'
+import { useNavigate } from 'react-router-dom';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 
 
@@ -22,14 +23,17 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 // import TabPanel from '@mui/lab/TabPanel';
 
 
-function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, appointments, setAppointments,setPatientId }) {
+function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, appointments, setAppointments, setPatientId }) {
     // const [appointments, setAppointments] = useState([])
+    const navigate = useNavigate();
     const hospitalId = localStorage.getItem('HospitalId')
     const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
     const [hospitalName, setHospitalName] = useState('')
     // const [patientId, setPatientId] = useState('')
-    
+
     // const [reload, setReload] = useState(false)
+
+    console.log('appointments777', appointments)
 
 
 
@@ -83,6 +87,7 @@ function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, app
 
         }
         instance.post('/list_appointment', obj).then((res) => {
+            console.log('res.data.appointment', res.data.appointment)
             setAppointments(res.data.appointment)
             setPendingList(res.data.appointment)
         })
@@ -111,6 +116,11 @@ function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, app
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const consultationHandler = (patientId, doctorId, index) => {
+        navigate('/consultation', { state: patientId })
+    }
+
     var curr = new Date();
     curr.setDate(curr.getDate());
     var date = curr.toISOString().substr(0, 10);
@@ -120,11 +130,6 @@ function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, app
                 <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
                     appointmentsDateHandler(e)
                 }} />
-
-                <div className="row pt-3 " >
-
-                </div>
-
                 <div className="row">
                     <div className="col-md-12">
 
@@ -155,15 +160,19 @@ function AppoitmentsListing({ setPendingList,setShowPrimaryAnalysis, reload, app
                                             <TableCell >{value._doc_id.doc_name}</TableCell>
                                             <TableCell >{value._doc_id.doc_spec}</TableCell>
                                             <TableCell >
-                                                <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }}
-                                                    onClick={() => { primaryAnalysisHandler(value._pat_id._id) }}>Primary Analysis</button>
+                                                <div className="d-flex">
+                                                    <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
+                                                        onClick={() => { primaryAnalysisHandler(value._pat_id._id) }}>Primary Analysis</button>
+                                                    <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
+                                                        onClick={() => { consultationHandler(value._pat_id._id, value._doc_id._id, index) }}>consultation</button>
+                                                </div>
                                             </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                       
+
                     </div>
 
                 </div>

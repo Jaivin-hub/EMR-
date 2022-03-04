@@ -5,6 +5,7 @@ import moment from 'moment';
 import XMLParser from 'react-xml-parser';
 import instance from '../config/api';
 import QrReader from 'react-qr-reader'
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -18,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function AddPatientModal({ setOpenModal, setReload, reload }) {
+    const navigate = useNavigate()
 
     const classes = useStyles()
     const [Phone, setPhone] = useState('')
@@ -351,6 +353,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                     // appointmentHandler()
                     setOpenModal(false)
                     setReload(true)
+                    navigate('/taskDashboard')
                 }
             }).catch((err) => {
                 console.log('error', err)
@@ -675,18 +678,13 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '' }}>
                 <div className="row" >
                     <div className="col-md-6 "  >
-                        <div className="row ">
-                            <div className="col-md-12 d-flex ">
-                                <Button variant="outlined" onClick={connectionHandler}>upload file</Button>
-                                <Button variant="outlined" onClick={connectionScanHandler} style={{ marginLeft: "2%" }}>Scan Qr</Button>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div className="col-md-2">
                     </div>
                 </div>
                 <div className="row text-center ">
-                    <div className="col-md-2 mt-5">
+                    <div className="col-md-2 mt-4">
                         {showUploadFile ?
                             <QrReader
                                 ref={qrRef}
@@ -710,6 +708,12 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                     <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', width: "100%" }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
                                 </div>
                         }
+                         <div className="row mt-4">
+                            <div className="col-md-12 d-flex ">
+                                <Button variant="outlined" onClick={connectionHandler}>upload file</Button>
+                                <Button variant="outlined" onClick={connectionScanHandler} style={{ marginLeft: "2%" }}>Scan Qr</Button>
+                            </div>
+                        </div>
                         <h4>{scanResultWebCam}</h4>
                     </div>
                     <div className="col-md-10">

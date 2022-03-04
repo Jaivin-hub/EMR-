@@ -1,4 +1,6 @@
 import React from 'react'
+// import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+// import {faCoffee} from "@fontawesome/free"
 
 
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
@@ -10,7 +12,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                 setShowAddDetailsModal(false)
             }}>
                 <div className="col-md-9 font-bold">
-                    {/* <FontAwesomeIcon icon="fa-solid fa-user-doctor" /> */}
+                    {/* <FontAwesomeIcon icon={doctor} /> */}
                     Add Doctor
                 </div>
                 <div className="col-md-3">

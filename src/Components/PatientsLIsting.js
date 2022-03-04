@@ -22,6 +22,7 @@ import AddDoctorModal from './Modals/AddDoctorModal';
 import SettingsView from './SettingsView';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
+import AddDetailsModal from './Modals/AddDetailsModal';
 
 
 function PatientsLIsting() {
@@ -43,6 +44,8 @@ function PatientsLIsting() {
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
+    const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
+
 
     const HospitalId = localStorage.getItem('HospitalId')
     const { state } = useLocation();
@@ -105,34 +108,21 @@ function PatientsLIsting() {
 
     }
 
-    const showModalsHandler = (e) => {
-        if (e.value == 'Add Patient') {
+    const changeContentHandler = (value) => {
+        console.log(value)
+        if (value == 'Add Patients') {
             setShowPatientView(true)
             setShowDoctorView(false)
-            // setShowAppointmentView(false)
-            // setShowHospitalView(false)
-            // setShowSettingsView(false)
-        } else if (e.value == 'Add Doctor') {
+        } else if (value == 'Add Doctor') {
             setShowDoctorView(true)
             setShowPatientView(false)
-            // setShowAppointmentView(false)
-            // setShowHospitalView(false)
-            // setShowSettingsView(false)
-            // setShowSettingsView(false)
-        } else if (e.value == 'PatientsListing') {
+        } else if (value == 'Appointments') {
             setShowDoctorView(false)
             setShowPatientView(false)
             setShowAppointmentView(true)
             setShowHospitalView(false)
             setShowSettingsView(false)
-        }
-        else if (e.value == 'Appointments') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowAppointmentView(true)
-            setShowHospitalView(false)
-            setShowSettingsView(false)
-        } else if (e.value == 'Settings') {
+        } else if (value == 'Settings') {
             setShowSettingsView(true)
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -187,9 +177,19 @@ function PatientsLIsting() {
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-1">
-                                            <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" />
+                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer"onClick={() => { setShowAddDetailsModal(true) }}>
+                                            <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
+                                            <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
+                                            {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
+                                    </div>
+                                    <div className="ml-20 ">
+                                        {showAddDetailsModal ?
+                                            <AddDetailsModal
+                                                changeContentHandler={changeContentHandler}
+                                                setShowAddDetailsModal={setShowAddDetailsModal}
+                                            />
+                                            : null}
                                     </div>
                                 </div>
                             </div>

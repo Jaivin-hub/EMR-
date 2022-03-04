@@ -42,27 +42,7 @@ function TaskDashboard() {
         'Appointments', 'Add Patient', 'Add Doctor', 'Settings'
     ];
     const defaultOption = options[0];
-    const dropDownHandler = (e) => {
-        if (e.value == 'Add Patient') {
-            setShowPatientView(true)
-            setShowDoctorView(false)
-        } else if (e.value == 'Add Doctor') {
-            setShowDoctorView(true)
-            setShowPatientView(false)
-        } else if (e.value == 'Appointments') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowAppointmentView(true)
-            setShowHospitalView(false)
-            setShowSettingsView(false)
-        } else if (e.value == 'Settings') {
-            setShowSettingsView(true)
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowAppointmentView(false)
-            setShowHospitalView(false)
-        }
-    }
+ 
 
     const fetchAppointment = () => {
         const Data = localStorage.getItem('HospitalName')
