@@ -10,6 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import SearchableDropdown from "./dropdown/SearchableDropdown";
+import "../assets/css/searchableDropdown.css"
 
 
 
@@ -41,6 +43,9 @@ function Tabs() {
     const [inputFields, setInputFields] = useState([
         { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', qty: '', comments: '' },
     ])
+    const [selectedMedicineName, setSelectedMedicineName] = useState('')
+    const [medicineScientificName, setMedicineScientificName] = useState('')
+    const [selectedMedicineType, setSelectedMedicineType] = useState('')
 
     useEffect(() => {
         fetchMedicineList()
@@ -59,6 +64,8 @@ function Tabs() {
             console.log('error', err)
         })
     }
+
+    console.log('medicineList', medicineList)
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -243,29 +250,34 @@ function Tabs() {
                                     return (
                                         <TableRow key={index}>
                                             <TableCell >
-                                                {index+1}
+                                                {index + 1}
                                             </TableCell>
                                             <TableCell >
-                                                <input type="text" className='border-2' />
+                                                <SearchableDropdown
+                                                    setSelectedMedicineName={setSelectedMedicineName}
+                                                    setMedicineScientificName={setMedicineScientificName}
+                                                    setSelectedMedicineType={setSelectedMedicineType}
+                                                    List={medicineList}
+                                                />
+                                                {/* <input type="text" className='border-2' /> */}
+                                            </TableCell>
+                                            <TableCell className='dropdown'>
+                                                <input type="text" value={medicineScientificName} className='border-2 w-40 h-10' />
+                                            </TableCell>
+                                            <TableCell className=''>
+                                                <input type="text" value={selectedMedicineType} className='border-2 w-40 h-10' />
                                             </TableCell>
                                             <TableCell >
-                                                <input type="text" className='border-2' />
-                                            </TableCell>
-                                            <TableCell >
-                                                <input type="text" className='border-2' />
-                                            </TableCell>
-                                            <TableCell >
-                                                <input type="text" className='border-2' />
+                                                <input type="text" className='border-2 h-10' />
                                             </TableCell>
                                             <TableCell className="space-x-2 ">
                                                 <div className="d-flex">
-
-                                                <input type="text" className='border-2 w-16' />
-                                                <input type="text" className='border-2 w-32' />
+                                                    <input type="text" className='border-2 w-16 h-10' />
+                                                    <input type="text" className='border-2 w-32 h-10' />
                                                 </div>
                                             </TableCell>
                                             <TableCell >
-                                                <input type="text" className='border-2' />
+                                                <input type="text" className='border-2 h-10' />
                                             </TableCell>
                                             <TableCell >
                                                 <div className="d-flex">
@@ -277,7 +289,7 @@ function Tabs() {
                                                             leading-normal uppercase shadow-md hover:bg-blue-400
                                                             hover:shadow-lg focus:bg-blue-400 focus:shadow-lg
                                                             focus:outline-none focus:ring-0 active:bg-blue-600
-                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2" 
+                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2"
                                                             onClick={addInputFieldHandler}>
                                                             +
                                                         </button>)
@@ -288,7 +300,7 @@ function Tabs() {
                                                             leading-normal uppercase shadow-md hover:bg-red-400
                                                             hover:shadow-lg focus:bg-red-400 focus:shadow-lg
                                                             focus:outline-none focus:ring-0 active:bg-red-600
-                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2" 
+                                                            active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2"
                                                             onClick={() => { removeInputFieldHandler(index) }}>
                                                             -
                                                         </button>)}

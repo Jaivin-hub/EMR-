@@ -35,7 +35,7 @@ function Consultation() {
 
         instance.post('list_patient_primary_analysis', obj).then((response) => {
             console.log('res--ponse--', response.data.patientAnalysis[0]);
-            const data = response.data.patientAnalysis[0]
+            const data = response?.data.patientAnalysis[0]
             setPatientHeight(data.height)
             setPatientWeight(data.weight)
             if (data.diabetes == true) {
@@ -155,7 +155,6 @@ function Consultation() {
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
-
                         <Tabs />
                     </div>
                 </div>
