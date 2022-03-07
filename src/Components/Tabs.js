@@ -198,7 +198,7 @@ function Tabs() {
 
     const medNameHandler = (opt, index) => {
 
-        medicineList.map((item, i) => {
+        medicineList?.map((item, i) => {
             if (item.med_name == opt.label) {
                 const newData = [...inputFields]
                 newData[index]['Sname'] = item.s_med_name

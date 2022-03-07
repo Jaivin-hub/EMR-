@@ -1,39 +1,30 @@
 import React, { useState } from 'react'
 
-import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
+import { useReactMediaRecorder } from "react-media-recorder";
 
 function VoiceRecorder() {
-    const [recordState, setRecordState] = useState(null)
+
+    const {
+        status,
+        startRecording,
+        stopRecording,
+        mediaBlobUrl,
+    } = useReactMediaRecorder({ audio: true });
+
+    console.log('mediaBlobUrl', mediaBlobUrl)
 
 
 
-    const start = () => {
-        setRecordState({
-            setRecordState: RecordState.START
-        })
-    }
 
-    const stop = () => {
-        setRecordState({
-            recordState: RecordState.STOP
-        })
-    }
+    return (
+        <div>
+            <p>{status}</p>
+            <button onClick={startRecording}>Start Recording</button>
+            <button onClick={stopRecording}>Stop Recording</button>
+            <audio src={mediaBlobUrl} controls />
+        </div>
+    )
 
-    //audioData contains blob and blobUrl
-    const onStop = (audioData) => {
-        console.log('audioData', audioData)
-    }
-
-    
-
-        return (
-            <div>
-                <AudioReactRecorder state={recordState} onStop={onStop} />
-                <button onClick={start}>Start</button>
-                <button onClick={stop}>Stop</button>
-            </div>
-        )
-    
 }
 
 export default VoiceRecorder

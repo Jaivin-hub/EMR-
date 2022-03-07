@@ -10,7 +10,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import instance from '../config/api';
 import Tabs from './Tabs'
-import {BsFillMicFill} from 'react-icons/bs'
+import { BsFillMicFill, BsFillMicMuteFill } from 'react-icons/bs'
+import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
+import { useReactMediaRecorder } from "react-media-recorder";
+
 
 function Consultation() {
     const hospitalId = localStorage.getItem('HospitalId')
@@ -35,6 +38,10 @@ function Consultation() {
     const [patientUpperValue, setPatientUpperValue] = useState('')
     const [patientAllergicFood, setPatientAllergicFood] = useState('')
     const [patientAllergicMedicine, setPatientAllergicMedicine] = useState('')
+    const [showPrimaryAnalysisDetails, setShowPrimaryAnalysisDetails] = useState(false)
+    const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
+    const [toggleMic, setToggleMic] = useState(true)
+    const [showStatus, setShowStatus] = useState(false)
 
 
     const fetchPatientPrimaryAnalysis = () => {
@@ -44,33 +51,60 @@ function Consultation() {
         }
 
         instance.post('list_patient_primary_analysis', obj).then((response) => {
-            console.log('res--ponse--', response.data.patientAnalysis[0]);
-            const data = response?.data.patientAnalysis[0]
-            setPatientHeight(data.height)
-            setPatientWeight(data.weight)
-            if (data.diabetes == true) {
-                setDiabetesChecked("Yes")
+            console.log('res--ponse--', response);
+            if (response == undefined) {
+                setShowPrimaryAnalysisDetails(true)
             } else {
-                setDiabetesChecked("No")
+                const data = response?.data.patientAnalysis[0]
+                setPatientHeight(data.height)
+                setPatientWeight(data.weight)
+                if (data.diabetes == true) {
+                    setDiabetesChecked("Yes")
+                } else {
+                    setDiabetesChecked("No")
+                }
+                setPatientFasting(data.fasting)
+                setPatientAfterFood(data.after_food)
+                if (data.bp == true) {
+                    setBpChecked('Yes')
+                } else {
+                    setBpChecked('No')
+                }
+                setPatientLowerValue(data.lower_value)
+                setPatientUpperValue(data.upper_value)
+                setPatientAllergicFood(data.allergic_food)
+                setPatientAllergicMedicine(data.allergic_medicine)
             }
-            setPatientFasting(data.fasting)
-            setPatientAfterFood(data.after_food)
-            if (data.bp == true) {
-                setBpChecked('Yes')
-            } else {
-                setBpChecked('No')
-            }
-            setPatientLowerValue(data.lower_value)
-            setPatientUpperValue(data.upper_value)
-            setPatientAllergicFood(data.allergic_food)
-            setPatientAllergicMedicine(data.allergic_medicine)
 
         })
+    }
+
+    const primaryAnalysisHandler = () => {
+        setShowPrimaryAnalysis(true)
     }
 
     useEffect(() => {
         fetchPatientPrimaryAnalysis()
     }, [])
+
+    const {
+        status,
+        startRecording,
+        stopRecording,
+        mediaBlobUrl,
+    } = useReactMediaRecorder({ audio: true });
+
+    const handleStartRecording = () => {
+        startRecording()
+        setToggleMic(false)
+        setShowStatus(true)
+    }
+
+    const handleStopRecording = () => {
+        stopRecording()
+        setToggleMic(true)
+        setShowStatus(false)
+    }
 
     return (
         <div>
@@ -96,50 +130,76 @@ function Consultation() {
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <div className="row">
-                    <div className="col-md-12">
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell >Height</TableCell>
-                                        <TableCell >Weight</TableCell>
-                                        <TableCell >Diabetes</TableCell>
-                                        <TableCell >Fasting</TableCell>
-                                        <TableCell >AfterFood</TableCell>
-                                        <TableCell >Bp</TableCell>
-                                        <TableCell >Lower Value</TableCell>
-                                        <TableCell >Upper Value</TableCell>
-                                        <TableCell >Allergic Food</TableCell>
-                                        <TableCell >Allergic Medicine</TableCell>
+                    <div className="col-md-12 d-flex justify-content-center">
+                        {showPrimaryAnalysisDetails ?
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell >Height</TableCell>
+                                            <TableCell >Weight</TableCell>
+                                            <TableCell >Diabetes</TableCell>
+                                            <TableCell >Fasting</TableCell>
+                                            <TableCell >AfterFood</TableCell>
+                                            <TableCell >Bp</TableCell>
+                                            <TableCell >Lower Value</TableCell>
+                                            <TableCell >Upper Value</TableCell>
+                                            <TableCell >Allergic Food</TableCell>
+                                            <TableCell >Allergic Medicine</TableCell>
 
 
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell component="th" scope="row">
-                                            {patientHeight}
-                                        </TableCell>
-                                        <TableCell >{patientWeight}</TableCell>
-                                        <TableCell >{diabetesChecked}</TableCell>
-                                        <TableCell >{patientFasting}</TableCell>
-                                        <TableCell >{patientAfterFood}</TableCell>
-                                        <TableCell >{bpChecked}</TableCell>
-                                        <TableCell >{patientLowerValue}</TableCell>
-                                        <TableCell >{patientUpperValue}</TableCell>
-                                        <TableCell >{patientAllergicFood}</TableCell>
-                                        <TableCell >{patientAllergicMedicine}</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                {patientHeight}
+                                            </TableCell>
+                                            <TableCell >{patientWeight}</TableCell>
+                                            <TableCell >{diabetesChecked}</TableCell>
+                                            <TableCell >{patientFasting}</TableCell>
+                                            <TableCell >{patientAfterFood}</TableCell>
+                                            <TableCell >{bpChecked}</TableCell>
+                                            <TableCell >{patientLowerValue}</TableCell>
+                                            <TableCell >{patientUpperValue}</TableCell>
+                                            <TableCell >{patientAllergicFood}</TableCell>
+                                            <TableCell >{patientAllergicMedicine}</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            :
+                            <button type="button" class="inline-block px-6 py-2 
+                         border-2 border-blue-400 text-blue-400 font-medium 
+                         text-xs leading-tight uppercase rounded hover:bg-black 
+                         hover:bg-opacity-5 focus:outline-none focus:ring-0 transition 
+                         duration-150 ease-in-out h-16" onClick={primaryAnalysisHandler}>Add Primary Analysis</button>
+                        }
+
                     </div>
                 </div>
+                {showPrimaryAnalysis ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
+                    </div>
+                    : null}
             </div>
             <div className="row space-x-3 m-5">
                 <textarea className='border-4' placeholder="Comments" name="" id="" cols="50" rows="2"></textarea>
                 <input type="text" className='border-4' />
-                <BsFillMicFill className='mt-3' size={35}/>
+                {toggleMic ?
+                    <BsFillMicFill cursor='pointer' onClick={handleStartRecording} className='mt-4' size={30} />
+                    :
+                    <BsFillMicMuteFill cursor='pointer' onClick={handleStopRecording} className='mt-4' size={30} />
+                }
+                {showStatus ?
+                    <p className='mt-4'>{status}</p>
+                    : null
+                }
+                {mediaBlobUrl ?
+                    <audio className='mt-2' src={mediaBlobUrl} controls />
+                    : null
+                }
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>
