@@ -36,6 +36,7 @@
     "react-select": "^3.1.0",
     "react-select-search": "^3.0.9",
     "react-time-picker-input": "^2.0.10",
+    "react-to-print": "^2.14.4",
     "react-xml-parser": "^1.1.8",
     "web-vitals": "^2.1.4"
   },

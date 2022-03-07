@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Header from './Header'
 import { useLocation } from 'react-router-dom'
 import Table from '@mui/material/Table';
@@ -13,9 +13,16 @@ import Tabs from './Tabs'
 import { BsFillMicFill, BsFillMicMuteFill } from 'react-icons/bs'
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import { useReactMediaRecorder } from "react-media-recorder";
+import { useReactToPrint } from "react-to-print";
+import { GrDocumentPdf } from 'react-icons/gr'
+
 
 
 function Consultation() {
+    const componentRef = useRef()
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    })
     const hospitalId = localStorage.getItem('HospitalId')
     const state = useLocation()
     const patientFirstName = state.state[0]._pat_id.p_firstname
@@ -106,7 +113,7 @@ function Consultation() {
     }
 
     return (
-        <div>
+        <div ref={componentRef}>
             <Header />
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <div className="row">
@@ -120,6 +127,13 @@ function Consultation() {
                                         <TableCell >Age : {patientDOB}</TableCell>
                                         <TableCell >Blood Group : {patientBloodGroup}</TableCell>
                                         <TableCell >Contact No1 : {patientPhone}</TableCell>
+                                        <TableCell >
+                                            <button type="button" class="inline-block px-6 py-2 border-2 
+            border-gray-800 text-gray-800 font-medium text-xs leading-tight 
+            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
+            focus:ring-0 transition duration-150 ease-in-out" onClick={handlePrint}><GrDocumentPdf size={25}/></button>
+                                        </TableCell>
+
                                     </TableRow>
                                 </TableHead>
                             </Table>

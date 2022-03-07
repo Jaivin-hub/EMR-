@@ -133,7 +133,7 @@ function MedicineModal({ setShowMedicineView, setOpenModal, setReload, reload })
         <div className="Modal_Container bg-white" style={{ maxWidth: '90%' }}>
             <div className="row">
                 <div className="col-md-8 ">
-                    <h4 className="underline"><strong>Primary Analysis</strong></h4>
+                    <h4 className="underline"><strong>Add Medicine</strong></h4>
                 </div>
                 <div style={{ cursor: 'pointer' }} onClick={() => { setShowMedicineView(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
                     <h4>x</h4>

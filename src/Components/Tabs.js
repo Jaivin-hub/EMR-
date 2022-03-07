@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import '../assets/css/tabs.css'
 import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import SearchableDropdown from "./dropdown/SearchableDropdown";
 import "../assets/css/searchableDropdown.css"
 import Select from 'react-select';
+// import { useReactToPrint } from "react-to-print";
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,6 +24,10 @@ const useStyles = makeStyles(theme => ({
 
 
 function Tabs() {
+    // const componentRef = useRef()
+    // const handlePrint = useReactToPrint({
+    //     content: () => componentRef.current,
+    // })
     const classes = useStyles()
 
     const [toggleState, setToggleState] = useState(1);
@@ -204,8 +209,13 @@ function Tabs() {
         })
     }
 
+    console.log('inputFields', inputFields)
+
+
+
     return (
         <div className="">
+                
             <div className="bloc-tabs">
                 <button
                     className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
@@ -231,7 +241,6 @@ function Tabs() {
             <div className="content-tabs" >
                 <div className={toggleState === 1 ? "content  active-content" : "content"}>
 
-
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -244,14 +253,12 @@ function Tabs() {
                                     <TableCell >Duration</TableCell>
                                     <TableCell >Oty</TableCell>
                                     <TableCell >Comments</TableCell>
-
-
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {inputFields.map((value, index) => {
                                     return (
-                                        <TableRow key={index}>
+                                        <TableRow>
                                             <TableCell >
                                                 {index + 1}
                                             </TableCell>
@@ -259,6 +266,7 @@ function Tabs() {
                                                 <Select
                                                     id="medicineName"
                                                     style={{ width: '100%' }}
+                                                    defaultValue={value.medicineName}
                                                     options={selectedList}
                                                     onChange={(opt) => { medNameHandler(opt, index) }}
                                                 />
