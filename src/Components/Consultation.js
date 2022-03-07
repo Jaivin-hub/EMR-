@@ -10,11 +10,21 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import instance from '../config/api';
 import Tabs from './Tabs'
+import {BsFillMicFill} from 'react-icons/bs'
 
 function Consultation() {
     const hospitalId = localStorage.getItem('HospitalId')
     const state = useLocation()
-    const patientId = state.state
+    console.log('state from consultation', state.state[0]._pat_id._id)
+    const patientFirstName = state.state[0]._pat_id.p_firstname
+    const patientLastName = state.state[0]._pat_id.p_lastname
+    const patientAdhar = state.state[0]._pat_id.aadhar_card_no
+    const patientBloodGroup = state.state[0]._pat_id.p_bloodgroup
+    const patientDOB = state.state[0]._pat_id.p_dob
+    const patientId = state.state[0]._pat_id._id
+    const patientPhone = state.state[0]._pat_id.p_phoneno
+
+    // const patientId = state.state
     const [diabetesChecked, setDiabetesChecked] = useState('')
     const [bpChecked, setBpChecked] = useState('')
     const [patientHeight, setPatientHeight] = useState('')
@@ -70,36 +80,15 @@ function Consultation() {
                     <div className="col-md-12">
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                {/* <TableHead>
+                                <TableHead>
                                     <TableRow>
-                                        <TableCell >Firstname</TableCell>
-                                        <TableCell >Lastname</TableCell>
-                                        <TableCell >Adhar No</TableCell>
-                                        <TableCell >Age</TableCell>
-                                        <TableCell >Blood Group</TableCell>
-                                        <TableCell >City</TableCell>
-                                        <TableCell >State</TableCell>
-                                        <TableCell >Contact No1</TableCell>
-                                        <TableCell >Contact No2</TableCell>
+                                        <TableCell >Name : {patientFirstName + " " + patientLastName}</TableCell>
+                                        <TableCell >Adhar No : {patientAdhar}</TableCell>
+                                        <TableCell >Age : {patientDOB}</TableCell>
+                                        <TableCell >Blood Group : {patientBloodGroup}</TableCell>
+                                        <TableCell >Contact No1 : {patientPhone}</TableCell>
                                     </TableRow>
-                                </TableHead> */}
-                                {/* <TableBody>
-                                    {patientDetails?.map((value, index) => (
-                                        <TableRow
-                                            key={index}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {value._pat_id.p_firstname}
-                                            </TableCell>
-                                            <TableCell >{value._pat_id.p_dob}</TableCell>
-                                            <TableCell >{value.app_date}</TableCell>
-                                            <TableCell >{value.app_time}</TableCell>
-                                            <TableCell >{value._doc_id.doc_name}</TableCell>
-                                            <TableCell >{value._doc_id.doc_spec}</TableCell>
-                                            
-                                        </TableRow>
-                                    ))}
-                                </TableBody> */}
+                                </TableHead>
                             </Table>
                         </TableContainer>
                     </div>
@@ -150,6 +139,7 @@ function Consultation() {
             <div className="row space-x-3 m-5">
                 <textarea className='border-4' placeholder="Comments" name="" id="" cols="50" rows="2"></textarea>
                 <input type="text" className='border-4' />
+                <BsFillMicFill className='mt-3' size={35}/>
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>

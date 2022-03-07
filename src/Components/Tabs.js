@@ -190,6 +190,7 @@ function Tabs() {
     }
 
     const removeInputFieldHandler = (index) => {
+        console.log('index', index)
         const newData = [...inputFields]
         newData.splice(index, 1)
         setInputFields(newData)
@@ -229,12 +230,6 @@ function Tabs() {
                     onClick={() => toggleTab(2)}
                 >
                     Investigation
-                </button>
-                <button
-                    className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
-                    onClick={() => toggleTab(3)}
-                >
-                    Medicine
                 </button>
                 <button
                     className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
@@ -348,7 +343,7 @@ function Tabs() {
                     </p> */}
                 </div>
 
-                <div className={toggleState === 3 ? "content  active-content" : "content"} >
+                {/* <div className={toggleState === 3 ? "content  active-content" : "content"} >
                     <h4><strong>Medicine details</strong></h4>
                     <div className="row mt-5">
                         <div className="col-md-6">
@@ -402,35 +397,10 @@ function Tabs() {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="col-md-6">
-                            <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell >Medicine name</TableCell>
-                                            <TableCell >Scientific name</TableCell>
-                                            <TableCell >Medicine type</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {medicineList?.map((value, index) => (
-                                            <TableRow
-                                                key={index}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {value.med_name}
-                                                </TableCell>
-                                                <TableCell >{value.s_med_name}</TableCell>
-                                                <TableCell >{value.med_type}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </div> */}
+                        
 
                     </div>
-                </div>
+                </div> */}
                 <div className={toggleState === 4 ? "content  active-content" : "content"}>
 
                 </div>

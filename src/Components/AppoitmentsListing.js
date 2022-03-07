@@ -118,7 +118,14 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     };
 
     const consultationHandler = (patientId, doctorId, index) => {
-        navigate('/consultation', { state: patientId })
+        const selectedData = []
+        appointments.map((item, i) => {
+            if (item._pat_id._id == patientId) {
+                selectedData.push(item);
+            }
+        })
+        console.log('selectedData', selectedData)
+        navigate('/consultation', { state: selectedData })
     }
 
     var curr = new Date();

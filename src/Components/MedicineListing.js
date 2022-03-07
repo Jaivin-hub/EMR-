@@ -18,11 +18,6 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
 
 
-
-
-
-
-
 function MedicineListing() {
     const hospitalName = localStorage.getItem('HospitalName')
     const [reload, setReload] = useState(false)
@@ -42,15 +37,6 @@ function MedicineListing() {
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
-
-
-
-    
-    
-
-
-
-
 
 
     const changeContentHandler = (value) => {
@@ -75,7 +61,7 @@ function MedicineListing() {
             setShowHospitalView(false)
         }
     }
-    
+
 
     const paginate = pageNumber => setCurrentPage(pageNumber)
     const pendingCount = pendingList?.length
@@ -170,7 +156,17 @@ function MedicineListing() {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {medicineList?.map((value, index) => (
+                                                {medicineList?.filter((val) => {
+                                                    if (searchTerm == '') {
+                                                        return val
+                                                    } else if (val.s_med_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                        return val
+                                                    } else if (val.med_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                        return val
+                                                    } else if (val.med_type?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                                        return val
+                                                    }
+                                                }).map((value, index) => (
                                                     <TableRow
                                                         key={index}
                                                     >

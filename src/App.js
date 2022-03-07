@@ -15,6 +15,7 @@ import PrimaryAnalysis from './Components/PrimaryAnalysis'
 import Consultation from './Components/Consultation'
 import DoctorLogin from './Components/Authentications/DoctorLogin'
 import SampleSearch from './Components/dropdown/SampleSearch'
+import VoiceRecorder from './Components/VoiceRecorder'
 import './index.css'
 import MedicineListing from "./Components/MedicineListing";
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path='/doctor/login' element={<DoctorLogin />} />
         <Route path='/SampleSearch' element={<SampleSearch />} />
         <Route path='/MedicineListing' element={<MedicineListing />} />
+        <Route path='/VoiceRecorder' element={<VoiceRecorder />} />
       </Routes>
     </Router>
   );
