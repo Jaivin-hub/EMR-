@@ -65,10 +65,8 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
     }
 
     const handleTimeSchedule = (e, index) => {
-        console.log(index)
         const newData = { ...inputDateFields }
         newData[index][e.target.id] = e.target.value
-        console.log(newData)
         setInputDateFields(newData)
     }
 
@@ -83,7 +81,6 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
 
 
     const handleChangeDate = (date) => {
-        console.log(date)
     }
 
     const handleRemoveFields = (index) => {

@@ -77,7 +77,6 @@ function TakeAppoiment() {
             app_date: date_format
 
         }
-        console.log('obj', obj)
 
         instance.post('/list_appointment', obj).then((res) => {
             const arr = res.data.appointment
@@ -88,16 +87,12 @@ function TakeAppoiment() {
     }
 
     useEffect(() => {
-        console.log('first mounting')
         const Data = localStorage.getItem('HospitalName')
         setHospitalName(Data)
-        console.log('Data', Data)
         const obj = {
             _hos_id: HospitalId
         }
-        console.log('mounting')
         instance.post('/list_doctors', obj).then((response) => {
-            console.log('list response', response)
             const doctorData = response.data.doctors
             setDoctorList(doctorData)
         }).catch((err) => {
@@ -107,13 +102,11 @@ function TakeAppoiment() {
     }, [reload])
 
     const dropDownHandler = (e) => {
-        console.log(e.value)
         setAppoinmentDate(e.value)
 
     }
 
     const changeContentHandler = (value) => {
-        console.log(value)
         if (value == 'Add Patients') {
             setShowPatientView(true)
             setShowDoctorView(false)

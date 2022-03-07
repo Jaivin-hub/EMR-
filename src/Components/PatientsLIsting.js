@@ -58,7 +58,6 @@ function PatientsLIsting() {
         'PatientsListing', 'Add Patient', 'Add Doctor', 'Settings'
     ];
     const defaultOption = showOptions[0];
-    console.log('searchTerm', searchTerm)
 
     const fetchAppointment = () => {
         const Data = localStorage.getItem('HospitalName')
@@ -103,13 +102,11 @@ function PatientsLIsting() {
     }, [reload])
 
     const dropDownHandler = (e) => {
-        console.log(e.value)
         setAppoinmentDate(e.value)
 
     }
 
     const changeContentHandler = (value) => {
-        console.log(value)
         if (value == 'Add Patients') {
             setShowPatientView(true)
             setShowDoctorView(false)

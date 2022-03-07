@@ -28,13 +28,10 @@ function MedicineModal({ setShowMedicineView, setOpenModal, setReload, reload })
             med_type: medicineType,
             IsActive: 'true'
         }
-        console.log('handle clicked')
         instance.post('/add_medicine', obj).then((res) => {
-            console.log('add medicine', res)
             if (res) {
                 setShowMedicineView(false)
             }
-            console.log('response', res)
         }).catch((err) => {
             console.log('error', err)
         })

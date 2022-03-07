@@ -59,7 +59,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const timeChangeHandler = (e) => {
         let time = e.target.value
         setTimeX(time)
-        console.log('time===', time)
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
         if (time.length > 1) { // If time format correct
             time = time.slice(1);  // Remove full string match value
@@ -324,7 +323,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
 
     const addPatientHandler = () => {
-        console.log('function calling')
         const { bloodBloodGroup, patientPhoneNo } = patientData
         if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
             const obj = {
@@ -349,7 +347,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             instance.post('/add_patient', obj).then((response) => {
                 setMainErr('')
                 if (response) {
-                    console.log('response====', response)
                     // appointmentHandler()
                     setOpenModal(false)
                     setReload(true)
@@ -385,11 +382,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             } if (patientBloodGroup == "") {
                 setBloodGroupErr('This field is required')
             }
-
-
-
-            // setMainErr('Check all the fields that you entered!')
-            console.log('else case')
         }
 
     }
@@ -660,7 +652,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const paginate = pageNumber => setCurrentPage(pageNumber)
 
     const addNewPatientHandler = () => {
-        console.log('handle clicked')
         setOpenModal(true)
     }
 

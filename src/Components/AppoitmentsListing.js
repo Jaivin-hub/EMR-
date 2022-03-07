@@ -33,10 +33,6 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
     // const [reload, setReload] = useState(false)
 
-    console.log('appointments777', appointments)
-
-
-
 
     useEffect(() => {
         // fetchAppointment()
@@ -45,7 +41,6 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setToday(date)
     }, [])
 
-    console.log('appointmentCurrentDate', appointmentCurrentDate)
 
 
     // const fetchAppointment = () => {
@@ -87,7 +82,6 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
         }
         instance.post('/list_appointment', obj).then((res) => {
-            console.log('res.data.appointment', res.data.appointment)
             setAppointments(res.data.appointment)
             setPendingList(res.data.appointment)
         })
@@ -105,7 +99,6 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     const [value, setValue] = React.useState('1');
     const [today, setToday] = useState()
 
-    console.log('appointments', appointments)
 
     const primaryAnalysisHandler = (id) => {
         setPatientId(id)
@@ -124,7 +117,6 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                 selectedData.push(item);
             }
         })
-        console.log('selectedData', selectedData)
         navigate('/consultation', { state: selectedData })
     }
 

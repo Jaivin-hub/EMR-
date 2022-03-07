@@ -53,7 +53,6 @@ function PrimaryAnalysis() {
         }
 
         instance.post('list_patient_primary_analysis', obj).then((response) => {
-            console.log('res--ponse--', response.data.patientAnalysis);
             const data = response.data.patientAnalysis[0]
             setPatientHeight(data.height)
             setPatientWeight(data.weight)
@@ -68,7 +67,6 @@ function PrimaryAnalysis() {
 
         })
     }
-    console.log('patientHeight', patientHeight)
 
 
     useEffect(() => {

@@ -49,9 +49,7 @@ function Tabs() {
             _hos_id: hospitalId,
             isActive: true
         }
-        console.log(obj)
         instance.post('/list_medicine', obj).then((res) => {
-            console.log('medicine response', res)
             setMedicineList(res?.data.medicines)
             const medNameList = []
             res?.data.medicines.map((item, index) => {
@@ -59,13 +57,11 @@ function Tabs() {
                 medNameList.push(value)
             })
             setSelectedList(medNameList)
-            console.log('medList', medNameList)
         }).catch((err) => {
             console.log('error', err)
         })
     }
 
-    console.log('medicineList', medicineList)
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -87,13 +83,10 @@ function Tabs() {
             med_type: medicineType,
             IsActive: 'true'
         }
-        console.log('handle clicked')
         instance.post('/add_medicine', obj).then((res) => {
-            console.log('add medicine', res)
             if (res) {
                 setreload(!reload)
             }
-            console.log('response', res)
         }).catch((err) => {
             console.log('error', err)
         })
@@ -190,7 +183,6 @@ function Tabs() {
     }
 
     const removeInputFieldHandler = (index) => {
-        console.log('index', index)
         const newData = [...inputFields]
         newData.splice(index, 1)
         setInputFields(newData)
@@ -210,12 +202,8 @@ function Tabs() {
                 // setSelectedMedicineType(item.med_type)
             }
         })
-        console.log(opt.label)
     }
 
-    console.log('medicineList', inputFields)
-
-    console.log('input', inputFields)
     return (
         <div className="">
             <div className="bloc-tabs">

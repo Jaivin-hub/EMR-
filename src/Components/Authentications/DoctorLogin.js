@@ -73,8 +73,6 @@ function DoctorLogin() {
         }
     }
 
-    console.log('email', email)
-    console.log('password', password)
 
     // #################### Validating Password! ###########################
 
@@ -90,7 +88,6 @@ function DoctorLogin() {
     // // console.log(loginData)
 
     const submitHandler = () => {
-        console.log('clicked')
         const obj = {
             email_id: email,
             password: password
@@ -98,7 +95,6 @@ function DoctorLogin() {
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
                 instance.post('/login_hospital', obj).then((response) => {
-                    console.log('response login hospital ---', response)
                     if (response.data.msg == 'Success') {
                         const Data = response.data.hospital[0].name
                         const id = response.data.hospital[0]._id
@@ -108,17 +104,14 @@ function DoctorLogin() {
                         navigate('/taskDashboard');
                     } else if (response.data.msg == 'Email or Password is invalid') {
                         setMainErr(response.data.msg)
-                        console.log('invalid username or password')
                     }
                 }).catch((err) => {
                     console.log('Error from login : ', err)
                 })
             } else {
-                console.log('the way')
                 setMainErr('All fields are required!')
             }
         } else {
-            console.log('on the right way')
             setMainErr('Check the fields you entered!')
         }
         // const { email_id, password } = loginData

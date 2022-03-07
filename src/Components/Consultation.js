@@ -18,7 +18,6 @@ import { useReactMediaRecorder } from "react-media-recorder";
 function Consultation() {
     const hospitalId = localStorage.getItem('HospitalId')
     const state = useLocation()
-    console.log('state from consultation', state.state[0]._pat_id._id)
     const patientFirstName = state.state[0]._pat_id.p_firstname
     const patientLastName = state.state[0]._pat_id.p_lastname
     const patientAdhar = state.state[0]._pat_id.aadhar_card_no
@@ -38,7 +37,7 @@ function Consultation() {
     const [patientUpperValue, setPatientUpperValue] = useState('')
     const [patientAllergicFood, setPatientAllergicFood] = useState('')
     const [patientAllergicMedicine, setPatientAllergicMedicine] = useState('')
-    const [showPrimaryAnalysisDetails, setShowPrimaryAnalysisDetails] = useState(false)
+    const [showPrimaryAnalysisDetails, setShowPrimaryAnalysisDetails] = useState(true)
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [toggleMic, setToggleMic] = useState(true)
     const [showStatus, setShowStatus] = useState(false)
@@ -53,7 +52,7 @@ function Consultation() {
         instance.post('list_patient_primary_analysis', obj).then((response) => {
             console.log('res--ponse--', response);
             if (response == undefined) {
-                setShowPrimaryAnalysisDetails(true)
+                setShowPrimaryAnalysisDetails(false)
             } else {
                 const data = response?.data.patientAnalysis[0]
                 setPatientHeight(data.height)

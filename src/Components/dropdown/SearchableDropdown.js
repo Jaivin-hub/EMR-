@@ -17,7 +17,6 @@ function SearchableDropdown({ List, setSelectedMedicineName, setMedicineScientif
         setSelectedIndex(index)
         List.map((item, i) => {
             if (item.med_name == med_name) {
-                console.log('this is the ---', item)
                 setSelectedMedicineName(item.med_name)
                 setMedicineScientificName(item.s_med_name)
                 setSelectedMedicineType(item.med_type)
@@ -38,10 +37,6 @@ function SearchableDropdown({ List, setSelectedMedicineName, setMedicineScientif
         },
     ];
 
-    console.log('searchTerm', searchTerm)
-
-
-    console.log('value', List)
     return (
         <div className="dropdown">
             <div className="dropdown-btn h-10" >

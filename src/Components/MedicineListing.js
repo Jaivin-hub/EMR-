@@ -40,7 +40,6 @@ function MedicineListing() {
 
 
     const changeContentHandler = (value) => {
-        console.log(value)
         if (value == 'Add Patients') {
             setShowPatientView(true)
             setShowDoctorView(false)
@@ -78,9 +77,7 @@ function MedicineListing() {
             _hos_id: hospitalId,
             isActive: true
         }
-        console.log(obj)
         instance.post('/list_medicine', obj).then((res) => {
-            console.log('medicine response', res)
             setMedicineList(res?.data.medicines)
         }).catch((err) => {
             console.log('error', err)

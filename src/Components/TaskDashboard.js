@@ -66,7 +66,6 @@ function TaskDashboard() {
             app_date: date_format
 
         }
-        console.log('obj', obj)
 
         instance.post('/list_appointment', obj).then((res) => {
             const arr = res.data.appointment
@@ -78,7 +77,6 @@ function TaskDashboard() {
     }
 
     const changeContentHandler = (value) => {
-        console.log(value)
         if (value == 'Add Patients') {
             setShowPatientView(true)
             setShowDoctorView(false)
@@ -118,10 +116,8 @@ function TaskDashboard() {
     }, [reload])
 
     const pendingAppointments = appointments?.length
-    console.log('length---', pendingAppointments)
     const [pendingList, setPendingList] = useState()
 
-    console.log('pendingList**********************', pendingList?.length)
     const pendingCount = pendingList?.length
 
     return (

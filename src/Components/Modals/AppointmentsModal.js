@@ -59,9 +59,7 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
             app_time: appointmentTime,
             _hos_id: HospitalId
         }
-        console.log('obj to snd', obj)
         instance.post('/patient_appointment', obj).then((res) => {
-            console.log('appointments response ', res)
             setShowNewAppointmentsModal(false)
         }).catch((err) => {
             console.log('error', err)

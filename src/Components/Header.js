@@ -18,7 +18,6 @@ function Header() {
         } else if (value == 'patients') {
             navigate('/patientlisting')
         } else if (value == 'dashboard') {
-            console.log('ivide')
             navigate('/taskDashboard');
         } else if (value == 'Medicine') {
             navigate('/MedicineListing')
@@ -32,7 +31,6 @@ function Header() {
     }
     const pathname = window.location.pathname
     // alert(pathname)
-    console.log('pathname:::', pathname)
     return (
         <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)', width: '100%' }}>
             <Navbar expand="lg">

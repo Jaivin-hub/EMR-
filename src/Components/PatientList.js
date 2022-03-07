@@ -37,23 +37,16 @@ export default function BasicTable({ List, searchTerm,setAppointmentPatientId ,s
     const [patientId, setPatientId] = useState('')
 
 
-    console.log('List', List)
-
-
-
-
     const AppointmentsHandler = (id) => {
         setPatientId(id)
         setOpenModal(true);
     }
     const primaryAnalysisHandler = (id) => {
-        console.log('clicked', id)
         navigate('/PrimaryAnalysis', { state: id });
 
     }
 
     const appointmentModalHandler = (id) => {
-        console.log('clicked')
         setPatientId(id)
         setAppointmentsModalOpen(true)
         setAppointmentPatientId(id)
