@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../assets/css/tabs.css'
-import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
 import instance from "../config/api";
 import Table from '@mui/material/Table';
@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import SearchableDropdown from "./dropdown/SearchableDropdown";
 import "../assets/css/searchableDropdown.css"
-
+import Select from 'react-select';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,14 +20,6 @@ const useStyles = makeStyles(theme => ({
         minWidth: 205
     }
 }))
-
-
-// {
-//     "_hos_id":"620a4845db8b9874e8e7466c",
-//     "IsActive":true
-// }
-
-
 
 
 function Tabs() {
@@ -46,6 +38,7 @@ function Tabs() {
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
     const [medicineScientificName, setMedicineScientificName] = useState('')
     const [selectedMedicineType, setSelectedMedicineType] = useState('')
+    const [selectedList, setSelectedList] = useState([])
 
     useEffect(() => {
         fetchMedicineList()
@@ -60,6 +53,13 @@ function Tabs() {
         instance.post('/list_medicine', obj).then((res) => {
             console.log('medicine response', res)
             setMedicineList(res?.data.medicines)
+            const medNameList = []
+            res?.data.medicines.map((item, index) => {
+                const value = { value: index, label: item.med_name }
+                medNameList.push(value)
+            })
+            setSelectedList(medNameList)
+            console.log('medList', medNameList)
         }).catch((err) => {
             console.log('error', err)
         })
@@ -195,6 +195,26 @@ function Tabs() {
         setInputFields(newData)
     }
 
+    const medNameHandler = (opt, index) => {
+
+        medicineList.map((item, i) => {
+            if (item.med_name == opt.label) {
+                const newData = [...inputFields]
+                newData[index]['Sname'] = item.s_med_name
+                newData[index]['type'] = item.med_type
+                newData[index]['medicineName'] = item.med_name
+                setreload(!reload)
+                // setSelectedMedicineName(item.med_name)
+                // setMedicineScientificName(item.s_med_name)
+                // setSelectedMedicineType(item.med_type)
+            }
+        })
+        console.log(opt.label)
+    }
+
+    console.log('medicineList', inputFields)
+
+    console.log('input', inputFields)
     return (
         <div className="">
             <div className="bloc-tabs">
@@ -252,20 +272,26 @@ function Tabs() {
                                             <TableCell >
                                                 {index + 1}
                                             </TableCell>
-                                            <TableCell >
-                                                <SearchableDropdown
+                                            <TableCell className="">
+                                                <Select
+                                                    id="medicineName"
+                                                    style={{ width: '100%' }}
+                                                    options={selectedList}
+                                                    onChange={(opt) => { medNameHandler(opt, index) }}
+                                                />
+                                                {/* <SearchableDropdown
                                                     setSelectedMedicineName={setSelectedMedicineName}
                                                     setMedicineScientificName={setMedicineScientificName}
                                                     setSelectedMedicineType={setSelectedMedicineType}
                                                     List={medicineList}
-                                                />
+                                                /> */}
                                                 {/* <input type="text" className='border-2' /> */}
                                             </TableCell>
                                             <TableCell className='dropdown'>
-                                                <input type="text" value={medicineScientificName} className='border-2 w-40 h-10' />
+                                                <input type="text" value={value.Sname} className='border-2 w-40 h-10' />
                                             </TableCell>
                                             <TableCell className=''>
-                                                <input type="text" value={selectedMedicineType} className='border-2 w-40 h-10' />
+                                                <input type="text" value={value.type} className='border-2 w-40 h-10' />
                                             </TableCell>
                                             <TableCell >
                                                 <input type="text" className='border-2 h-10' />

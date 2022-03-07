@@ -47,7 +47,7 @@ function SearchableDropdown({ List, setSelectedMedicineName, setMedicineScientif
             <div className="dropdown-btn h-10" >
                 <SearchPage  searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
-            {!searchTerm == "" ?
+            {!searchTerm == ""?
 
                 List.filter((val) => {
                     if (searchTerm == '') {

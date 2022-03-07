@@ -8,7 +8,7 @@ const SearchPage = ({ setSearchTerm, searchTerm }) => {
     }
     return (
         <MDBCol md="6">
-            <MDBInput value={searchTerm} onChange={(e) => { handleSearchInput(e) }} hint="Search" type="text" containerClass="mt-0" />
+            <MDBInput value={searchTerm} onChange={(e) => { handleSearchInput(e) }}  type="text" containerClass="mt-0" />
         </MDBCol>
     );
 }

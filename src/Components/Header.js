@@ -20,6 +20,8 @@ function Header() {
         } else if (value == 'dashboard') {
             console.log('ivide')
             navigate('/taskDashboard');
+        } else if (value == 'Medicine') {
+            navigate('/MedicineListing')
         }
     }
     // handleLogin
@@ -46,6 +48,7 @@ function Header() {
                                 <Nav.Link onClick={() => { navigateHandler('appointments') }} >Appointments</Nav.Link>
                                 <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                                 <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
+                                <Nav.Link onClick={() => { navigateHandler('Medicine') }} className="navMenu3">Medicine</Nav.Link>
                                 <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
                                 {/* <Nav.Link className="   ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link> */}
 

@@ -36,7 +36,11 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     </svg>
                 </div>
             </div>
-            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('Add Medicines') }}>
+            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex"
+                onClick={() => {
+                    changeContentHandler('Add Medicines')
+                    setShowAddDetailsModal(false)
+                }}>
                 <div className="col-md-9 font-bold">
                     {/* <FontAwesomeIcon icon="fa-solid fa-syringe" /> */}
                     Add Medicines

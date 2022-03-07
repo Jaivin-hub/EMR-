@@ -14,13 +14,14 @@ import AdminDashboard from './Components/Admin/AdminDashboard'
 import PrimaryAnalysis from './Components/PrimaryAnalysis'
 import Consultation from './Components/Consultation'
 import DoctorLogin from './Components/Authentications/DoctorLogin'
+import SampleSearch from './Components/dropdown/SampleSearch'
 import './index.css'
+import MedicineListing from "./Components/MedicineListing";
 function App() {
   const verification = localStorage.getItem('handleLogin')
   return (
     <Router basename={"/project/emr"}>
       <Routes>
-
         <Route exact path='/' element={<SignIn />} />
         <Route path="/taskDashboard" element={<TaskDashboard />} />
         <Route path='/addDoctor' element={<DoctorView />} />
@@ -34,6 +35,8 @@ function App() {
         <Route path='/PrimaryAnalysis' element={<PrimaryAnalysis />} />
         <Route path='/consultation' element={<Consultation />} />
         <Route path='/doctor/login' element={<DoctorLogin />} />
+        <Route path='/SampleSearch' element={<SampleSearch />} />
+        <Route path='/MedicineListing' element={<MedicineListing />} />
       </Routes>
     </Router>
   );
