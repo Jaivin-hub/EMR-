@@ -16,6 +16,9 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { useReactToPrint } from "react-to-print";
 import { GrDocumentPdf } from 'react-icons/gr'
 import { useVoiceRecorder } from "use-voice-recorder";
+import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
+import { MdPauseCircleFilled } from 'react-icons/md'
+import { GrResume } from 'react-icons/gr'
 
 
 
@@ -53,6 +56,17 @@ function Consultation() {
     const { isRecording, stop, start } = useVoiceRecorder((data) => {
         updateRecords([...records, window.URL.createObjectURL(data)]);
     });
+
+    const {
+        audioResult,
+        timer,
+        startRecording,
+        stopRecording,
+        pauseRecording,
+        resumeRecording,
+        status,
+        errorMessage
+    } = useAudioRecorder()
 
 
     const fetchPatientPrimaryAnalysis = () => {
@@ -98,12 +112,12 @@ function Consultation() {
         fetchPatientPrimaryAnalysis()
     }, [])
 
-    const {
-        status,
-        startRecording,
-        stopRecording,
-        mediaBlobUrl,
-    } = useReactMediaRecorder({ audio: true });
+    // const {
+    //     status,
+    //     startRecording,
+    //     stopRecording,
+    //     mediaBlobUrl,
+    // } = useReactMediaRecorder({ audio: true });
 
     const handleStartRecording = () => {
         startRecording()
@@ -217,20 +231,24 @@ function Consultation() {
 
                     </div>
                 </div>
-                {!isRecording ?
-                    <BsFillMicFill cursor='pointer' onClick={start} className='mt-4' size={30} />
+                {status == "idle" ?
+                    <BsFillMicFill cursor='pointer' onClick={startRecording} className='mt-3' size={30} />
                     :
-                    <BsFillMicMuteFill cursor='pointer' onClick={stop} className='mt-4' size={30} />
+                    <>
+                        <p className='mt-4'>{new Date(timer * 1000).toISOString().substr(11, 8)}</p>
+                        <MdPauseCircleFilled cursor='pointer' onClick={pauseRecording} className='mt-3' size={30} />
+                        <GrResume cursor='pointer' onClick={resumeRecording} className='mt-3' size={30} />
+                        <BsFillMicMuteFill cursor='pointer' onClick={stopRecording} className='mt-3' size={30} />
+                    </>
                 }
-                {isRecording ?
-                    <p className='mt-4'>Recording</p>
-                    : null  
-                }
-                {records.map((data, idx) => (
+                {audioResult ?
+                    <audio controls src={audioResult} />
+                    : null}
+                {/* {records.map((data, idx) => (
                     <div key={idx} className='pt-3'>
                         <audio src={data} controls preload={'metadata'} />
                     </div>
-                ))}
+                ))} */}
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>
