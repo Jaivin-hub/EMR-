@@ -23,6 +23,8 @@ import SettingsView from './SettingsView';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
+import MaterialTable from 'material-table';
+
 
 
 function PatientsLIsting() {
@@ -45,6 +47,17 @@ function PatientsLIsting() {
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
+
+    const columns = [
+        { title: 'Patient First Name', field: 'p_firstname' },
+        { title: 'Last Name', field: 'p_lastname' },
+        { title: 'Aadhar Card No', field: 'aadhar_card_no' },
+        { title: 'Patient Bloodgroup', field: 'p_bloodgroup' },
+        { title: 'Patient City', field: 'p_city' },
+        { title: 'Patient State', field: 'p_state' },
+        { title: 'Patient Age', field: 'p_dob' },
+        { title: 'Patient Phoneno', field: 'p_phoneno' },
+    ]
 
 
     const HospitalId = localStorage.getItem('HospitalId')
@@ -174,7 +187,7 @@ function PatientsLIsting() {
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer"onClick={() => { setShowAddDetailsModal(true) }}>
+                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
                                             <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
                                             <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
@@ -192,82 +205,88 @@ function PatientsLIsting() {
                             </div>
                         </div>
                     </div>
-                    <div className="row ">
-                        <div className="col-md-6">
-                            <div className="row ">
-                                <SearchPage setSearchTerm={setSearchTerm} />
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                        </div>
-                    </div>
                     {showAppointmentView ?
-                        <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                        // <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
 
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <TableContainer component={Paper}>
-                                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell >Patient First Name</TableCell>
-                                                    <TableCell >Last Name</TableCell>
-                                                    <TableCell >Aadhar Card No</TableCell>
-                                                    <TableCell >Patient Bloodgroup</TableCell>
-                                                    <TableCell >Patient City</TableCell>
-                                                    <TableCell >Patient State</TableCell>
-                                                    <TableCell >Patient Age</TableCell>
-                                                    <TableCell >Patient Phoneno</TableCell>
-                                                    <TableCell >Actions</TableCell>
+                        //     <div className="row">
+                        //         <div className="col-md-12">
+                        //             <TableContainer component={Paper}>
+                        //                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        //                     <TableHead>
+                        //                         <TableRow>
+                        //                             <TableCell >Patient First Name</TableCell>
+                        //                             <TableCell >Last Name</TableCell>
+                        //                             <TableCell >Aadhar Card No</TableCell>
+                        //                             <TableCell >Patient Bloodgroup</TableCell>
+                        //                             <TableCell >Patient City</TableCell>
+                        //                             <TableCell >Patient State</TableCell>
+                        //                             <TableCell >Patient Age</TableCell>
+                        //                             <TableCell >Patient Phoneno</TableCell>
+                        //                             <TableCell >Actions</TableCell>
 
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {currentPosts?.filter((val) => {
-                                                    if (searchTerm == '') {
-                                                        return val
-                                                    } else if (val.p_firstname?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                        return val
-                                                    } else if (val.p_phoneno?.includes(searchTerm)) {
-                                                        return val
-                                                    } else if (val.aadhar_card_no?.includes(searchTerm)) {
-                                                        return val
-                                                    }
-                                                }).map((value, index) => (
-                                                    <TableRow
-                                                        key={index}
-                                                    >
-                                                        <TableCell>{value.p_firstname}</TableCell>
-                                                        <TableCell>{value.p_lastname}</TableCell>
-                                                        <TableCell component="th" scope="row">
-                                                            {value.aadhar_card_no}
-                                                        </TableCell>
-                                                        <TableCell >{value.p_bloodgroup}</TableCell>
-                                                        <TableCell >{value.p_city}</TableCell>
-                                                        <TableCell >{value.p_state}</TableCell>
-                                                        {/* <TableCell >{value.doc_email}</TableCell> */}
-                                                        <TableCell >{value.p_dob}</TableCell>
-                                                        <TableCell >{value.p_phoneno}</TableCell>
-                                                        {/* <TableCell >
-                                                            <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { primaryAnalysisHandler(value._id) }}>Primary Analysis</button>
-                                                        </TableCell> */}
-                                                        <TableCell >
-                                                            <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { newAppointmentsHandler(value._id) }}>New Appointment</button>
-                                                            {/* <Button >New Appointment</Button> */}
-                                                        </TableCell>
+                        //                         </TableRow>
+                        //                     </TableHead>
+                        //                     <TableBody>
+                        //                         {currentPosts?.filter((val) => {
+                        //                             if (searchTerm == '') {
+                        //                                 return val
+                        //                             } else if (val.p_firstname?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        //                                 return val
+                        //                             } else if (val.p_phoneno?.includes(searchTerm)) {
+                        //                                 return val
+                        //                             } else if (val.aadhar_card_no?.includes(searchTerm)) {
+                        //                                 return val
+                        //                             }
+                        //                         }).map((value, index) => (
+                        //                             <TableRow
+                        //                                 key={index}
+                        //                             >
+                        //                                 <TableCell>{value.p_firstname}</TableCell>
+                        //                                 <TableCell>{value.p_lastname}</TableCell>
+                        //                                 <TableCell component="th" scope="row">
+                        //                                     {value.aadhar_card_no}
+                        //                                 </TableCell>
+                        //                                 <TableCell >{value.p_bloodgroup}</TableCell>
+                        //                                 <TableCell >{value.p_city}</TableCell>
+                        //                                 <TableCell >{value.p_state}</TableCell>
+                        //                                 {/* <TableCell >{value.doc_email}</TableCell> */}
+                        //                                 <TableCell >{value.p_dob}</TableCell>
+                        //                                 <TableCell >{value.p_phoneno}</TableCell>
+                        //                                 {/* <TableCell >
+                        //                                     <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { primaryAnalysisHandler(value._id) }}>Primary Analysis</button>
+                        //                                 </TableCell> */}
+                        //                                 <TableCell >
+                        //                                     <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { newAppointmentsHandler(value._id) }}>New Appointment</button>
+                        //                                     {/* <Button >New Appointment</Button> */}
+                        //                                 </TableCell>
 
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                    {patientList?.length >= 10 ?
+                        //                             </TableRow>
+                        //                         ))}
+                        //                     </TableBody>
+                        //                 </Table>
+                        //             </TableContainer>
+                        //             {patientList?.length >= 10 ?
 
-                                        <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
-                                        : null}
-                                </div>
-                            </div>
+                        //                 <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
+                        //                 : null}
+                        //         </div>
+                        //     </div>
 
+                        // </div>
+                        <div className="mt-5">
+                            <MaterialTable
+                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                className="mt-5" columns={columns} data={patientList} title='Patient Details'
+                                
+                                actions={[
+                                    {
+                                        icon: () => <button className="btn btn-">New Appointment</button>,
+                                        tooltip: 'New Appointment',
+                                        onClick: (e, data) => { newAppointmentsHandler(data._id) }
+                                    }
+
+                                ]}
+                            />
                         </div>
                         : null}
                 </div>

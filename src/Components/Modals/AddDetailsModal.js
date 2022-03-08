@@ -6,7 +6,7 @@ import React from 'react'
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
 
     return (
-        <div class="absolute shadow-md p-8 bg-white w-full max-w-xs m-auto flex-col flex">
+        <div className="absolute shadow-md p-8 bg-white w-full max-w-xs m-auto flex-col flex">
             <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
                 changeContentHandler('Add Doctor')
                 setShowAddDetailsModal(false)

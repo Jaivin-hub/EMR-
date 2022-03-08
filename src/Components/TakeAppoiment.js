@@ -18,6 +18,8 @@ import SettingsView from './SettingsView';
 import AddPatientModal from './AddPatientModal';
 import AddDoctorModal from './Modals/AddDoctorModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
+import MaterialTable from 'material-table';
+
 
 
 function TakeAppoiment() {
@@ -37,7 +39,13 @@ function TakeAppoiment() {
     const [reload, setReload] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
 
-
+    const columns = [
+        { title: 'Name', field: 'doc_name' },
+        { title: 'Qualification', field: 'doc_qualification' },
+        { title: 'Specialization', field: 'doc_spec' },
+        { title: 'Contact No', field: 'doc_contact' },
+        { title: 'Email ID', field: 'doc_email' },
+    ]
 
 
     const HospitalId = localStorage.getItem('HospitalId')
@@ -167,7 +175,7 @@ function TakeAppoiment() {
                                                 <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer"onClick={() => { setShowAddDetailsModal(true) }}>
+                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
                                             <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
                                             <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
@@ -185,60 +193,58 @@ function TakeAppoiment() {
                             </div>
                         </div>
                     </div>
-                    <div className="row ">
-                        <div className="col-md-6">
-                            <div className="row ">
-                                <SearchPage setSearchTerm={setSearchTerm} />
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                        </div>
-                    </div>
+
                     {showAppointmentView ?
-                        <div className="row mt-4">
-                            <div className="col-md-12">
-                                <TableContainer component={Paper}>
-                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell >Name</TableCell>
-                                                <TableCell >Qualification</TableCell>
-                                                <TableCell >Specialization</TableCell>
-                                                <TableCell >Contact No</TableCell>
-                                                <TableCell >Email ID</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {currentPosts?.filter((val) => {
-                                                if (searchTerm == '') {
-                                                    return val
-                                                } else if (val.doc_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                    return val
-                                                } else if (val.doc_contact?.includes(searchTerm)) {
-                                                    return val
-                                                } else if (val.doc_spec?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                    return val
-                                                }
-                                            }).map((value, index) => (
-                                                <TableRow
-                                                    key={index}
-                                                >
-                                                    <TableCell component="th" scope="row">
-                                                        {value.doc_name}
-                                                    </TableCell>
-                                                    <TableCell >{value.doc_qualification}</TableCell>
-                                                    <TableCell >{value.doc_spec}</TableCell>
-                                                    <TableCell >{value.doc_contact}</TableCell>
-                                                    <TableCell >{value.doc_email}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </div>
-                            {doctorList?.length >= 10 ?
-                                <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
-                                : null}
+                        // <div className="row mt-4">
+                        //     <div className="col-md-12">
+                        //         <TableContainer component={Paper}>
+                        //             <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        //                 <TableHead>
+                        //                     <TableRow>
+                        //                         <TableCell >Name</TableCell>
+                        //                         <TableCell >Qualification</TableCell>
+                        //                         <TableCell >Specialization</TableCell>
+                        //                         <TableCell >Contact No</TableCell>
+                        //                         <TableCell >Email ID</TableCell>
+                        //                     </TableRow>
+                        //                 </TableHead>
+                        //                 <TableBody>
+                        //                     {currentPosts?.filter((val) => {
+                        //                         if (searchTerm == '') {
+                        //                             return val
+                        //                         } else if (val.doc_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        //                             return val
+                        //                         } else if (val.doc_contact?.includes(searchTerm)) {
+                        //                             return val
+                        //                         } else if (val.doc_spec?.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        //                             return val
+                        //                         }
+                        //                     }).map((value, index) => (
+                        //                         <TableRow
+                        //                             key={index}
+                        //                         >
+                        //                             <TableCell component="th" scope="row">
+                        //                                 {value.doc_name}
+                        //                             </TableCell>
+                        //                             <TableCell >{value.doc_qualification}</TableCell>
+                        //                             <TableCell >{value.doc_spec}</TableCell>
+                        //                             <TableCell >{value.doc_contact}</TableCell>
+                        //                             <TableCell >{value.doc_email}</TableCell>
+                        //                         </TableRow>
+                        //                     ))}
+                        //                 </TableBody>
+                        //             </Table>
+                        //         </TableContainer>
+                        //     </div>
+                        //     {doctorList?.length >= 10 ?
+                        //         <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
+                        //         : null}
+                        // </div>
+                        <div className="mt-5">
+                            <MaterialTable
+                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                className="mt-5 relative" columns={columns} data={doctorList} title='Patient Details'
+                            />
                         </div>
                         : null}
                     {showSettingsView ?

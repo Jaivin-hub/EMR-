@@ -16,6 +16,9 @@ import AddPatientModal from './AddPatientModal';
 import AddDoctorModal from './Modals/AddDoctorModal';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
+import { makeStyles } from "@material-ui/core/styles";
+import MaterialTable from 'material-table';
+
 
 
 function MedicineListing() {
@@ -37,6 +40,14 @@ function MedicineListing() {
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
+    const [tableData, setTableData] = useState([])
+
+    const columns = [
+        { title: 'Medicine name', field: 'med_name' },
+        { title: 'Pharmacological name', field: 's_med_name' },
+        { title: 'Medicine type', field: 'med_type' },
+
+    ]
 
 
     const changeContentHandler = (value) => {
@@ -129,61 +140,11 @@ function MedicineListing() {
                             </div>
                         </div>
                     </div>
-                    <div className="row ">
-                        <div className="col-md-6">
-                            <div className="row ">
-                                <SearchPage setSearchTerm={setSearchTerm} />
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                        </div>
-                    </div>
+
                     {showAppointmentView ?
-                        <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <TableContainer component={Paper}>
-                                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell >Medicine name</TableCell>
-                                                    <TableCell >Pharmacological name</TableCell>
-                                                    <TableCell >Medicine type</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {medicineList?.filter((val) => {
-                                                    if (searchTerm == '') {
-                                                        return val
-                                                    } else if (val.s_med_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                        return val
-                                                    } else if (val.med_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                        return val
-                                                    } else if (val.med_type?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                                        return val
-                                                    }
-                                                }).map((value, index) => (
-                                                    <TableRow
-                                                        key={index}
-                                                    >
-                                                        <TableCell component="th" scope="row">
-                                                            {value.med_name}
-                                                        </TableCell>
-                                                        <TableCell >{value.s_med_name}</TableCell>
-                                                        <TableCell >{value.med_type}</TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                    {patientList?.length >= 10 ?
-
-                                        <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
-                                        : null}
-                                </div>
-                            </div>
-
+                        <div className="mt-5">
+                            <MaterialTable options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                className="mt-5" columns={columns} data={medicineList} title='Medicine Details' />
                         </div>
                         : null}
                 </div>

@@ -15,6 +15,7 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import { useReactMediaRecorder } from "react-media-recorder";
 import { useReactToPrint } from "react-to-print";
 import { GrDocumentPdf } from 'react-icons/gr'
+import { useVoiceRecorder } from "use-voice-recorder";
 
 
 
@@ -48,6 +49,10 @@ function Consultation() {
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
     const [toggleMic, setToggleMic] = useState(true)
     const [showStatus, setShowStatus] = useState(false)
+    const [records, updateRecords] = useState([]);
+    const { isRecording, stop, start } = useVoiceRecorder((data) => {
+        updateRecords([...records, window.URL.createObjectURL(data)]);
+    });
 
 
     const fetchPatientPrimaryAnalysis = () => {
@@ -112,6 +117,7 @@ function Consultation() {
         setShowStatus(false)
     }
 
+
     return (
         <div ref={componentRef}>
             <Header />
@@ -129,9 +135,10 @@ function Consultation() {
                                         <TableCell >Contact No1 : {patientPhone}</TableCell>
                                         <TableCell >
                                             <button type="button" class="inline-block px-6 py-2 border-2 
-            border-gray-800 text-gray-800 font-medium text-xs leading-tight 
-            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
-            focus:ring-0 transition duration-150 ease-in-out" onClick={handlePrint}><GrDocumentPdf size={25}/></button>
+                                          border-gray-800 text-gray-800 font-medium text-xs leading-tight 
+                                            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
+                                            focus:ring-0 transition duration-150 ease-in-out"
+                                                onClick={handlePrint}><GrDocumentPdf size={25} /></button>
                                         </TableCell>
 
                                     </TableRow>
@@ -182,7 +189,7 @@ function Consultation() {
                                 </Table>
                             </TableContainer>
                             :
-                            <button type="button" class="inline-block px-6 py-2 
+                            <button type="button" className="inline-block px-6 py-2 
                          border-2 border-blue-400 text-blue-400 font-medium 
                          text-xs leading-tight uppercase rounded hover:bg-black 
                          hover:bg-opacity-5 focus:outline-none focus:ring-0 transition 
@@ -200,19 +207,30 @@ function Consultation() {
             <div className="row space-x-3 m-5">
                 <textarea className='border-4' placeholder="Comments" name="" id="" cols="50" rows="2"></textarea>
                 <input type="text" className='border-4' />
-                {toggleMic ?
-                    <BsFillMicFill cursor='pointer' onClick={handleStartRecording} className='mt-4' size={30} />
+                <div>
+                    {/* <div>
+                        <h3>On air: {isRecording ? 'on' : 'off'}</h3>
+                        <button onClick={start}>Start</button>
+                        <button onClick={stop}>Stop</button>
+                    </div> */}
+                    <div>
+
+                    </div>
+                </div>
+                {!isRecording ?
+                    <BsFillMicFill cursor='pointer' onClick={start} className='mt-4' size={30} />
                     :
-                    <BsFillMicMuteFill cursor='pointer' onClick={handleStopRecording} className='mt-4' size={30} />
+                    <BsFillMicMuteFill cursor='pointer' onClick={stop} className='mt-4' size={30} />
                 }
-                {showStatus ?
-                    <p className='mt-4'>{status}</p>
-                    : null
+                {isRecording ?
+                    <p className='mt-4'>Recording</p>
+                    : null  
                 }
-                {mediaBlobUrl ?
-                    <audio className='mt-2' src={mediaBlobUrl} controls />
-                    : null
-                }
+                {records.map((data, idx) => (
+                    <div key={idx} className='pt-3'>
+                        <audio src={data} controls preload={'metadata'} />
+                    </div>
+                ))}
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>

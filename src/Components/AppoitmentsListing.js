@@ -125,14 +125,14 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     var date = curr.toISOString().substr(0, 10);
     return (
         <>
-            <div className="addPatient navbar-light mt-4" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            <div className="addPatient navbar-light mt-4 " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
                     appointmentsDateHandler(e)
                 }} />
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12 ">
 
-                        <TableContainer component={Paper}>
+                        <TableContainer component={Paper} className='relative'>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>

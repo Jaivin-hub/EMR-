@@ -37,7 +37,7 @@ function Tabs() {
     const hospitalId = localStorage.getItem('HospitalId')
     const [medicineList, setMedicineList] = useState([])
     const [reload, setreload] = useState(false)
-    const [inputFields, setInputFields] = useState([
+    let [inputFields, setInputFields] = useState([
         { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', qty: '', comments: '' },
     ])
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
@@ -187,10 +187,16 @@ function Tabs() {
         setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', qty: '', comments: '' }])
     }
 
-    const removeInputFieldHandler = (index) => {
+    const removeInputFieldHandler = (index, value) => {
+        console.log(value)
+
+        // inputFields=inputFields.filter((val) => 
+        //     val.medicineName!==value.medicineName
+        // )
         const newData = [...inputFields]
         newData.splice(index, 1)
         setInputFields(newData)
+        setreload(!reload)
     }
 
     const medNameHandler = (opt, index) => {
@@ -211,11 +217,9 @@ function Tabs() {
 
     console.log('inputFields', inputFields)
 
-
-
     return (
         <div className="">
-                
+
             <div className="bloc-tabs">
                 <button
                     className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
@@ -235,7 +239,6 @@ function Tabs() {
                 >
                     Stock
                 </button>
-
             </div>
 
             <div className="content-tabs" >
@@ -266,7 +269,7 @@ function Tabs() {
                                                 <Select
                                                     id="medicineName"
                                                     style={{ width: '100%' }}
-                                                    defaultValue={value.medicineName}
+                                                    defaultInputValue={value.medicineName}
                                                     options={selectedList}
                                                     onChange={(opt) => { medNameHandler(opt, index) }}
                                                 />
@@ -318,7 +321,7 @@ function Tabs() {
                                                             hover:shadow-lg focus:bg-red-400 focus:shadow-lg
                                                             focus:outline-none focus:ring-0 active:bg-red-600
                                                             active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2"
-                                                            onClick={() => { removeInputFieldHandler(index) }}>
+                                                            onClick={() => { removeInputFieldHandler(index, value) }}>
                                                             -
                                                         </button>)}
                                                 </div>
@@ -329,6 +332,18 @@ function Tabs() {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    <div className="d-flex mt-3 justify-content-end space-x-5">
+                        <button type="button" className="inline-block px-6 py-2.5 
+                    bg-red-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-red-500 hover:shadow-lg 
+                    focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-red-600 active:shadow-lg transition duration-150 ease-in-out">Cancel</button>
+                        <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out">Save</button>
+                    </div>
                 </div>
                 <div className={toggleState === 2 ? "content  active-content" : "content"}>
                     {/* <h2>Content 2</h2>
