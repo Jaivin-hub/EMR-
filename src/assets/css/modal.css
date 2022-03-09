@@ -13,6 +13,7 @@
     /* left: 35%; */
     width: 600px;
   max-width: 100%;
+  z-index: 10001
     /* transform: translate(30%, -50%); */
 }
 /* 
@@ -52,6 +53,7 @@
 
 .modalContainer .footer button{
     /* width: 150px; */
+    z-index: 10001;
     height: 45px;
     margin: 10px;
     border: none;
@@ -69,6 +71,7 @@
 .Modal_Container{
     /* width: 1162px; */
     /* height: 500px; */
+    z-index: 10001;
     border-radius: 12px;
     background-color:white;
     box-shadow:rgba(0,0,0,0.35) 0px 5px 15px;

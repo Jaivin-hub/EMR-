@@ -158,17 +158,21 @@ function TaskDashboard() {
                                         </div>
                                     </div>
                                     <div className="ml-20 ">
-                                        {showAddDetailsModal ?
-                                            <AddDetailsModal
-                                                changeContentHandler={changeContentHandler}
-                                                setShowAddDetailsModal={setShowAddDetailsModal}
-                                            />
-                                            : null}
+                                        {/* {showAddDetailsModal ?
+                                            <div>
+
+                                                <AddDetailsModal
+                                                    changeContentHandler={changeContentHandler}
+                                                    setShowAddDetailsModal={setShowAddDetailsModal}
+                                                />
+                                            </div>
+                                            : null} */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     {showAppointmentView ?
                         <div className="">
@@ -178,9 +182,23 @@ function TaskDashboard() {
                                 setShowPrimaryAnalysis={setShowPrimaryAnalysis}
                                 setPatientId={setPatientId}
                                 setPendingList={setPendingList}
-                                reload={reload} />
+                                reload={reload}
+                                showAddDetailsModal={showAddDetailsModal}
+                                setShowAddDetailsModal={setShowAddDetailsModal}
+                                showAddDetailsModal={showAddDetailsModal}
+                                changeContentHandler={changeContentHandler}
+                            />
+                            {/* : showAddDetailsModal ?
+                            <div className="centered loginWrapper d-flex justify-content-end align-items-end">
+                                <AddDetailsModal
+                                    changeContentHandler={changeContentHandler}
+                                    setShowAddDetailsModal={setShowAddDetailsModal}
+                                />
+                            </div> */}
                         </div>
-                        : null}
+                        : null
+                    }
+
                     {showDoctorView ?
                         <div className="">
                             <div className="centered loginWrapper d-flex justify-content-center align-items-center">

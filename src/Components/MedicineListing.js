@@ -18,6 +18,7 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from 'material-table';
+import MedicineModal from './Modals/MedicineModal';
 
 
 
@@ -41,6 +42,8 @@ function MedicineListing() {
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
     const [tableData, setTableData] = useState([])
+    const [showMedicineView, setShowMedicineView] = useState(false)
+
 
     const columns = [
         { title: 'Medicine name', field: 'med_name' },
@@ -69,6 +72,11 @@ function MedicineListing() {
             setShowPatientView(false)
             setShowAppointmentView(false)
             setShowHospitalView(false)
+        } else if (value == 'Add Medicines') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(true)
         }
     }
 
@@ -129,12 +137,7 @@ function MedicineListing() {
                                         </div>
                                     </div>
                                     <div className="ml-20 ">
-                                        {showAddDetailsModal ?
-                                            <AddDetailsModal
-                                                changeContentHandler={changeContentHandler}
-                                                setShowAddDetailsModal={setShowAddDetailsModal}
-                                            />
-                                            : null}
+
                                     </div>
                                 </div>
                             </div>
@@ -145,6 +148,14 @@ function MedicineListing() {
                         <div className="mt-5">
                             <MaterialTable options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
                                 className="mt-5" columns={columns} data={medicineList} title='Medicine Details' />
+                        </div>
+                        : null}
+                    {showAddDetailsModal ?
+                        <div className="d-flex top-0 justify-content-end bg-primary">
+                            <AddDetailsModal
+                                changeContentHandler={changeContentHandler}
+                                setShowAddDetailsModal={setShowAddDetailsModal}
+                            />
                         </div>
                         : null}
                 </div>
@@ -170,6 +181,11 @@ function MedicineListing() {
                 {showNewAppointmentsModal ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                         <AppointmentsModal patientId={patientId} setShowNewAppointmentsModal={setShowNewAppointmentsModal} setReload={setReload} reload={reload} />
+                    </div>
+                    : null}
+                {showMedicineView ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <MedicineModal setShowMedicineView={setShowMedicineView} />
                     </div>
                     : null}
             </div>

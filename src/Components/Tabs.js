@@ -12,7 +12,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import SearchableDropdown from "./dropdown/SearchableDropdown";
 import "../assets/css/searchableDropdown.css"
-import Select from 'react-select';
+// import Select from 'react-select';
+import Select from 'react-dropdown-select';
 // import { useReactToPrint } from "react-to-print";
 
 
@@ -189,10 +190,10 @@ function Tabs() {
 
     const removeInputFieldHandler = (index, value) => {
         console.log(value)
-
-        // inputFields=inputFields.filter((val) => 
-        //     val.medicineName!==value.medicineName
-        // )
+        // const newData = [...inputFields]
+        // newData[index]['Sname'] = ""
+        // newData[index]['type'] = ""
+        // newData[index]['medicineName'] = ""
         const newData = [...inputFields]
         newData.splice(index, 1)
         setInputFields(newData)
@@ -200,13 +201,16 @@ function Tabs() {
     }
 
     const medNameHandler = (opt, index) => {
+        const data = opt[0]?.label
 
         medicineList?.map((item, i) => {
-            if (item.med_name == opt.label) {
+            if (item.med_name == data) {
                 const newData = [...inputFields]
                 newData[index]['Sname'] = item.s_med_name
                 newData[index]['type'] = item.med_type
-                newData[index]['medicineName'] = item.med_name
+                // newData[index]['medicineName'] = item.med_name
+                newData[index]['medicineName'] = { value: item.med_name, label: item.med_name }
+
                 setreload(!reload)
                 // setSelectedMedicineName(item.med_name)
                 // setMedicineScientificName(item.s_med_name)
@@ -220,7 +224,7 @@ function Tabs() {
     return (
         <div className="">
 
-            <div className="bloc-tabs">
+            <div className="bloc-tabs ">
                 <button
                     className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
                     onClick={() => toggleTab(1)}
@@ -267,12 +271,18 @@ function Tabs() {
                                             </TableCell>
                                             <TableCell className="">
                                                 <Select
+                                                    // multi
+                                                    defaultValue="standard"
+                                                    options={selectedList}
+                                                    onChange={(values) => medNameHandler(values, index)}
+                                                />
+                                                {/* <Select
                                                     id="medicineName"
                                                     style={{ width: '100%' }}
                                                     defaultInputValue={value.medicineName}
                                                     options={selectedList}
                                                     onChange={(opt) => { medNameHandler(opt, index) }}
-                                                />
+                                                /> */}
                                                 {/* <SearchableDropdown
                                                     setSelectedMedicineName={setSelectedMedicineName}
                                                     setMedicineScientificName={setMedicineScientificName}

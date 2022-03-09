@@ -14,6 +14,7 @@ import { Tab, Nav, Tabs, Form, Button, Accordion } from 'react-bootstrap';
 import '../assets/css/appointments.css'
 import { useNavigate } from 'react-router-dom';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
+import AddDetailsModal from './Modals/AddDetailsModal';
 
 
 // import Box from '@mui/material/Box';
@@ -23,7 +24,7 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 // import TabPanel from '@mui/lab/TabPanel';
 
 
-function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, appointments, setAppointments, setPatientId }) {
+function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, appointments, setAppointments, setPatientId, setShowAddDetailsModal, showAddDetailsModal, changeContentHandler }) {
     // const [appointments, setAppointments] = useState([])
     const navigate = useNavigate();
     const hospitalId = localStorage.getItem('HospitalId')
@@ -41,6 +42,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setToday(date)
     }, [])
 
+  
 
 
     // const fetchAppointment = () => {
@@ -125,14 +127,14 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     var date = curr.toISOString().substr(0, 10);
     return (
         <>
-            <div className="addPatient navbar-light mt-4 " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            <div className=" addPatient navbar-light mt-4 " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
                     appointmentsDateHandler(e)
                 }} />
                 <div className="row">
                     <div className="col-md-12 ">
 
-                        <TableContainer component={Paper} className='relative'>
+                        <TableContainer component={Paper} className=''>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
@@ -175,8 +177,16 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                     </div>
 
                 </div>
-
             </div>
+            {showAddDetailsModal ?
+                <div className="centered loginWrapper d-flex justify-content-end align-items-end mt-4">
+                    <AddDetailsModal
+                        changeContentHandler={changeContentHandler}
+                        setShowAddDetailsModal={setShowAddDetailsModal}
+                    />
+                </div>
+                : null}
+
         </>
     )
 }

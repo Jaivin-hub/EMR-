@@ -19,6 +19,7 @@ import AddPatientModal from './AddPatientModal';
 import AddDoctorModal from './Modals/AddDoctorModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
+import MedicineModal from './Modals/MedicineModal';
 
 
 
@@ -38,6 +39,7 @@ function TakeAppoiment() {
     const [showSettingsView, setShowSettingsView] = useState(false)
     const [reload, setReload] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
+    const [showMedicineView, setShowMedicineView] = useState(false)
 
     const columns = [
         { title: 'Name', field: 'doc_name' },
@@ -133,6 +135,11 @@ function TakeAppoiment() {
             setShowPatientView(false)
             setShowAppointmentView(false)
             setShowHospitalView(false)
+        } else if (value == 'Add Medicines') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(true)
         }
     }
 
@@ -182,20 +189,43 @@ function TakeAppoiment() {
                                         </div>
                                     </div>
                                     <div className="ml-20 ">
-                                        {showAddDetailsModal ?
+
+                                        {/* {showAddDetailsModal ?
                                             <AddDetailsModal
                                                 changeContentHandler={changeContentHandler}
                                                 setShowAddDetailsModal={setShowAddDetailsModal}
                                             />
-                                            : null}
+                                            : null} */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {showAppointmentView ?
-                        // <div className="row mt-4">
+
+                    <div className="mt-5 ">
+                        <MaterialTable
+                            options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", }}
+                            className="mt-5" columns={columns} data={doctorList} title='Patient Details'
+                        />
+                    </div>
+                    {showDoctorView ?
+                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                            <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
+                        </div>
+                        // <DoctorView />
+                        : null}
+                    {showAddDetailsModal ?
+                        <div className="d-flex top-0 justify-content-end bg-primary">
+                            <AddDetailsModal
+                                changeContentHandler={changeContentHandler}
+                                setShowAddDetailsModal={setShowAddDetailsModal}
+                            />
+                        </div>
+                        : null}
+
+
+                    {/* // <div className="row mt-4">
                         //     <div className="col-md-12">
                         //         <TableContainer component={Paper}>
                         //             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -239,14 +269,13 @@ function TakeAppoiment() {
                         //     {doctorList?.length >= 10 ?
                         //         <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
                         //         : null}
-                        // </div>
-                        <div className="mt-5">
-                            <MaterialTable
-                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
-                                className="mt-5 relative" columns={columns} data={doctorList} title='Patient Details'
-                            />
-                        </div>
-                        : null}
+                        // </div> */}
+
+                    <div className="mt-5 ">
+
+
+                    </div>
+
                     {showSettingsView ?
                         <SettingsView />
                         : null}
@@ -255,11 +284,10 @@ function TakeAppoiment() {
                             <AddPatientModal setOpenModal={setShowPatientView} setReload={setReload} reload={reload} />
                         </div>
                         : null}
-                    {showDoctorView ?
+                    {showMedicineView ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                            <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
+                            <MedicineModal setShowMedicineView={setShowMedicineView} />
                         </div>
-                        // <DoctorView />
                         : null}
                 </div>
             </div>

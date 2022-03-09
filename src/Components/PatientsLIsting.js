@@ -24,6 +24,7 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
+import MedicineModal from './Modals/MedicineModal';
 
 
 
@@ -47,6 +48,8 @@ function PatientsLIsting() {
     const [patientId, setPatientId] = useState('')
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
+    const [showMedicineView, setShowMedicineView] = useState(false)
+
 
     const columns = [
         { title: 'Patient First Name', field: 'p_firstname' },
@@ -138,6 +141,11 @@ function PatientsLIsting() {
             setShowPatientView(false)
             setShowAppointmentView(false)
             setShowHospitalView(false)
+        } else if (value == 'Add Medicines') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(true)
         }
     }
 
@@ -194,12 +202,7 @@ function PatientsLIsting() {
                                         </div>
                                     </div>
                                     <div className="ml-20 ">
-                                        {showAddDetailsModal ?
-                                            <AddDetailsModal
-                                                changeContentHandler={changeContentHandler}
-                                                setShowAddDetailsModal={setShowAddDetailsModal}
-                                            />
-                                            : null}
+
                                     </div>
                                 </div>
                             </div>
@@ -275,9 +278,9 @@ function PatientsLIsting() {
                         // </div>
                         <div className="mt-5">
                             <MaterialTable
-                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
                                 className="mt-5" columns={columns} data={patientList} title='Patient Details'
-                                
+
                                 actions={[
                                     {
                                         icon: () => <button className="btn btn-">New Appointment</button>,
@@ -285,7 +288,16 @@ function PatientsLIsting() {
                                         onClick: (e, data) => { newAppointmentsHandler(data._id) }
                                     }
 
+
                                 ]}
+                            />
+                        </div>
+                        : null}
+                    {showAddDetailsModal ?
+                        <div className="d-flex top-0 justify-content-end bg-primary">
+                            <AddDetailsModal
+                                changeContentHandler={changeContentHandler}
+                                setShowAddDetailsModal={setShowAddDetailsModal}
                             />
                         </div>
                         : null}
@@ -312,6 +324,11 @@ function PatientsLIsting() {
                 {showNewAppointmentsModal ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                         <AppointmentsModal patientId={patientId} setShowNewAppointmentsModal={setShowNewAppointmentsModal} setReload={setReload} reload={reload} />
+                    </div>
+                    : null}
+                {showMedicineView ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <MedicineModal setShowMedicineView={setShowMedicineView} />
                     </div>
                     : null}
             </div>
