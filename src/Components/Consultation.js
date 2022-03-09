@@ -254,7 +254,7 @@ function Consultation() {
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
-                        <Tabs />
+                        <Tabs patientId={patientId} />
                     </div>
                 </div>
             </div>

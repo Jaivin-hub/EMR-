@@ -20,6 +20,7 @@ import instance from '../../config/api'
 import { useNavigate } from 'react-router-dom';
 import HospitalListingTable from '../hospitalListingTable'
 import AddHospitalModal from './AddHospitalModal'
+import MaterialTable from 'material-table';
 
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import SearchPage from '../SearchPage'
@@ -59,6 +60,14 @@ function TaskDashboard() {
         newData[id] = value
         setHospitalData(newData)
     }
+    const columns = [
+        { title: 'Hospital Name', field: 'name' },
+        { title: 'State', field: 'state' },
+        { title: 'City', field: 'city' },
+        { title: 'Contact No', field: 'contact_1' },
+        { title: 'Contact No2', field: 'contact_2' },
+        
+    ]
 
     const fileSelectorHandler = (e) => {
         setPickedFile(e.target.files[0]);
@@ -124,9 +133,9 @@ function TaskDashboard() {
     const paginate = pageNumber => setCurrentPage(pageNumber)
 
     return (
-        <div className="div">
+        <div className="div h-screen w-screen fixed">
             <Header />
-            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
+            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)'}}>
                 <div className="row">
                     <div className="hospitalName mt-3">
                     </div>
@@ -139,33 +148,34 @@ function TaskDashboard() {
                     </div>
                     <div className="row mt-2">
                         <div className="col-md-6">
-                            <div className="row ">
-                                <SearchPage setSearchTerm={setSearchTerm} />
-                            </div>
+                           
                         </div>
                         <div className="col-md-6">
-                            <div className="row ">
+                        <div className="row ">
                                 <Button onClick={addHospitalHandler}>Add hospital</Button>
                             </div>
                         </div>
-                        <div className="col-md-6">
-
-                        </div>
                     </div>
                     {hospitalList?.length >= 1 ?
+                             <div className="mt-5">
+                             <MaterialTable
+                                 options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                 className="mt-5" columns={columns} data={hospitalList} title='Hospital Details'
+                             />
+                         </div>
 
-                        <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                            <div className="row pt-4 " >
+                        // <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                        //     <div className="row pt-4 " >
 
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <HospitalListingTable searchTerm={searchTerm} List={currentPosts} />
-                                    <Pagenation postsPerPage={postsPerPage} totalPosts={hospitalList?.length} paginate={paginate} />
-                                </div>
+                        //     </div>
+                        //     <div className="row">
+                        //         <div className="col-md-12">
+                        //             <HospitalListingTable searchTerm={searchTerm} List={currentPosts} />
+                        //             <Pagenation postsPerPage={postsPerPage} totalPosts={hospitalList?.length} paginate={paginate} />
+                        //         </div>
 
-                            </div>
-                        </div>
+                        //     </div>
+                        // </div>
                         : null}
                     {openModal ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">

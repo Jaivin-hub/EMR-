@@ -287,8 +287,6 @@ function PatientsLIsting() {
                                         tooltip: 'New Appointment',
                                         onClick: (e, data) => { newAppointmentsHandler(data._id) }
                                     }
-
-
                                 ]}
                             />
                         </div>

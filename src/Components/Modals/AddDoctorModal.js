@@ -1,10 +1,11 @@
 import React, { useState, forwardRef } from 'react'
-import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import {  MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import datePickerImg from '../../assets/imgs/image 8.png'
 import instance from '../../config/api'
 import uploadImg from '../../assets/imgs/image 7.png'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
 import Dropdown from 'react-dropdown';
+import Select from 'react-select';
 import 'react-dropdown/style.css';
 
 
@@ -41,9 +42,13 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
         'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     ];
 
-    const Specialization = ['Cardiology', 'Cardio Thoracic & Vascular Surgery', 'Dental & Maxillo Facial Surgery', 'Dermatology', 'Endocrinology & Diabetes', 'E.N.T', 'Gastroenterology & Hepatology', 'General Medicine',
-        'Obstetrics & Gynecology', 'Infertility & Laproscopy', 'Nephrology', 'Neurosurgery', 'Neurology', 'Ophthalmology', 'Orthopaedics', 'Paediatrics', 'Paediatric Surgery', 'Paedeatric Endocrinology', 'Plastic & Reconstructive Surgery',
-        'Psychiatry & Behavioural Sciences', 'Pulmonology', 'Rheumatology', 'Urology', 'Ayurveda Department', 'Heart Rhythm Disorders', 'Paedeatric Neurology', 'Paedeatric Nephrology', 'Neonatology', 'Oncology', 'Cardiac Anesthesia & Cardiac Critical Care']
+    
+    const Specialization = [{ value: 'Cardiology', label: 'Cardiology' }, { value: 'Cardio Thoracic & Vascular Surgery', label: 'Cardio Thoracic & Vascular Surgery' }, { value: 'Dental & Maxillo Facial Surgery', label: 'Dental & Maxillo Facial Surgery' }, { value: 'Dermatology', label: 'Dermatology' }, { value: 'Endocrinology & Diabetes', label: 'Endocrinology & Diabetes' },
+    { value: 'E.N.T', label: 'E.N.T' }, { value: 'Gastroenterology & Hepatology', label: 'Gastroenterology & Hepatology' }, { value: 'General Medicine', label: 'General Medicine' }, { value: 'Obstetrics & Gynecology', label: 'Obstetrics & Gynecology' }, { value: 'Infertility & Laproscopy', label: 'Infertility & Laproscopy' },
+    { value: 'Nephrology', label: 'Nephrology' }, { value: 'Neurosurgery', label: 'Neurosurgery' }, { value: 'Neurology', label: 'Neurology' }, { value: 'Ophthalmology', label: 'Ophthalmology' }, { value: 'Orthopaedics', label: 'Orthopaedics' }, { value: 'Paediatrics', label: 'Paediatrics' }, { value: 'Paediatric Surgery', label: 'Paediatric Surgery' }
+        , { value: 'Paedeatric Endocrinology', label: 'Paedeatric Endocrinology' }, { value: 'Plastic & Reconstructive Surgery', label: 'Plastic & Reconstructive Surgery' }, { value: 'Psychiatry & Behavioural Sciences', label: 'Psychiatry & Behavioural Sciences' }, { value: 'Pulmonology', label: 'Pulmonology' }, { value: 'Rheumatology', label: 'Rheumatology' }, { value: 'Urology', label: 'Urology' }
+        , { value: 'Ayurveda Department', label: 'Ayurveda Department' }, { value: 'Heart Rhythm Disorders', label: 'Heart Rhythm Disorders' }, { value: 'Paedeatric Neurology', label: 'Paedeatric Neurology' }, { value: 'Paedeatric Nephrology', label: 'Paedeatric Nephrology' }, { value: 'Neonatology', label: 'Neonatology' }, { value: 'Oncology', label: 'Oncology' }, { value: 'Cardiac Anesthesia & Cardiac Critical Care', label: 'Cardiac Anesthesia & Cardiac Critical Care' }]
+
     const defaultOption = options[0];
 
     const dropDownHandler = (e, index) => {
@@ -282,8 +287,8 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
     // #################### Validating Password! ###########################
 
     const [specialization, setSpecialization] = useState('')
-    const SpecializationHandler = (e) => {
-        setSpecialization(e.target.value)
+    const SpecializationHandler = (value) => {
+        setSpecialization(value.label)
         setsPecializationErr('')
     }
 
@@ -397,7 +402,15 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                                 <p className="" style={{ color: "red" }}>{qualificationErr}</p>
                             </div>
                             <div className="col-md-3">
-                                <FormControl className={classes.formControl}>
+                            <Select
+                                    className="primary mt-2"
+                                    name="singleSelect"
+                                    placeholder="Specialization"
+                                    // value={value.medicineName}
+                                    options={Specialization}
+                                    onChange={(value) => SpecializationHandler(value)}
+                                />
+                                {/* <FormControl className={classes.formControl}>
                                     <InputLabel>Specialization</InputLabel>
                                     <Select onChange={SpecializationHandler}>
                                         {Specialization?.map((item, index) => {
@@ -406,7 +419,7 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                                             )
                                         })}
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                                 <p style={{ color: "red" }}>{specializationErr}</p>
                             </div>
                             <div className="col-md-3">

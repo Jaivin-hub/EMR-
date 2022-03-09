@@ -1,18 +1,21 @@
 import React from 'react'
 // import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 // import {faCoffee} from "@fontawesome/free"
+import { FcManager, FcBusinessman } from 'react-icons/fc'
+import { GiMedicines } from 'react-icons/gi'
+import { ImLab } from 'react-icons/im'
 
 
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
 
     return (
-        <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs" style={{zIndex:10001}}>
+        <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs" style={{ zIndex: 10001 }}>
             <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
                 changeContentHandler('Add Doctor')
                 setShowAddDetailsModal(false)
             }}>
-                <div className="col-md-9 font-bold">
-                    {/* <FontAwesomeIcon icon={doctor} /> */}
+                <div className="col-md-9 d-flex font-bold">
+                    <FcBusinessman size={20} />
                     Add Doctor
                 </div>
                 <div className="col-md-3">
@@ -26,8 +29,8 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     changeContentHandler('Add Patients')
                     setShowAddDetailsModal(false)
                 }}>
-                <div className="col-md-9 font-bold">
-                    {/* <FontAwesomeIcon icon="fa-solid fa-user-tie-hair-long" /> */}
+                <div className="col-md-9 d-flex font-bold">
+                    <FcManager size={20} />
                     Add Patients
                 </div>
                 <div className="col-md-3">
@@ -41,8 +44,8 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     changeContentHandler('Add Medicines')
                     setShowAddDetailsModal(false)
                 }}>
-                <div className="col-md-9 font-bold">
-                    {/* <FontAwesomeIcon icon="fa-solid fa-syringe" /> */}
+                <div className="col-md-9 d-flex font-bold">
+                    <GiMedicines size={20} />
                     Add Medicines
                 </div>
                 <div className="col-md-3">
@@ -52,9 +55,9 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                 </div>
             </div>
             <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('Add Lab Procedures') }}>
-                <div className="col-md-9 font-bold">
-                    {/* <FontAwesomeIcon icon="fa-solid fa-flask" /> */}
-                    Add Lab Procedures
+                <div className="col-md-9 d-flex font-bold">
+                    <ImLab size={20} />
+                    Add LabProcedures
                 </div>
                 <div className="col-md-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

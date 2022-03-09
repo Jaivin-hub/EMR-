@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
 import instance from '../../config/api'
-import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import Select from 'react-select';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -14,13 +16,20 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
     const classes = useStyles()
     const [country, setCountry] = useState('India')
     const [hospitalData, setHospitalData] = useState({})
-    const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
-        'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
-        'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
-        'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim',
-        'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal']
+    // const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
+    //     'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
+    //     'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+    //     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim',
+    //     'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal']
 
-
+    const states = [{ value: 'Andhra Pradesh', label: 'Andhra Pradesh' }, { value: 'Arunachal Pradesh', label: 'Arunachal Pradesh' }, { value: 'Assam', label: 'Assam' },
+    { value: 'Bihar', label: 'Bihar' }, { value: 'Chhattisgarh', label: 'Chhattisgarh' }, { value: 'Goa', label: 'Goa' },
+    { value: 'Gujarat', label: 'Gujarat' }, { value: 'Haryana', label: 'Haryana' }, { value: 'Himachal Pradesh', label: 'Himachal Pradesh' }, { value: 'Jharkhand', label: 'Jharkhand' }
+        , { value: 'Karnataka', label: 'Karnataka' }, { value: 'Kerala', label: 'Kerala' }, { value: 'Madhya Pradesh', label: 'Madhya Pradesh' }
+        , { value: 'Maharashtra', label: 'Maharashtra' }, { value: 'Manipur', label: 'Manipur' }, { value: 'Meghalaya', label: 'Meghalaya' }
+        , { value: 'Mizoram', label: 'Mizoram' }, { value: 'Nagaland', label: 'Nagaland' }, { value: 'Odisha', label: 'Odisha' }, { value: 'Punjab', label: 'Punjab' }, { value: 'Rajasthan', label: 'Rajasthan' }
+        , { value: 'Sikkim', label: 'Sikkim' }, { value: 'Tamil Nadu', label: 'Tamil Nadu' }, { value: 'Telangana', label: 'Telangana' }, { value: 'Tripura', label: 'Tripura' }, { value: 'Uttar Pradesh', label: 'Uttar Pradesh' }
+        , { value: 'Uttarakhand', label: 'Uttarakhand' }, { value: 'West Bengal', label: 'West Bengal' }]
     const inputChangeHandler = (e) => {
         const id = e.target.id
         const value = e.target.value
@@ -433,6 +442,12 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
             }
         }
     }
+
+    const stateDropdownHandler = (value) => {
+        console.log(value.label)
+        setState(value.label)
+        setStateErr('')
+    }
     return (
         <div className="Modal_Container">
             <div className="row">
@@ -545,7 +560,14 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                 />
                             </div>
                             <div className="col-md-3">
-                                <FormControl className={classes.formControl}>
+                                <Select
+                                    className="primary mt-2"
+                                    name="singleSelect"
+                                    // value={value.medicineName}
+                                    options={states}
+                                    onChange={(value) => stateDropdownHandler(value)}
+                                />
+                                {/* <FormControl className={classes.formControl}>
                                     <InputLabel>State</InputLabel>
                                     <Select onChange={dropDownHandler}>
                                         {states.map((item, index) => {
@@ -554,7 +576,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                             )
                                         })}
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                                 <div className="row">
                                     <span style={{ color: "red" }}>{stateErr}</span>
                                 </div>
