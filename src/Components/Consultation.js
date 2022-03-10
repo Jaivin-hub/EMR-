@@ -29,6 +29,9 @@ function Consultation() {
     })
     const hospitalId = localStorage.getItem('HospitalId')
     const state = useLocation()
+    console.log('state[[[', state.state)
+    const referDoctorId = state.state[0]._doc_id._id
+    const appointmentId = state.state[0]._id
     const patientFirstName = state.state[0]._pat_id.p_firstname
     const patientLastName = state.state[0]._pat_id.p_lastname
     const patientAdhar = state.state[0]._pat_id.aadhar_card_no
@@ -219,8 +222,8 @@ function Consultation() {
                     : null}
             </div>
             <div className="row space-x-3 m-5">
-                <textarea className='border-4' placeholder="Comments" name="" id="" cols="50" rows="2"></textarea>
-                <input type="text" className='border-4' />
+                <textarea className='border-2 rounded-md' placeholder="Doctor note" name="" id="" cols="50" rows="2"></textarea>
+                <input type="text" placeholder="" className='border-2 rounded-md' />
                 <div>
                     {/* <div>
                         <h3>On air: {isRecording ? 'on' : 'off'}</h3>
@@ -254,7 +257,7 @@ function Consultation() {
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
-                        <Tabs patientId={patientId} />
+                        <Tabs patientId={patientId} referDoctorId={referDoctorId} appointmentId={appointmentId}/>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import React from 'react'
 import { FcManager, FcBusinessman } from 'react-icons/fc'
 import { GiMedicines } from 'react-icons/gi'
 import { ImLab } from 'react-icons/im'
+import { IoSettingsOutline } from 'react-icons/io5'
 
 
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
@@ -14,8 +15,11 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                 changeContentHandler('Add Doctor')
                 setShowAddDetailsModal(false)
             }}>
-                <div className="col-md-9 d-flex font-bold">
+                <div className="col-md-2 ">
                     <FcBusinessman size={20} />
+                    {/* Add Doctor */}
+                </div>
+                <div className="col-md-7 space-x-2 d-flex font-bold">
                     Add Doctor
                 </div>
                 <div className="col-md-3">
@@ -29,8 +33,10 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     changeContentHandler('Add Patients')
                     setShowAddDetailsModal(false)
                 }}>
-                <div className="col-md-9 d-flex font-bold">
+                <div className="col-md-2 ">
                     <FcManager size={20} />
+                </div>
+                <div className="col-md-7 d-flex font-bold">
                     Add Patients
                 </div>
                 <div className="col-md-3">
@@ -44,8 +50,10 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     changeContentHandler('Add Medicines')
                     setShowAddDetailsModal(false)
                 }}>
-                <div className="col-md-9 d-flex font-bold">
+                <div className="col-md-2 ">
                     <GiMedicines size={20} />
+                </div>
+                <div className="col-md-7 d-flex font-bold">
                     Add Medicines
                 </div>
                 <div className="col-md-3">
@@ -55,9 +63,24 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                 </div>
             </div>
             <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('Add Lab Procedures') }}>
-                <div className="col-md-9 d-flex font-bold">
+                <div className="col-md-2 ">
                     <ImLab size={20} />
-                    Add LabProcedures
+                </div>
+                <div className="col-md-7 d-flex font-bold">
+                    LabProcedures
+                </div>
+                <div className="col-md-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('settings') }}>
+                <div className="col-md-2 ">
+                    <IoSettingsOutline size={20} />
+                </div>
+                <div className="col-md-7 d-flex font-bold">
+                    Settings
                 </div>
                 <div className="col-md-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

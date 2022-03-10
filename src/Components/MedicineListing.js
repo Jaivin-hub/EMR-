@@ -66,12 +66,14 @@ function MedicineListing() {
             setShowAppointmentView(true)
             setShowHospitalView(false)
             setShowSettingsView(false)
-        } else if (value == 'Settings') {
-            setShowSettingsView(true)
+        } else if (value == "settings") {
             setShowDoctorView(false)
-            setShowPatientView(false)
             setShowAppointmentView(false)
-            setShowHospitalView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowSettingsView(true)
+            setShowAddDetailsModal(false)
         } else if (value == 'Add Medicines') {
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -84,11 +86,35 @@ function MedicineListing() {
     const paginate = pageNumber => setCurrentPage(pageNumber)
     const pendingCount = pendingList?.length
 
+    const fetchAppointment = () => {
+        var today = new Date();
+        var dd = today.getDate();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        var mm = today.getMonth() + 1;
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var year = today.getFullYear();
+        const date_format = dd + "-" + mm + "-" + year
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: date_format
 
+        }
+        instance.post('/list_appointment', obj).then((res) => {
+            const arr = res.data.appointment
+            // setAppointments(arr)
+            setPendingList(arr)
+
+        })
+    }
 
 
     useEffect(() => {
         fetchMedicineList()
+        fetchAppointment()
     }, [reload])
 
     const fetchMedicineList = () => {
@@ -97,7 +123,7 @@ function MedicineListing() {
             isActive: true
         }
         instance.post('/list_medicine', obj).then((res) => {
-            setMedicineList(res?.data.medicines)
+            setMedicineList(res?.data.medicines.reverse())
         }).catch((err) => {
             console.log('error', err)
         })
@@ -185,7 +211,7 @@ function MedicineListing() {
                     : null}
                 {showMedicineView ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                        <MedicineModal setShowMedicineView={setShowMedicineView} />
+                        <MedicineModal setShowMedicineView={setShowMedicineView} setReload={setReload} reload={reload} />
                     </div>
                     : null}
             </div>

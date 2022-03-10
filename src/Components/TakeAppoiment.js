@@ -103,8 +103,8 @@ function TakeAppoiment() {
             _hos_id: HospitalId
         }
         instance.post('/list_doctors', obj).then((response) => {
-            const doctorData = response.data.doctors
-            setDoctorList(doctorData)
+            const doctorData = response?.data.doctors
+            setDoctorList(doctorData.reverse())
         }).catch((err) => {
             console.log('error', err)
         })
@@ -206,7 +206,7 @@ function TakeAppoiment() {
                     <div className="mt-5 ">
                         <MaterialTable
                             options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", }}
-                            className="mt-5" columns={columns} data={doctorList} title='Patient Details'
+                            className="mt-5" columns={columns} data={doctorList} title='Doctor Details'
                         />
                     </div>
                     {showDoctorView ?

@@ -5,7 +5,7 @@ import moment from 'moment';
 import XMLParser from 'react-xml-parser';
 import instance from '../config/api';
 import QrReader from 'react-qr-reader'
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -669,7 +669,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '' }}>
                 <div className="row" >
                     <div className="col-md-6 "  >
-                       
+
                     </div>
                     <div className="col-md-2">
                     </div>
@@ -696,13 +696,25 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 :
                                 <div className="div ">
 
-                                    <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer', width: "100%" }} src="https://static.thenounproject.com/png/59262-200.png" alt="" />
+                                    <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer'}} src="https://image.winudf.com/v2/image/Y29tLmppZ3MucXJjb2Rlc2Nhbm5lcl9pY29uXzE1MzkxODE2NjVfMDk5/icon.png?w=&fakeurl=1" alt="" />
                                 </div>
                         }
-                         <div className="row mt-4">
-                            <div className="col-md-12 d-flex ">
-                                <Button variant="outlined" onClick={connectionHandler}>upload file</Button>
-                                <Button variant="outlined" onClick={connectionScanHandler} style={{ marginLeft: "2%" }}>Scan Qr</Button>
+                        <div className="row mt-4">
+                            <div className="col-md-12 d-flex space-x-2">
+                            <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={connectionHandler}
+                                >Upload file</button>
+                                 <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={connectionScanHandler}
+                                >Scan Qr</button>
                             </div>
                         </div>
                         <h4>{scanResultWebCam}</h4>
@@ -886,7 +898,13 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3">
-                                <Button variant="contained" style={{ width: "50%" }} onClick={addPatientHandler}>ADD</Button>
+                                <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={addPatientHandler}
+                                >ADD</button>
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">

@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-function Tabs({ patientId }) {
+function Tabs({ patientId, referDoctorId, appointmentId }) {
     // const componentRef = useRef()
     // const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
@@ -45,13 +45,13 @@ function Tabs({ patientId }) {
     const [medicineScientificName, setMedicineScientificName] = useState('')
     const [selectedMedicineType, setSelectedMedicineType] = useState('')
     const [selectedList, setSelectedList] = useState([])
+    const [selectedDosageList, setSelectedDosageList] = useState([])
 
-    const durationOptions = [{ value: 'Days(s)', label: 'Days(s)' }, { value: "Week(s)", label: 'week(s)' }, { value: "Months(s)", label: 'Months(s)' }]
-    const durationDaysOptions = [{ value: "1", label: '1' }, { value: "2", label: '2' }, { value: "3", label: '3' }, { value: "4", label: '4' }, { value: "5", label: '5' }
-        , { value: "6", label: '6' }, { value: "7", label: '7' }, { value: "8", label: '8' }, { value: "9", label: '9' }, { value: "10", label: '10' },]
+
 
     useEffect(() => {
         fetchMedicineList()
+        fetchDosageList()
     }, [reload])
 
     const fetchMedicineList = () => {
@@ -72,6 +72,22 @@ function Tabs({ patientId }) {
         })
     }
 
+    const fetchDosageList = () => {
+        const obj = {
+            _hos_id: hospitalId,
+            isActive: true
+        }
+        instance.post('/list_dosage', obj).then((res) => {
+            const dosageList = res?.data.dosage
+            let val = []
+            dosageList?.map((item, i) => {
+                const data = { value: item.dosage, label: item.dosage }
+                val.push(data)
+            })
+            setSelectedDosageList(val)
+        })
+    }
+    console.log('selectedDosageList', selectedDosageList)
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -204,6 +220,8 @@ function Tabs({ patientId }) {
         setreload(!reload)
     }
 
+    console.log('medicineList', medicineList)
+
     const medNameHandler = (value, index) => {
         console.log('value', value.label)
         // const data = opt[0]?.label
@@ -213,8 +231,9 @@ function Tabs({ patientId }) {
                 const newData = [...inputFields]
                 newData[index]['Sname'] = item.s_med_name
                 newData[index]['type'] = item.med_type
+                const medId = item._id
                 // newData[index]['medicineName'] = item.med_name
-                newData[index]['medicineName'] = { value: item.med_name, label: item.med_name }
+                newData[index]['medicineName'] = { value: medId, label: item.med_name }
 
                 setreload(!reload)
                 // setSelectedMedicineName(item.med_name)
@@ -224,51 +243,64 @@ function Tabs({ patientId }) {
         })
     }
 
-    const changeDurationHandler = (value, index) => {
+    const [dummyQty, setDummyQty] = useState('')
+
+    const dosageChangeHandler = (value, index) => {
         const newData = [...inputFields]
-        newData[index]['day'] = { value: value.label, label: value.label }
+        newData[index]['Dosage'] = { value: value.label, label: value.label }
+        let a = value.label.split("-")
+        let total = 0
+        a.forEach(element => {
+            total += eval(element);
+        });
+        newData[index]['qty'] = total
+        setDummyQty(total)
         setInputFields(newData)
     }
 
-    const changeDurationDayHandler = (value, index) => {
+    const durationHandler = (value, index) => {
         const newData = [...inputFields]
-        newData[index]['dayCount'] = { value: value.label, label: value.label }
+        newData[index]['Duration'] = value
+        const multipleData = dummyQty * value
+        newData[index]['qty'] = multipleData
         setInputFields(newData)
     }
 
 
-
-    console.log(inputFields)
-    const ex = "1-1-1"
-    const ans = ex.split("-")
-    console.log('answer' + ans)
+    const commentsInputHandler = (value, index) => {
+        const newData = [...inputFields]
+        newData[index]['comments'] = value
+        setInputFields(newData)
+    }
 
     const priscriptionSubmitHandler = () => {
         const { medicineName, Sname, type, Dosage, Duration, qty, comments } = inputFields
-        console.log('medicineName', medicineName)
+        const newList = []
+        inputFields.map((item, i) => {
+            const dosage = item.Dosage.label
+            const days = item.Duration
+            const Sname = item.Sname
+            const comments = item.comments
+            const _med_id = item.medicineName.value
+            const total_quantity = item.qty
+            const type = item.type
+            const newListData = { _med_id, dosage, days, total_quantity }
+            newList.push(newListData)
+        })
+
         const obj = [{
             _hos_id: hospitalId,
             _pat_id: patientId,
-            _med_id: "621c3da8afce7021d6eb3497",
-            dosage: "1-1-1",
-            quantity: 1,
-            days: "3",
-            total_quantity: "9",
-            _refer_doc_id: "620b8b750ca972e35ad7f3ad"
-        }, {
-            _hos_id: "620a4845db8b9874e8e7466c",
-            _pat_id: "62145ba93fcb7e4074651f25",
-            _med_id: "621c3da8afce7021d6eb3497",
-            dosage: "1-1-1",
-            quantity: 1,
-            days: "3",
-            total_quantity: "9",
-            _refer_doc_id: "620b8b750ca972e35ad7f3ad"
+            _pat_app_id: appointmentId,
+            _refer_doc_id: referDoctorId,
+            dosages: newList
         }]
+        console.log('obj', obj)
         instance.post('/patient_prescription', obj).then((res) => {
             console.log(res)
         })
     }
+
 
     const smpArr = "1/2-1/2-1/2"
 
@@ -279,166 +311,153 @@ function Tabs({ patientId }) {
     let data = 0
     splitedValue.forEach((value) => {
         const parseData = parseInt(value)
-         data += parseData
+        data += parseData
     })
 
-    console.log("new Data"+data)
+    console.log("new Data" + data)
 
     // })
 
+    return (
+        <div className="">
 
+            <div className="bloc-tabs ">
+                <button
+                    className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+                    onClick={() => toggleTab(1)}
+                >
+                    Prescription
+                </button>
+                <button
+                    className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+                    onClick={() => toggleTab(2)}
+                >
+                    Investigation
+                </button>
+                <button
+                    className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
+                    onClick={() => toggleTab(4)}
+                >
+                    Stock
+                </button>
+            </div>
 
+            <div className="content-tabs" >
+                <div className={toggleState === 1 ? "content  active-content" : "content"}>
 
-
-
-
-return (
-    <div className="">
-
-        <div className="bloc-tabs ">
-            <button
-                className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
-                onClick={() => toggleTab(1)}
-            >
-                Prescription
-            </button>
-            <button
-                className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
-                onClick={() => toggleTab(2)}
-            >
-                Investigation
-            </button>
-            <button
-                className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
-                onClick={() => toggleTab(4)}
-            >
-                Stock
-            </button>
-        </div>
-
-        <div className="content-tabs" >
-            <div className={toggleState === 1 ? "content  active-content" : "content"}>
-
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell >SI No</TableCell>
-                                <TableCell >Medicine Name</TableCell>
-                                <TableCell >Pharmacological Name</TableCell>
-                                <TableCell >Type</TableCell>
-                                <TableCell >Dosage</TableCell>
-                                <TableCell >Duration</TableCell>
-                                <TableCell >Oty</TableCell>
-                                <TableCell >Comments</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {inputFields.map((value, index) => {
-                                return (
-                                    <TableRow>
-                                        <TableCell >
-                                            {index + 1}
-                                        </TableCell>
-                                        <TableCell className="">
-                                            <Select
-                                                className="primary"
-                                                name="singleSelect"
-                                                value={value.medicineName}
-                                                options={selectedList}
-                                                onChange={(value) => medNameHandler(value, index)}
-                                            />
-                                        </TableCell>
-                                        <TableCell className='dropdown'>
-                                            <input type="text" value={value.Sname} className='border-2 w-40 h-10' />
-                                        </TableCell>
-                                        <TableCell className=''>
-                                            <input type="text" value={value.type} className='border-2 w-40 h-10' />
-                                        </TableCell>
-                                        <TableCell >
-                                            <input type="text" className='border-2 w-28 h-10' />
-                                        </TableCell>
-                                        <TableCell className="space-x-2 ">
-                                            <div className="d-flex">
-                                                {/* <input type="text" className='border-2 w-16 h-10' /> */}
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >SI No</TableCell>
+                                    <TableCell >Medicine Name</TableCell>
+                                    <TableCell >Pharmacological Name</TableCell>
+                                    <TableCell >Type</TableCell>
+                                    <TableCell >Dosage</TableCell>
+                                    <TableCell >Duration</TableCell>
+                                    <TableCell >Quantity</TableCell>
+                                    <TableCell >Comments</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {inputFields.map((value, index) => {
+                                    return (
+                                        <TableRow>
+                                            <TableCell >
+                                                {index + 1}
+                                            </TableCell>
+                                            <TableCell className="">
                                                 <Select
-                                                    className="primary w-16"
+                                                    className="primary"
                                                     name="singleSelect"
-                                                    value={value.dayCount}
-                                                    options={durationDaysOptions}
-                                                    onChange={(value) => changeDurationDayHandler(value, index)}
+                                                    value={value.medicineName}
+                                                    options={selectedList}
+                                                    onChange={(value) => medNameHandler(value, index)}
                                                 />
+                                            </TableCell>
+                                            <TableCell className='dropdown'>
+                                                <input type="text" value={value.Sname} className='border-2 w-32 h-10 rounded-md' />
+                                            </TableCell>
+                                            <TableCell className=''>
+                                                <input type="text" value={value.type} className='border-2 w-32 h-10 rounded-md' />
+                                            </TableCell>
+                                            <TableCell >
                                                 <Select
                                                     className="primary w-32"
                                                     name="singleSelect"
-                                                    value={value.day}
-                                                    options={durationOptions}
-                                                    onChange={(value) => changeDurationHandler(value, index)}
+                                                    value={value.Dosage}
+                                                    options={selectedDosageList}
+                                                    onChange={(value) => dosageChangeHandler(value, index)}
                                                 />
-                                                {/* <input type="text" className='border-2 w-32 h-10' /> */}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell >
-                                            <input type="text" className='border-2 w-16 h-10' />
-                                        </TableCell>
-                                        <TableCell >
-                                            <div className="d-flex">
-                                                <textarea className="border-2" placeholder="Comments" name="" id="" cols="30" rows="2"></textarea>
-                                                {(inputFields.length - 1 === index) ?
-                                                    (<button type="button"
-                                                        className="inline-block
+                                                {/* <input type="text" className='border-2 w-28 h-10' /> */}
+                                            </TableCell>
+                                            <TableCell className="space-x-2 ">
+                                                <div className="d-flex">
+                                                    <input type="text" value={value.Duration} onChange={(e) => durationHandler(e.target.value, index)} className='border-2 w-16 h-10 rounded-md' />
+                                                    {/* <input type="text" className='border-2 w-32 h-10' /> */}
+                                                </div>
+                                            </TableCell>
+                                            <TableCell >
+                                                <input type="text" value={" " + value.qty} className='border-2 w-16 h-10 rounded-md' />
+                                            </TableCell>
+                                            <TableCell >
+                                                <div className="d-flex">
+                                                    <textarea onChange={(e) => { commentsInputHandler(e.target.value, index) }} className="border-2" placeholder="Comments" name="" id="" cols="30" rows="2" className="rounded-md border-2"></textarea>
+                                                    {(inputFields.length - 1 === index) ?
+                                                        (<button type="button"
+                                                            className="inline-block
                                                             rounded-sm bg-blue-300 text-white
                                                             leading-normal uppercase shadow-md hover:bg-blue-400
                                                             hover:shadow-lg focus:bg-blue-400 focus:shadow-lg
                                                             focus:outline-none focus:ring-0 active:bg-blue-600
                                                             active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2"
-                                                        onClick={addInputFieldHandler}>
-                                                        +
-                                                    </button>)
-                                                    :
-                                                    (<button type="button"
-                                                        className="inline-block
+                                                            onClick={addInputFieldHandler}>
+                                                            +
+                                                        </button>)
+                                                        :
+                                                        (<button type="button"
+                                                            className="inline-block
                                                             rounded-sm bg-red-400 text-white
                                                             leading-normal uppercase shadow-md hover:bg-red-400
                                                             hover:shadow-lg focus:bg-red-400 focus:shadow-lg
                                                             focus:outline-none focus:ring-0 active:bg-red-600
                                                             active:shadow-lg transition duration-150 ease-in-out w-7 h-7 mt-2 ml-2"
-                                                        onClick={() => { removeInputFieldHandler(index, value) }}>
-                                                        -
-                                                    </button>)}
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <div className="d-flex mt-3 justify-content-end space-x-5">
-                    <button type="button" className="inline-block px-6 py-2.5 
+                                                            onClick={() => { removeInputFieldHandler(index, value) }}>
+                                                            -
+                                                        </button>)}
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <div className="d-flex mt-3 justify-content-end space-x-5">
+                        <button type="button" className="inline-block px-6 py-2.5 
                     bg-red-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-red-500 hover:shadow-lg 
                     focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0 
                     active:bg-red-600 active:shadow-lg transition duration-150 ease-in-out">Cancel</button>
-                    <button type="button" className="inline-block px-6 py-2.5 
+                        <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
                     active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                        onClick={priscriptionSubmitHandler}
-                    >Save</button>
+                            onClick={priscriptionSubmitHandler}
+                        >Save</button>
+                    </div>
                 </div>
-            </div>
-            <div className={toggleState === 2 ? "content  active-content" : "content"}>
-                {/* <h2>Content 2</h2>
+                <div className={toggleState === 2 ? "content  active-content" : "content"}>
+                    {/* <h2>Content 2</h2>
                     <hr />
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
                         voluptatum qui adipisci.
                     </p> */}
-            </div>
+                </div>
 
-            {/* <div className={toggleState === 3 ? "content  active-content" : "content"} >
+                {/* <div className={toggleState === 3 ? "content  active-content" : "content"} >
                     <h4><strong>Medicine details</strong></h4>
                     <div className="row mt-5">
                         <div className="col-md-6">
@@ -496,11 +515,11 @@ return (
 
                     </div>
                 </div> */}
-            <div className={toggleState === 4 ? "content  active-content" : "content"}>
+                <div className={toggleState === 4 ? "content  active-content" : "content"}>
 
-            </div>
-            <div className={toggleState === 5 ? "content  active-content" : "content"}>
-                {/* <h2>Content 5</h2>
+                </div>
+                <div className={toggleState === 5 ? "content  active-content" : "content"}>
+                    {/* <h2>Content 5</h2>
                     <hr />
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos sed
@@ -510,10 +529,10 @@ return (
                         laboriosam architecto optio rem, dignissimos voluptatum beatae
                         aperiam voluptatem atque. Beatae rerum dolores sunt.
                     </p> */}
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 }
 
 export default Tabs;

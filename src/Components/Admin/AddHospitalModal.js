@@ -449,22 +449,20 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         setStateErr('')
     }
     return (
-        <div className="Modal_Container">
+        <div className="Modal_Container" style={{ maxWidth: '90%' }}>
             <div className="row">
-                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-12  d-flex justify-content-end align-items-end">
-                    <h1>x</h1>
+                <div className="col-md-8 ">
+                    <h4 className="underline"><strong>Add Hospitals</strong></h4>
+                </div>
+                <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
+                    <h4>x</h4>
                 </div>
             </div>
             <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", }}>
-                <div className="row pt-4" >
-                    <div className="col-md-2 d-flex justify-content-center">
-                        Add Hospitals
-                    </div>
-                </div>
                 <div className="row text-center">
                     <div className="col-md-2">
-                        <div className="uploadDiv mt-4" style={{ width: '60%', marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
-                            <img width="80%" height="" src='https://cdn5.vectorstock.com/i/thumb-large/49/04/letter-h-home-hospital-plus-medical-symbol-vector-33034904.jpg' alt="" />
+                        <div className="uploadDiv mt-5" style={{ width: '60%', marginLeft: '20%', borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
+                            <img width="100%" height="" src='https://img.freepik.com/free-vector/hospital-logo-design-vector-medical-cross_53876-136743.jpg' alt="" />
                             <label className="mt-3" style={{ color: '#0298D5' }}>Upload Logo</label>
                         </div>
                     </div>
@@ -679,7 +677,13 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
-                                <Button variant="contained" onClick={addHospitalSubmitHandler}>Add Hospital</Button>
+                            <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={addHospitalSubmitHandler}
+                                >Add Hospital</button>
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">

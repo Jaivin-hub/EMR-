@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react'
-import {  MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import datePickerImg from '../../assets/imgs/image 8.png'
 import instance from '../../config/api'
 import uploadImg from '../../assets/imgs/image 7.png'
@@ -42,7 +42,7 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
         'Select', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     ];
 
-    
+
     const Specialization = [{ value: 'Cardiology', label: 'Cardiology' }, { value: 'Cardio Thoracic & Vascular Surgery', label: 'Cardio Thoracic & Vascular Surgery' }, { value: 'Dental & Maxillo Facial Surgery', label: 'Dental & Maxillo Facial Surgery' }, { value: 'Dermatology', label: 'Dermatology' }, { value: 'Endocrinology & Diabetes', label: 'Endocrinology & Diabetes' },
     { value: 'E.N.T', label: 'E.N.T' }, { value: 'Gastroenterology & Hepatology', label: 'Gastroenterology & Hepatology' }, { value: 'General Medicine', label: 'General Medicine' }, { value: 'Obstetrics & Gynecology', label: 'Obstetrics & Gynecology' }, { value: 'Infertility & Laproscopy', label: 'Infertility & Laproscopy' },
     { value: 'Nephrology', label: 'Nephrology' }, { value: 'Neurosurgery', label: 'Neurosurgery' }, { value: 'Neurology', label: 'Neurology' }, { value: 'Ophthalmology', label: 'Ophthalmology' }, { value: 'Orthopaedics', label: 'Orthopaedics' }, { value: 'Paediatrics', label: 'Paediatrics' }, { value: 'Paediatric Surgery', label: 'Paediatric Surgery' }
@@ -356,7 +356,7 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                 <div className="row text-center">
                     <div className="col-md-2 item-center">
                         <div className="uploadDiv mt-4" style={{ borderRadius: '5px', border: '1px solid rgba(2, 152, 213, 0.56)' }}>
-                            <img width="80%" height="" src={uploadImg} alt="" />
+                            <img width="80%" className="ml-3" height="" src="https://media.istockphoto.com/vectors/doctor-icon-or-avatar-physician-with-stethoscope-medicine-symbol-vector-id1150502263?k=20&m=1150502263&s=612x612&w=0&h=s2_jO-vB7I_Jd5UqFIacb5hpXrTFjOFpOTABRiVg40A=" alt="" />
                             <label className="mt-3" style={{ color: '#0298D5', width: '80%' }}>Upload Image</label>
                         </div>
                     </div>
@@ -402,7 +402,7 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                                 <p className="" style={{ color: "red" }}>{qualificationErr}</p>
                             </div>
                             <div className="col-md-3">
-                            <Select
+                                <Select
                                     className="primary mt-2"
                                     name="singleSelect"
                                     placeholder="Specialization"
@@ -410,16 +410,6 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                                     options={Specialization}
                                     onChange={(value) => SpecializationHandler(value)}
                                 />
-                                {/* <FormControl className={classes.formControl}>
-                                    <InputLabel>Specialization</InputLabel>
-                                    <Select onChange={SpecializationHandler}>
-                                        {Specialization?.map((item, index) => {
-                                            return (
-                                                <MenuItem value={item} key={index}>{item}</MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl> */}
                                 <p style={{ color: "red" }}>{specializationErr}</p>
                             </div>
                             <div className="col-md-3">
@@ -474,69 +464,15 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
                                 <p style={{ color: "red" }}>{passwordErr}</p>
                             </div>
                         </div>
-                        {/* {inputDateFields.map((inputDateFields, index) => {
-                            return (
-                                <div key={index} className="row">
-                                    <div className="timeScedulediv mt-4" style={{ width: '90%', marginLeft: "5%", height: '6em', borderRadius: '5px', border: '1px ', backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
-                                        <div className="row mt-2">
-                                            <div className="col-md-3 " >
-                                                <div className="row" style={{ marginLeft: "5%" }}>
-                                                    Day
-                                                </div>
-                                                <Dropdown id='doc_avail_day' options={options} onChange={(e) => { dropDownHandler(e, index) }} value={defaultOption} placeholder="Select an option" />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <div className="row" style={{ marginLeft: "5%" }}>
-                                                    Time From
-                                                </div>
-                                                <input id="doc_from_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%", height: '3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time From" />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <div className="row" style={{ marginLeft: "5%" }}>
-                                                    Time To
-                                                </div>
-                                                <input id="doc_to_time" className="" onChange={(e) => { dropDownHandler(e, index) }} type="time" style={{ width: "90%", height: '3em', position: 'relative', border: '1px solid #EEEEEE' }} placeholder="Time To" />
-                                            </div>
-                                            <div className="col-md-3">
-
-
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="row mt-4">
-                                                            <div className="col-md-4 mt-2">
-                                                                <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0F9D58', opacity: '0.3' }}>
-                                                                    <label className="" >+</label>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-8 pt-2 mt-2">
-                                                                <h6 htmlFor="" style={{ cursor: 'pointer' }} onClick={handleAddFields}>Add More</h6>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="row mt-4">
-                                                            <div className="col-md-4 mt-2">
-                                                                <div className="addBox text-center pt-1" style={{ width: '100%', height: '2em', borderRadius: '5px', backgroundColor: '#0298D5', opacity: '0.3' }}>
-                                                                    <label className="" >-</label>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-8 pt-2 mt-2">
-                                                                <h6 htmlFor="" style={{ cursor: 'pointer' }} onClick={() => { handleRemoveFields(index) }}>Clear All</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })} */}
-
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
-                                <Button variant="contained" style={{ marginLeft: '30%' }} onClick={submitHandler}>Add Doctor</Button>
+                                <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={submitHandler}
+                                >Add Doctor</button>
                             </div>
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">

@@ -66,7 +66,7 @@ function TaskDashboard() {
         { title: 'City', field: 'city' },
         { title: 'Contact No', field: 'contact_1' },
         { title: 'Contact No2', field: 'contact_2' },
-        
+
     ]
 
     const fileSelectorHandler = (e) => {
@@ -111,7 +111,8 @@ function TaskDashboard() {
 
     useEffect(() => {
         instance.post('/list_hospital').then((res) => {
-            setHospitalList(res.data.hospital)
+            const data = res?.data.hospital
+            setHospitalList(data.reverse());
         }).catch((err) => {
             console.log('error:', err)
         })
@@ -135,7 +136,7 @@ function TaskDashboard() {
     return (
         <div className="div h-screen w-screen fixed">
             <Header />
-            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)'}}>
+            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
                 <div className="row">
                     <div className="hospitalName mt-3">
                     </div>
@@ -148,21 +149,21 @@ function TaskDashboard() {
                     </div>
                     <div className="row mt-2">
                         <div className="col-md-6">
-                           
+
                         </div>
                         <div className="col-md-6">
-                        <div className="row ">
+                            <div className="row ">
                                 <Button onClick={addHospitalHandler}>Add hospital</Button>
                             </div>
                         </div>
                     </div>
                     {hospitalList?.length >= 1 ?
-                             <div className="mt-5">
-                             <MaterialTable
-                                 options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
-                                 className="mt-5" columns={columns} data={hospitalList} title='Hospital Details'
-                             />
-                         </div>
+                        <div className="mt-5">
+                            <MaterialTable
+                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                className="mt-5" columns={columns} data={hospitalList} title='Hospital Details'
+                            />
+                        </div>
 
                         // <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                         //     <div className="row pt-4 " >

@@ -42,7 +42,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setToday(date)
     }, [])
 
-  
+
 
 
     // const fetchAppointment = () => {
@@ -107,12 +107,14 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setShowPrimaryAnalysis(true)
     }
 
+    console.log('appointments', appointments)
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const consultationHandler = (patientId, doctorId, index) => {
+    const consultationHandler = (patientId, doctorId, index,appId) => {
         const selectedData = []
         appointments.map((item, i) => {
             if (item._pat_id._id == patientId) {
@@ -165,7 +167,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                                                     <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
                                                         onClick={() => { primaryAnalysisHandler(value._pat_id._id) }}>Primary Analysis</button>
                                                     <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
-                                                        onClick={() => { consultationHandler(value._pat_id._id, value._doc_id._id, index) }}>consultation</button>
+                                                        onClick={() => { consultationHandler(value._pat_id._id, value._doc_id._id, index,value._id) }}>consultation</button>
                                                 </div>
                                             </TableCell>
                                         </TableRow>

@@ -40,18 +40,43 @@ function Header() {
                     <Nav className="me-auto" style={{ marginLeft: "10%" }}>
                         {pathname == '/project/emr/adminDashboard' ?
                             // null
-                            <Nav.Link className="navMenu1">Hospitals</Nav.Link>
+                            <Nav.Link className=" decoration-sky-500 underline decoration-4">Hospitals</Nav.Link>
                             :
-                            <>
-                                <Nav.Link onClick={() => { navigateHandler('appointments') }} >Appointments</Nav.Link>
-                                <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
-                                <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
-                                <Nav.Link onClick={() => { navigateHandler('Medicine') }} className="navMenu3">Medicine</Nav.Link>
-                                <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link>
-                                {/* <Nav.Link className="   ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link> */}
-
-                            </>
+                            null
                         }
+                        {pathname == '/project/emr/taskDashboard' ?
+                            <Nav.Link onClick={() => { navigateHandler('appointments') }} className=" decoration-sky-500 underline decoration-4">Appointments</Nav.Link>
+                            : pathname == '/project/emr/adminDashboard' ?
+                                null
+                                :
+                                <Nav.Link onClick={() => { navigateHandler('appointments') }} className="">Appointments</Nav.Link>
+                        }
+                        {pathname == '/project/emr/hospitallisting' ?
+                            <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }} className=" decoration-sky-500 underline decoration-4">Doctors</Nav.Link>
+                            : pathname == '/project/emr/adminDashboard' ?
+                                null
+                                :
+                                <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
+                        }
+                        {pathname == '/project/emr/patientlisting' ?
+                            <Nav.Link onClick={() => { navigateHandler('patients') }} className=" decoration-sky-500 underline decoration-4">Patients</Nav.Link>
+                            : pathname == '/project/emr/adminDashboard' ?
+                                null
+                                :
+                                <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>
+                        }
+                        {pathname == '/project/emr/MedicineListing' ?
+                            <Nav.Link onClick={() => { navigateHandler('Medicine') }} className=" decoration-sky-500 underline decoration-4">Medicine</Nav.Link>
+                            : pathname == '/project/emr/adminDashboard' ?
+                                null
+                                :
+                                <Nav.Link onClick={() => { navigateHandler('Medicine') }} className="navMenu3">Medicine</Nav.Link>
+                        }
+                        {/* <Nav.Link href="#link" className="navMenu4">Reports</Nav.Link> */}
+
+                        {/* <Nav.Link className="   ml-auto" href="#link" className="navMenu4" onClick={handleLogout}>Logout</Nav.Link> */}
+
+
                     </Nav>
                     <Nav className="ml-auto" style={{ marginLeft: "10%" }}>
                         {pathname == '/project/emr/adminDashboard' ?

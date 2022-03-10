@@ -31,6 +31,7 @@ function MedicineModal({ setShowMedicineView, setOpenModal, setReload, reload })
         instance.post('/add_medicine', obj).then((res) => {
             if (res) {
                 setShowMedicineView(false)
+                setReload(!reload)
             }
         }).catch((err) => {
             console.log('error', err)
