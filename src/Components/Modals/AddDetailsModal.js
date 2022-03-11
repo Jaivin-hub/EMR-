@@ -10,7 +10,7 @@ import { GiLevelEndFlag } from 'react-icons/gi'
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
 
     return (
-        <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs" style={{ zIndex: 10001 }}>
+        <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs rounded-md" style={{ zIndex: 10001 }}>
             <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
                 changeContentHandler('Add Doctor')
                 setShowAddDetailsModal(false)
