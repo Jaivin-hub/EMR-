@@ -15,6 +15,7 @@ import '../assets/css/appointments.css'
 import { useNavigate } from 'react-router-dom';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
+import MaterialTable from 'material-table';
 
 
 // import Box from '@mui/material/Box';
@@ -33,6 +34,15 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     // const [patientId, setPatientId] = useState('')
 
     // const [reload, setReload] = useState(false)
+
+    const columns = [
+        { title: 'Patient Name', field: '_pat_id.p_firstname', sorting: false },
+        { title: 'Age', field: '_pat_id.p_dob', sorting: false },
+        { title: 'Appointment date', field: 'app_date', sorting: false },
+        { title: 'Appointment Time', field: 'app_time', defaultSort: 'asc' },
+        { title: 'Doctor Name', field: '_doc_id.doc_name', sorting: false },
+        { title: 'Specialization', field: '_doc_id.doc_spec', sorting: false },
+    ]
 
 
     useEffect(() => {
@@ -84,8 +94,9 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
         }
         instance.post('/list_appointment', obj).then((res) => {
-            setAppointments(res.data.appointment)
-            setPendingList(res.data.appointment)
+            setAppointments(res?.data.appointment)
+            setPendingList(res?.data.appointment)
+
         })
     }
 
@@ -103,18 +114,16 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
 
     const primaryAnalysisHandler = (id) => {
+        console.log(id)
         setPatientId(id)
         setShowPrimaryAnalysis(true)
     }
-
-    console.log('appointments', appointments)
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const consultationHandler = (patientId, doctorId, index,appId) => {
+    const consultationHandler = (patientId, doctorId, index, appId) => {
         const selectedData = []
         appointments.map((item, i) => {
             if (item._pat_id._id == patientId) {
@@ -136,7 +145,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                 <div className="row">
                     <div className="col-md-12 ">
 
-                        <TableContainer component={Paper} className=''>
+                        {/* <TableContainer component={Paper} className=''>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
@@ -174,7 +183,23 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                                     ))}
                                 </TableBody>
                             </Table>
-                        </TableContainer>
+                        </TableContainer> */}
+                        <MaterialTable
+                        
+                            options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
+                            className="mt-5" columns={columns} data={appointments} title=''
+
+                            actions={[
+                                {
+                                    icon: () => <button style={{ color: 'white', backgroundColor: '#6c757d' }} className="btn btn- rounded-md">Primary Analysis</button>,
+                                    onClick: (e, data) => { primaryAnalysisHandler(data._pat_id._id) }
+                                },
+                                {
+                                    icon: () => <button style={{ color: 'white', backgroundColor: '#6c757d' }} className="btn btn-">consultation</button>,
+                                    onClick: (e, data) => { consultationHandler(data._pat_id._id, data._doc_id._id, data._id) }
+                                }
+                            ]}
+                        />
 
                     </div>
 

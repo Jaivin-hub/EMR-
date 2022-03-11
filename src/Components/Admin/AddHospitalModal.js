@@ -65,7 +65,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
             setFirstNameErr('should not start with space.')
             return false
         } else if (firstName.includes('  ')) {
-            setFirstNameErr('should not contain consecutive spaces.')
+            setFirstNameErr('remove consecutive spaces.')
             return false
         } else if (/\d/.test(firstName)) {
             setFirstNameErr('should not contain numbers.')
@@ -276,7 +276,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
             setCityErr('should not start with space.')
             return false
         } else if (city.includes('  ')) {
-            setCityErr('should not contain consecutive spaces.')
+            setCityErr('remove consecutive spaces.')
             return false
         } else if (/\d/.test(city)) {
             setCityErr('should not contain numbers.')
@@ -320,7 +320,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
             setAddress1Err('should not start with space.')
             return false
         } else if (address1.includes('  ')) {
-            setAddress1Err('should not contain consecutive spaces.')
+            setAddress1Err('remove consecutive spaces.')
             return false
         } else if (address1 === '') {
             setAddress1Err('This field cannot be empty!')
@@ -358,7 +358,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
             setAddress2Err('should not start with space.')
             return false
         } else if (address2.includes('  ')) {
-            setAddress2Err('should not contain consecutive spaces.')
+            setAddress2Err('remove consecutive spaces.')
             return false
         } else if (address2 === '') {
             setAddress2Err('This field cannot be empty!')
@@ -489,7 +489,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Hospital Name"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{firstNameErr}</span>
 
                                 </div>
@@ -507,7 +507,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Email ID"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{emailError}</span>
                                 </div>
                             </div>
@@ -525,7 +525,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Hospital Address 1"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{address1Err}</span>
                                 </div>
                             </div>
@@ -542,7 +542,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Hospital Address 2"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{address2Err}</span>
                                 </div>
                             </div>
@@ -561,6 +561,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                 <Select
                                     className="primary mt-2"
                                     name="singleSelect"
+                                    placeholder="State"
                                     // value={value.medicineName}
                                     options={states}
                                     onChange={(value) => stateDropdownHandler(value)}
@@ -575,7 +576,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                         })}
                                     </Select>
                                 </FormControl> */}
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{stateErr}</span>
                                 </div>
                             </div>
@@ -594,7 +595,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                         cityInputBlurHandler(e.target.value, setCityErr)
                                     }}
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{cityErr}</span>
                                 </div>
                             </div>
@@ -612,7 +613,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Pin Code"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{postalErr}</span>
                                 </div>
                             </div>
@@ -634,7 +635,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Contact No 1"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{phoneErr}</span>
                                 </div>
                             </div>
@@ -652,7 +653,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Contact No 2"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{secondaryPhoneErr}</span>
                                 </div>
                             </div>
@@ -670,7 +671,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     }}
                                     label="Password"
                                 />
-                                <div className="row">
+                                <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{passwordErr}</span>
                                 </div>
                             </div>

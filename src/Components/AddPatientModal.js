@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { TextField, Button, IconButton, RemoveButton } from '@mui/material'
-import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
+import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import moment from 'moment';
 import XMLParser from 'react-xml-parser';
 import instance from '../config/api';
 import QrReader from 'react-qr-reader'
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+
 
 
 
@@ -46,6 +48,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const [bloodGroupErr, setBloodGroupErr] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [postsPerPage, setPostsPerPage] = useState(10)
+    const [selectedList, setSelectedList] = useState([])
 
 
     const dateChangeHandler = (e) => {
@@ -57,6 +60,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const [timeX, setTimeX] = useState('')
 
     const timeChangeHandler = (e) => {
+        console.log('e.target.value', e.target.value)
         let time = e.target.value
         setTimeX(time)
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -70,8 +74,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     }
 
 
-    const bloodGroups = ['A-positive (A+)', 'A-negative (A-)', 'B-positive (B+)', 'B-negative (B-)', 'AB-positive (AB+)', 'AB-negative (AB-)', 'O-positive (O+)', 'O-negative (O-)']
 
+    const bloodGroups = [{ value: 'A-positive (A+)', label: 'A-positive (A+)' }, { value: 'A-negative (A-)', label: 'A-negative (A-)' }, { value: 'B-positive (B+)', label: 'B-positive (B+)' },
+    { value: 'B-negative (B-)', label: 'B-negative (B-)' }, { value: 'AB-positive (AB+)', label: 'AB-positive (AB+)' }, { value: 'AB-negative (AB-)', label: 'AB-negative (AB-)' }, { value: 'O-positive (O+)', label: 'O-positive (O+)' },
+    { value: 'O-negative (O-)', label: 'O-negative (O-)' }]
     const getYear = () => {
         return new Date().getFullYear();
     }
@@ -207,7 +213,14 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             _hos_id: HospitalId
         }
         instance.post('/list_doctors', obj).then((res) => {
-            setDoctorList(res.data.doctors)
+            setDoctorList(res?.data.doctors)
+            console.log('res?.data.doctors', res.data.doctors)
+            const doctorSelectedList = []
+            res?.data.doctors.map((item, index) => {
+                const value = { value: item._id, label: item.doc_name }
+                doctorSelectedList.push(value)
+            })
+            setSelectedList(doctorSelectedList)
         })
     }, [reload])
 
@@ -297,16 +310,16 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
     const [patientBloodGroup, setPatientBloodGroup] = useState('')
     const [appointmentDoctor, setAppointmentDoctor] = useState('')
-    const bloodGroupHandler = (e) => {
-        setPatientBloodGroup(e.target.value)
+    const bloodGroupHandler = (value) => {
+        setPatientBloodGroup(value.label)
         setBloodGroupErr('')
     }
 
-    const selectDoctorHandler = (e) => {
-        setAppointmentDoctor(e.target.value)
+    const selectDoctorHandler = (value) => {
+        setAppointmentDoctor(value.value)
     }
 
-    
+
 
 
     const addPatientHandler = () => {
@@ -683,19 +696,19 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 :
                                 <div className="div ">
 
-                                    <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer'}} src="https://image.winudf.com/v2/image/Y29tLmppZ3MucXJjb2Rlc2Nhbm5lcl9pY29uXzE1MzkxODE2NjVfMDk5/icon.png?w=&fakeurl=1" alt="" />
+                                    <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer' }} src="https://image.winudf.com/v2/image/Y29tLmppZ3MucXJjb2Rlc2Nhbm5lcl9pY29uXzE1MzkxODE2NjVfMDk5/icon.png?w=&fakeurl=1" alt="" />
                                 </div>
                         }
                         <div className="row mt-4">
                             <div className="col-md-12 d-flex space-x-2">
-                            <button type="button" className="inline-block px-6 py-2.5 
+                                <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
                     active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
                                     onClick={connectionHandler}
                                 >Upload file</button>
-                                 <button type="button" className="inline-block px-6 py-2.5 
+                                <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
@@ -849,30 +862,26 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-3 mt-3">
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel>Patient Blood Group</InputLabel>
-                                    <Select onChange={bloodGroupHandler}>
-                                        {bloodGroups?.map((item, index) => {
-                                            return (
-                                                <MenuItem value={item} key={index}>{item}</MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
+                            <div className="col-md-3 mt-3 d-flex justify-content-center">
+                                <Select
+                                    className="primary mt-2 w-52 "
+                                    name="singleSelect"
+                                    placeholder="Patient Blood Group"
+                                    // value={value.medicineName}
+                                    options={bloodGroups}
+                                    onChange={(value) => bloodGroupHandler(value)}
+                                />
                                 <p style={{ color: "red" }}>{bloodGroupErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel>Select Doctor</InputLabel>
-                                    <Select onChange={selectDoctorHandler}>
-                                        {doctorList?.map((item, index) => {
-                                            return (
-                                                <MenuItem id={item._id} name={item._id} value={item._id} key={index}>{item.doc_name}</MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
+                            <div className="col-md-3 mt-3 d-flex justify-content-center">
+                                <Select
+                                    className="primary mt-2 w-52 "
+                                    name="singleSelect"
+                                    placeholder="Select Doctor"
+                                    // value={value.medicineName}
+                                    options={selectedList}
+                                    onChange={(value) => selectDoctorHandler(value)}
+                                />
                             </div>
                             <div className="col-md-3 mt-1" >
                                 <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
