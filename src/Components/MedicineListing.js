@@ -19,6 +19,7 @@ import AppointmentsModal from './Modals/AppointmentsModal';
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
+import AddDosage from './Modals/AddDosage';
 
 
 
@@ -43,6 +44,8 @@ function MedicineListing() {
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
     const [tableData, setTableData] = useState([])
     const [showMedicineView, setShowMedicineView] = useState(false)
+    const [showDosageModal, setShowDosageModal] = useState(false)
+
 
 
     const columns = [
@@ -79,6 +82,12 @@ function MedicineListing() {
             setShowPatientView(false)
             setShowMedicineView(false)
             setShowMedicineView(true)
+        } else if (value == 'dosage') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowDosageModal(true)
         }
     }
 
@@ -212,6 +221,11 @@ function MedicineListing() {
                 {showMedicineView ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                         <MedicineModal setShowMedicineView={setShowMedicineView} setReload={setReload} reload={reload} />
+                    </div>
+                    : null}
+                {showDosageModal ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <AddDosage setShowDosageModal={setShowDosageModal} />
                     </div>
                     : null}
             </div>

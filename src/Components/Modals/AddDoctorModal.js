@@ -214,7 +214,7 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
             setPhoneErr("Enter numbers only!");
             return false
         } else if (phone.length > 10) {
-            setPhoneErr('Phone number has more than 10 digits')
+            setPhoneErr('has more than 10 digits')
             return false
         }
         else {

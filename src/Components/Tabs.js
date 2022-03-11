@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import SearchableDropdown from "./dropdown/SearchableDropdown";
 import "../assets/css/searchableDropdown.css"
 import Select from 'react-select';
+import SuccessModal from "./Modals/SuccessModal";
 // import Select from 'react-dropdown-select';
 // import { useReactToPrint } from "react-to-print";
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-function Tabs({ patientId, referDoctorId, appointmentId }) {
+function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) {
     // const componentRef = useRef()
     // const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
@@ -46,7 +47,6 @@ function Tabs({ patientId, referDoctorId, appointmentId }) {
     const [selectedMedicineType, setSelectedMedicineType] = useState('')
     const [selectedList, setSelectedList] = useState([])
     const [selectedDosageList, setSelectedDosageList] = useState([])
-
 
 
     useEffect(() => {
@@ -253,7 +253,13 @@ function Tabs({ patientId, referDoctorId, appointmentId }) {
         a.forEach(element => {
             total += eval(element);
         });
-        newData[index]['qty'] = total
+        const selectedDuration = inputFields[index].Duration
+        if (inputFields[index].Duration == "") {
+            newData[index]['qty'] = total
+        } else {
+            newData[index]['qty'] = selectedDuration * total
+        }
+
         setDummyQty(total)
         setInputFields(newData)
     }
@@ -261,6 +267,7 @@ function Tabs({ patientId, referDoctorId, appointmentId }) {
     const durationHandler = (value, index) => {
         const newData = [...inputFields]
         newData[index]['Duration'] = value
+        const selectedQty = inputFields[index].qty
         const multipleData = dummyQty * value
         newData[index]['qty'] = multipleData
         setInputFields(newData)
@@ -288,15 +295,19 @@ function Tabs({ patientId, referDoctorId, appointmentId }) {
             newList.push(newListData)
         })
 
-        const obj = [{
+        const obj = {
             _hos_id: hospitalId,
             _pat_id: patientId,
             _pat_app_id: appointmentId,
             _refer_doc_id: referDoctorId,
             dosages: newList
-        }]
-        console.log('obj', obj)
+        }
+        console.log("obj", obj)
         instance.post('/patient_prescription', obj).then((res) => {
+            setShowSuccessModal(true)
+            setTimeout(() => {
+                setShowSuccessModal(false)
+            }, 2000);
             console.log(res)
         })
     }
@@ -531,6 +542,11 @@ function Tabs({ patientId, referDoctorId, appointmentId }) {
                     </p> */}
                 </div>
             </div>
+            {/* {showSuccessModal ?
+                <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                    <SuccessModal  />
+                </div>
+                : null} */}
         </div>
     );
 }

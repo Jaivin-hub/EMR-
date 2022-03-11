@@ -18,6 +18,8 @@ import SampleSearch from './Components/dropdown/SampleSearch'
 import VoiceRecorder from './Components/VoiceRecorder'
 import './index.css'
 import MedicineListing from "./Components/MedicineListing";
+import DoctorDashboard from "./Components/Doctor/DoctorDashboard";
+import PatientHistory from "./Components/PatientHistory";
 function App() {
   const verification = localStorage.getItem('handleLogin')
   return (
@@ -39,6 +41,8 @@ function App() {
         <Route path='/SampleSearch' element={<SampleSearch />} />
         <Route path='/MedicineListing' element={<MedicineListing />} />
         <Route path='/VoiceRecorder' element={<VoiceRecorder />} />
+        <Route path='/doctordashboard' element={<DoctorDashboard />} />
+        <Route path='/patientHistory' element={<PatientHistory />} />
       </Routes>
     </Router>
   );

@@ -25,6 +25,7 @@ import AppointmentsModal from './Modals/AppointmentsModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
+import AddDosage from './Modals/AddDosage';
 
 
 
@@ -49,6 +50,7 @@ function PatientsLIsting() {
     const [showNewAppointmentsModal, setShowNewAppointmentsModal] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
     const [showMedicineView, setShowMedicineView] = useState(false)
+    const [showDosageModal, setShowDosageModal] = useState(false)
 
 
     const columns = [
@@ -110,7 +112,7 @@ function PatientsLIsting() {
         }
         instance.post('/list_patients', obj).then((response) => {
             const PatientData = response?.data.patientList
-            setPatientList(PatientData)
+            setPatientList(PatientData.reverse())
         }).catch((err) => {
             console.log('error', err)
         })
@@ -146,6 +148,12 @@ function PatientsLIsting() {
             setShowPatientView(false)
             setShowMedicineView(false)
             setShowMedicineView(true)
+        } else if (value == 'dosage') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowDosageModal(true)
         }
     }
 
@@ -209,73 +217,6 @@ function PatientsLIsting() {
                         </div>
                     </div>
                     {showAppointmentView ?
-                        // <div className="addPatient navbar-light mt-2" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-
-                        //     <div className="row">
-                        //         <div className="col-md-12">
-                        //             <TableContainer component={Paper}>
-                        //                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        //                     <TableHead>
-                        //                         <TableRow>
-                        //                             <TableCell >Patient First Name</TableCell>
-                        //                             <TableCell >Last Name</TableCell>
-                        //                             <TableCell >Aadhar Card No</TableCell>
-                        //                             <TableCell >Patient Bloodgroup</TableCell>
-                        //                             <TableCell >Patient City</TableCell>
-                        //                             <TableCell >Patient State</TableCell>
-                        //                             <TableCell >Patient Age</TableCell>
-                        //                             <TableCell >Patient Phoneno</TableCell>
-                        //                             <TableCell >Actions</TableCell>
-
-                        //                         </TableRow>
-                        //                     </TableHead>
-                        //                     <TableBody>
-                        //                         {currentPosts?.filter((val) => {
-                        //                             if (searchTerm == '') {
-                        //                                 return val
-                        //                             } else if (val.p_firstname?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        //                                 return val
-                        //                             } else if (val.p_phoneno?.includes(searchTerm)) {
-                        //                                 return val
-                        //                             } else if (val.aadhar_card_no?.includes(searchTerm)) {
-                        //                                 return val
-                        //                             }
-                        //                         }).map((value, index) => (
-                        //                             <TableRow
-                        //                                 key={index}
-                        //                             >
-                        //                                 <TableCell>{value.p_firstname}</TableCell>
-                        //                                 <TableCell>{value.p_lastname}</TableCell>
-                        //                                 <TableCell component="th" scope="row">
-                        //                                     {value.aadhar_card_no}
-                        //                                 </TableCell>
-                        //                                 <TableCell >{value.p_bloodgroup}</TableCell>
-                        //                                 <TableCell >{value.p_city}</TableCell>
-                        //                                 <TableCell >{value.p_state}</TableCell>
-                        //                                 {/* <TableCell >{value.doc_email}</TableCell> */}
-                        //                                 <TableCell >{value.p_dob}</TableCell>
-                        //                                 <TableCell >{value.p_phoneno}</TableCell>
-                        //                                 {/* <TableCell >
-                        //                                     <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { primaryAnalysisHandler(value._id) }}>Primary Analysis</button>
-                        //                                 </TableCell> */}
-                        //                                 <TableCell >
-                        //                                     <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={() => { newAppointmentsHandler(value._id) }}>New Appointment</button>
-                        //                                     {/* <Button >New Appointment</Button> */}
-                        //                                 </TableCell>
-
-                        //                             </TableRow>
-                        //                         ))}
-                        //                     </TableBody>
-                        //                 </Table>
-                        //             </TableContainer>
-                        //             {patientList?.length >= 10 ?
-
-                        //                 <Pagenation postsPerPage={postsPerPage} totalPosts={patientList?.length} paginate={paginate} />
-                        //                 : null}
-                        //         </div>
-                        //     </div>
-
-                        // </div>
                         <div className="mt-5">
                             <MaterialTable
                                 options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
@@ -327,6 +268,11 @@ function PatientsLIsting() {
                 {showMedicineView ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                         <MedicineModal setShowMedicineView={setShowMedicineView} />
+                    </div>
+                    : null}
+                {showDosageModal ?
+                    <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                        <AddDosage setShowDosageModal={setShowDosageModal} />
                     </div>
                     : null}
             </div>

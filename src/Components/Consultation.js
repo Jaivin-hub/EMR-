@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import instance from '../config/api';
 import Tabs from './Tabs'
-import { BsFillMicFill, BsFillMicMuteFill } from 'react-icons/bs'
+import { BsFillMicFill, BsFillMicMuteFill, BsArrowRightShort } from 'react-icons/bs'
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import { useReactMediaRecorder } from "react-media-recorder";
 import { useReactToPrint } from "react-to-print";
@@ -19,10 +19,14 @@ import { useVoiceRecorder } from "use-voice-recorder";
 import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
 import { MdPauseCircleFilled } from 'react-icons/md'
 import { GrResume } from 'react-icons/gr'
+import { useNavigate } from 'react-router-dom';
+import SuccessModal from './Modals/SuccessModal';
+
 
 
 
 function Consultation() {
+    const navigate = useNavigate();
     const componentRef = useRef()
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -59,6 +63,8 @@ function Consultation() {
     const { isRecording, stop, start } = useVoiceRecorder((data) => {
         updateRecords([...records, window.URL.createObjectURL(data)]);
     });
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+
 
     const {
         audioResult,
@@ -134,6 +140,10 @@ function Consultation() {
         setShowStatus(false)
     }
 
+    const navigateHandler = () => {
+        navigate('/patientHistory');
+    }
+
 
     return (
         <div ref={componentRef}>
@@ -150,6 +160,13 @@ function Consultation() {
                                         <TableCell >Age : {patientDOB}</TableCell>
                                         <TableCell >Blood Group : {patientBloodGroup}</TableCell>
                                         <TableCell >Contact No1 : {patientPhone}</TableCell>
+                                        <TableCell >
+                                            <button type="button" className="inline-block px-6 py-2 border-2 
+                                          border-gray-800 text-gray-800 font-medium text-xs leading-tight 
+                                            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
+                                            focus:ring-0 transition duration-150 ease-in-out d-flex"
+                                                onClick={navigateHandler} >History<BsArrowRightShort /></button>
+                                        </TableCell>
                                         <TableCell >
                                             <button type="button" class="inline-block px-6 py-2 border-2 
                                           border-gray-800 text-gray-800 font-medium text-xs leading-tight 
@@ -222,7 +239,7 @@ function Consultation() {
                     : null}
             </div>
             <div className="row space-x-3 m-5">
-                <textarea className='border-2 rounded-md' placeholder="Doctor note" name="" id="" cols="50" rows="2"></textarea>
+                <textarea className='border-2 rounded-md' placeholder="Doctor note..." name="" id="" cols="50" rows="2"></textarea>
                 <input type="text" placeholder="" className='border-2 rounded-md' />
                 <div>
                     {/* <div>
@@ -257,10 +274,15 @@ function Consultation() {
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
-                        <Tabs patientId={patientId} referDoctorId={referDoctorId} appointmentId={appointmentId}/>
+                        <Tabs setShowSuccessModal={setShowSuccessModal} patientId={patientId} referDoctorId={referDoctorId} appointmentId={appointmentId} />
                     </div>
                 </div>
             </div>
+            {showSuccessModal ?
+                <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                    <SuccessModal />
+                </div>
+                : null}
         </div>
     )
 }

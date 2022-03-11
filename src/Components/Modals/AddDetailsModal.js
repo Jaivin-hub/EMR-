@@ -4,7 +4,7 @@ import React from 'react'
 import { FcManager, FcBusinessman } from 'react-icons/fc'
 import { GiMedicines } from 'react-icons/gi'
 import { ImLab } from 'react-icons/im'
-import { IoSettingsOutline } from 'react-icons/io5'
+import { GiLevelEndFlag } from 'react-icons/gi'
 
 
 function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
@@ -75,12 +75,16 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                     </svg>
                 </div>
             </div>
-            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex" onClick={() => { changeContentHandler('settings') }}>
+            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex"
+                onClick={() => {
+                    changeContentHandler('dosage')
+                    setShowAddDetailsModal(false)
+                }}>
                 <div className="col-md-2 ">
-                    <IoSettingsOutline size={20} />
+                    <GiLevelEndFlag size={20} />
                 </div>
                 <div className="col-md-7 d-flex font-bold">
-                    Settings
+                    Add Dosage
                 </div>
                 <div className="col-md-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

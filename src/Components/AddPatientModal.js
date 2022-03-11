@@ -231,10 +231,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             setPatientPhoneErr('This field cannot be empty!')
             return false
         } else if (phone.length < 10) {
-            setPatientPhoneErr('Phone number does not have 10 digits')
+            setPatientPhoneErr('does not have 10 digits')
             return false
         } else if (phone.length > 10) {
-            setPatientPhoneErr('Phone number has more than 10 digits')
+            setPatientPhoneErr('has more than 10 digits')
             return false
         } else {
             setPatientPhoneErr('')
@@ -247,7 +247,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             setPatientPhoneErr("Enter numbers only!");
             return false
         } else if (phone.length > 10) {
-            setPatientPhoneErr('Phone number has more than 10 digits')
+            setPatientPhoneErr('has more than 10 digits')
             return false
         }
         else {
@@ -306,20 +306,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         setAppointmentDoctor(e.target.value)
     }
 
-    const appointmentHandler = () => {
-        const obj = {
-            _hos_id: HospitalId,
-            _doc_id: appointmentDoctor,
-            _pat_id: "614ce34cfe3edcd0e3c6413t",
-            app_date: appoinmentDate,
-            app_time: appointmentTime
-        }
-        instance.post('/patient_appointment', obj).then((response) => {
-            if (response.data.msg == 'Patient Appointment created successfully') {
-                alert(response.data.msg)
-            }
-        })
-    }
+    
 
 
     const addPatientHandler = () => {

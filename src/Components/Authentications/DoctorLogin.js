@@ -94,20 +94,21 @@ function DoctorLogin() {
         }
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
-                instance.post('/login_hospital', obj).then((response) => {
-                    if (response.data.msg == 'Success') {
-                        const Data = response.data.hospital[0].name
-                        const id = response.data.hospital[0]._id
-                        localStorage.setItem('HospitalName', Data)
-                        localStorage.setItem('HospitalId', id)
-                        localStorage.setItem('handleLogin', true)
-                        navigate('/taskDashboard');
-                    } else if (response.data.msg == 'Email or Password is invalid') {
-                        setMainErr(response.data.msg)
-                    }
-                }).catch((err) => {
-                    console.log('Error from login : ', err)
-                })
+                // instance.post('/login_hospital', obj).then((response) => {
+                //     if (response.data.msg == 'Success') {
+                //         const Data = response.data.hospital[0].name
+                //         const id = response.data.hospital[0]._id
+                //         localStorage.setItem('HospitalName', Data)
+                //         localStorage.setItem('HospitalId', id)
+                //         localStorage.setItem('handleLogin', true)
+                //         navigate('/taskDashboard');
+                //     } else if (response.data.msg == 'Email or Password is invalid') {
+                //         setMainErr(response.data.msg)
+                //     }
+                // }).catch((err) => {
+                //     console.log('Error from login : ', err)
+                // })
+                navigate('/doctordashboard');
             } else {
                 setMainErr('All fields are required!')
             }

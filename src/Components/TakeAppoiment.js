@@ -20,6 +20,7 @@ import AddDoctorModal from './Modals/AddDoctorModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
+import AddDosage from './Modals/AddDosage';
 
 
 
@@ -40,6 +41,7 @@ function TakeAppoiment() {
     const [reload, setReload] = useState(false)
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
     const [showMedicineView, setShowMedicineView] = useState(false)
+    const [showDosageModal, setShowDosageModal] = useState(false)
 
     const columns = [
         { title: 'Name', field: 'doc_name' },
@@ -129,17 +131,25 @@ function TakeAppoiment() {
             setShowAppointmentView(true)
             setShowHospitalView(false)
             setShowSettingsView(false)
-        } else if (value == 'Settings') {
-            setShowSettingsView(true)
+        } else if (value == "settings") {
             setShowDoctorView(false)
-            setShowPatientView(false)
             setShowAppointmentView(false)
-            setShowHospitalView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowSettingsView(true)
+            setShowAddDetailsModal(false)
         } else if (value == 'Add Medicines') {
             setShowDoctorView(false)
             setShowPatientView(false)
             setShowMedicineView(false)
             setShowMedicineView(true)
+        } else if (value == 'dosage') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowDosageModal(true)
         }
     }
 
@@ -188,15 +198,6 @@ function TakeAppoiment() {
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
                                     </div>
-                                    <div className="ml-20 ">
-
-                                        {/* {showAddDetailsModal ?
-                                            <AddDetailsModal
-                                                changeContentHandler={changeContentHandler}
-                                                setShowAddDetailsModal={setShowAddDetailsModal}
-                                            />
-                                            : null} */}
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,7 +214,6 @@ function TakeAppoiment() {
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                             <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
                         </div>
-                        // <DoctorView />
                         : null}
                     {showAddDetailsModal ?
                         <div className="d-flex top-0 justify-content-end bg-primary">
@@ -223,59 +223,11 @@ function TakeAppoiment() {
                             />
                         </div>
                         : null}
-
-
-                    {/* // <div className="row mt-4">
-                        //     <div className="col-md-12">
-                        //         <TableContainer component={Paper}>
-                        //             <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        //                 <TableHead>
-                        //                     <TableRow>
-                        //                         <TableCell >Name</TableCell>
-                        //                         <TableCell >Qualification</TableCell>
-                        //                         <TableCell >Specialization</TableCell>
-                        //                         <TableCell >Contact No</TableCell>
-                        //                         <TableCell >Email ID</TableCell>
-                        //                     </TableRow>
-                        //                 </TableHead>
-                        //                 <TableBody>
-                        //                     {currentPosts?.filter((val) => {
-                        //                         if (searchTerm == '') {
-                        //                             return val
-                        //                         } else if (val.doc_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        //                             return val
-                        //                         } else if (val.doc_contact?.includes(searchTerm)) {
-                        //                             return val
-                        //                         } else if (val.doc_spec?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                        //                             return val
-                        //                         }
-                        //                     }).map((value, index) => (
-                        //                         <TableRow
-                        //                             key={index}
-                        //                         >
-                        //                             <TableCell component="th" scope="row">
-                        //                                 {value.doc_name}
-                        //                             </TableCell>
-                        //                             <TableCell >{value.doc_qualification}</TableCell>
-                        //                             <TableCell >{value.doc_spec}</TableCell>
-                        //                             <TableCell >{value.doc_contact}</TableCell>
-                        //                             <TableCell >{value.doc_email}</TableCell>
-                        //                         </TableRow>
-                        //                     ))}
-                        //                 </TableBody>
-                        //             </Table>
-                        //         </TableContainer>
-                        //     </div>
-                        //     {doctorList?.length >= 10 ?
-                        //         <Pagenation postsPerPage={postsPerPage} totalPosts={doctorList?.length} paginate={paginate} />
-                        //         : null}
-                        // </div> */}
-
-                    <div className="mt-5 ">
-
-
-                    </div>
-
+                    {showDosageModal ?
+                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                            <AddDosage setShowDosageModal={setShowDosageModal} />
+                        </div>
+                        : null}
                     {showSettingsView ?
                         <SettingsView />
                         : null}

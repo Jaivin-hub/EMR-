@@ -12,6 +12,7 @@ import AddDoctorModal from './Modals/AddDoctorModal'
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MedicineModal from './Modals/MedicineModal';
+import AddDosage from './Modals/AddDosage';
 
 
 
@@ -32,6 +33,7 @@ function TaskDashboard() {
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
     const [showMedicineView, setShowMedicineView] = useState(false)
     const [settingsView, setSettingsView] = useState(false)
+    const [showDosageModal, setShowDosageModal] = useState(false)
 
 
 
@@ -105,6 +107,12 @@ function TaskDashboard() {
             setShowMedicineView(false)
             setShowMedicineView(false)
             setShowSettingsView(true)
+        } else if (value == 'dosage') {
+            setShowDoctorView(false)
+            setShowPatientView(false)
+            setShowMedicineView(false)
+            setShowMedicineView(false)
+            setShowDosageModal(true)
         }
     }
 
@@ -194,7 +202,7 @@ function TaskDashboard() {
                         : null}
 
                     {showSettingsView ?
-                        <SettingsView changeContentHandler={changeContentHandler}/>
+                        <SettingsView changeContentHandler={changeContentHandler} />
                         : null}
                     {showPatientView ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
@@ -214,9 +222,11 @@ function TaskDashboard() {
                             <MedicineModal setShowMedicineView={setShowMedicineView} />
                         </div>
                         : null}
-                    {/* {settingsView?
-                        
-                        :null} */}
+                    {showDosageModal ?
+                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                            <AddDosage setShowDosageModal={setShowDosageModal} />
+                        </div>
+                        : null}
                 </div>
 
             </div>
