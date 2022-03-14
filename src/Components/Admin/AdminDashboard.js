@@ -146,21 +146,22 @@ function TaskDashboard() {
                         <div className="col-md-6">
                             <h5 className=""><strong> Hospitals</strong></h5>
                         </div>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="col-md-6">
-
-                        </div>
                         <div className="col-md-6">
                             <div className="row ">
                                 <Button onClick={addHospitalHandler}>Add hospital</Button>
                             </div>
                         </div>
                     </div>
+                    <div className="row ">
+                        <div className="col-md-6">
+
+                        </div>
+
+                    </div>
                     {hospitalList?.length >= 1 ?
-                        <div className="mt-5">
+                        <div className="">
                             <MaterialTable
-                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT" }}
+                                options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "All Hospital Details" }}
                                 className="mt-5" columns={columns} data={hospitalList} title='Hospital Details'
                             />
                         </div>

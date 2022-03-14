@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import SearchableDropdown from "./dropdown/SearchableDropdown";
 import "../assets/css/searchableDropdown.css"
 import Select from 'react-select';
+import { useNavigate } from 'react-router-dom';
 import SuccessModal from "./Modals/SuccessModal";
 // import Select from 'react-dropdown-select';
 // import { useReactToPrint } from "react-to-print";
@@ -31,7 +32,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     //     content: () => componentRef.current,
     // })
     const classes = useStyles()
-
+    const navigate = useNavigate();
     const [toggleState, setToggleState] = useState(1);
     const [medicineName, setMedicineName] = useState('')
     const [scientificName, setScientificName] = useState('')
@@ -304,11 +305,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
         }
         console.log("obj", obj)
         instance.post('/patient_prescription', obj).then((res) => {
-            setShowSuccessModal(true)
-            setTimeout(() => {
-                setShowSuccessModal(false)
-            }, 2000);
-            console.log(res)
+            navigate("/taskDashboard")
         })
     }
 

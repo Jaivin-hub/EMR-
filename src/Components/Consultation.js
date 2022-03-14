@@ -21,6 +21,7 @@ import { MdPauseCircleFilled } from 'react-icons/md'
 import { GrResume } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom';
 import SuccessModal from './Modals/SuccessModal';
+import { IoMdArrowRoundBack } from 'react-icons/io'
 
 
 
@@ -121,6 +122,10 @@ function Consultation() {
         fetchPatientPrimaryAnalysis()
     }, [])
 
+    const backButtonHandler = () => {
+        navigate('/taskDashboard')
+    }
+
     // const {
     //     status,
     //     startRecording,
@@ -148,8 +153,14 @@ function Consultation() {
     return (
         <div ref={componentRef}>
             <Header />
+            <div className="row m-3">
+                <div className="col-md-12">
+                    <IoMdArrowRoundBack onClick={backButtonHandler} size={20} cursor='pointer' />
+                </div>
+            </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
-                <div className="row">
+
+                <div className="row ">
                     <div className="col-md-12">
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">

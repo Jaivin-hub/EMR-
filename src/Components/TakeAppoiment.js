@@ -206,7 +206,7 @@ function TakeAppoiment() {
 
                     <div className="mt-5 ">
                         <MaterialTable
-                            options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", }}
+                            options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "Doctor Details", }}
                             className="mt-5" columns={columns} data={doctorList} title='Doctor Details'
                         />
                     </div>

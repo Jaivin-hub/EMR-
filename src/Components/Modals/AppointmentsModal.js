@@ -61,6 +61,7 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
         }
         instance.post('/patient_appointment', obj).then((res) => {
             setShowNewAppointmentsModal(false)
+            setReload(!reload)
         }).catch((err) => {
             console.log('error', err)
         })

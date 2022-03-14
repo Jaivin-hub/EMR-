@@ -23,6 +23,10 @@ function Header() {
             navigate('/MedicineListing')
         }
     }
+
+    const adminHandleLogout = () => {
+        navigate('/admin/login')
+    }
     // handleLogin
 
     const handleLogout = () => {
@@ -89,8 +93,14 @@ function Header() {
 
                             </>
                         }
-
+                        {pathname == '/project/emr/adminDashboard' ?
+                            // null
+                            <Nav.Link className="ml-auto" href="#link" className="navMenu4" onClick={adminHandleLogout}>Logout</Nav.Link>
+                            :
+                            null
+                        }
                     </Nav>
+
                 </Navbar.Collapse>
             </Navbar>
 

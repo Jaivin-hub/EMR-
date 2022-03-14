@@ -11,12 +11,12 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
     const hospitalName = localStorage.getItem('HospitalName')
     const [diabetesChecked, setDiabetesChecked] = useState(false)
     const [bpChecked, setBpChecked] = useState(false)
-    const [patientHeight, setPatientHeight] = useState('')
-    const [patientWeight, setPatientWeight] = useState('')
-    const [patientFasting, setPatientFasting] = useState('')
-    const [patientAfterFood, setPatientAfterFood] = useState('')
-    const [patientLowerValue, setPatientLowerValue] = useState('')
-    const [patientUpperValue, setPatientUpperValue] = useState('')
+    const [patientHeight, setPatientHeight] = useState("null")
+    const [patientWeight, setPatientWeight] = useState("null")
+    const [patientFasting, setPatientFasting] = useState("null")
+    const [patientAfterFood, setPatientAfterFood] = useState("null")
+    const [patientLowerValue, setPatientLowerValue] = useState("null")
+    const [patientUpperValue, setPatientUpperValue] = useState("null")
     const [patientAllergicFood, setPatientAllergicFood] = useState('No food allergi')
     const [patientAllergicMedicine, setPatientAllergicMedicine] = useState('No medicine allergi')
 
@@ -36,6 +36,7 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             allergic_medicine: patientAllergicMedicine
         }
         instance.post('patient_primary_analysis', obj).then((response) => {
+            console.log('response----', response)
             if (response) {
                 setShowPrimaryAnalysis(false)
             }
@@ -47,10 +48,11 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             _hos_id: hospitalId,
             _pat_id: patientId
         }
-
+        console.log("obj----", obj)
         instance.post('list_patient_primary_analysis', obj).then((response) => {
-            console.log('res--ponse--', response.data.patientAnalysis);
+            console.log('particular response', response);
             const data = response.data.patientAnalysis[0]
+            console.log('testing', data.lower_value)
             setPatientHeight(data.height)
             setPatientWeight(data.weight)
             setDiabetesChecked(data.diabetes)
@@ -61,6 +63,12 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             setPatientUpperValue(data.upper_value)
             setPatientAllergicFood(data.allergic_food)
             setPatientAllergicMedicine(data.allergic_medicine)
+            console.log(patientHeight)
+            console.log(patientWeight)
+            console.log(patientFasting)
+            console.log(patientAfterFood)
+            console.log(patientLowerValue)
+            console.log(patientUpperValue)
 
         })
     }
@@ -71,7 +79,7 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
         fetchPatientPrimaryAnalysis()
     }, [])
     return (
-        <div className="Modal_Container bg-white" style={{maxWidth:'90%'}}>
+        <div className="Modal_Container bg-white" style={{ maxWidth: '90%' }}>
             <div className="row">
                 <div className="col-md-8 ">
                     <h4 className="underline"><strong>Primary Analysis</strong></h4>
@@ -82,104 +90,104 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             </div>
             <div className="row p-5 d-flex space-x-5 " style={{ backgroundColor: "#FFFFFF" }}>
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientHeight'
-                        value={patientHeight}
-                        onChange={(e) => {
-                            setPatientHeight(e.target.value)
-                        }}
-                        label="Patient Height"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientHeight'
+                    value={patientHeight == 'null' ? "" : patientHeight}
+                    onChange={(e) => {
+                        setPatientHeight(e.target.value)
+                    }}
+                    label="Patient Height"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientWeight'
-                        value={patientWeight}
-                        onChange={(e) => {
-                            setPatientWeight(e.target.value)
-                        }}
-                        label="Patient Weight"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientWeight'
+                    value={patientWeight == 'null' ? "" : patientWeight}
+                    onChange={(e) => {
+                        setPatientWeight(e.target.value)
+                    }}
+                    label="Patient Weight"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-4"> */}
-                    <FormGroup>
-                        <FormControlLabel control={<Checkbox color="primary" checked={diabetesChecked} onChange={() => { setDiabetesChecked(!diabetesChecked) }} />} label="Diabetes" />
-                    </FormGroup>
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox color="primary" checked={diabetesChecked} onChange={() => { setDiabetesChecked(!diabetesChecked) }} />} label="Diabetes" />
+                </FormGroup>
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientName'
-                        value={patientFasting}
-                        onChange={(e) => {
-                            setPatientFasting(e.target.value)
-                        }}
-                        label="Fasting"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientName'
+                    value={patientFasting == 'null' ? "" : patientFasting}
+                    onChange={(e) => {
+                        setPatientFasting(e.target.value)
+                    }}
+                    label="Fasting"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientName'
-                        value={patientAfterFood}
-                        onChange={(e) => {
-                            setPatientAfterFood(e.target.value)
-                        }}
-                        label="After_food"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientName'
+                    value={patientAfterFood == 'null' ? "" : patientAfterFood}
+                    onChange={(e) => {
+                        setPatientAfterFood(e.target.value)
+                    }}
+                    label="After_food"
+                />
                 {/* </div> */}
             </div>
             <div className="row p-5 d-flex space-x-5">
                 {/* <div className="col-md-2 mt-4"> */}
-                    <FormGroup>
-                        <FormControlLabel control={<Checkbox color="primary" checked={bpChecked} onChange={() => { setBpChecked(!bpChecked) }} />} label="bp" />
-                    </FormGroup>
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox color="primary" checked={bpChecked} onChange={() => { setBpChecked(!bpChecked) }} />} label="bp" />
+                </FormGroup>
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientLowervalue'
-                        value={patientLowerValue}
-                        onChange={(e) => {
-                            setPatientLowerValue(e.target.value)
-                        }}
-                        label="Lower_value"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientLowervalue'
+                    value={patientLowerValue == 'null' ? "" : patientLowerValue}
+                    onChange={(e) => {
+                        setPatientLowerValue(e.target.value)
+                    }}
+                    label="Lower_value"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientUpperValue'
-                        value={patientUpperValue}
-                        onChange={(e) => {
-                            setPatientUpperValue(e.target.value)
-                        }}
-                        label="Upper_value"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientUpperValue'
+                    value={patientUpperValue == 'null' ? "" : patientUpperValue}
+                    onChange={(e) => {
+                        setPatientUpperValue(e.target.value)
+                    }}
+                    label="Upper_value"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientName'
-                        value={patientAllergicFood}
-                        onChange={(e) => {
-                            setPatientAllergicFood(e.target.value)
-                        }}
-                        label="Allergic_food"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientName'
+                    value={patientAllergicFood == 'null' ? "" : patientAllergicFood}
+                    onChange={(e) => {
+                        setPatientAllergicFood(e.target.value)
+                    }}
+                    label="Allergic_food"
+                />
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
-                    <TextField
-                        variant="standard"
-                        id='patientName'
-                        value={patientAllergicMedicine}
-                        onChange={(e) => {
-                            setPatientAllergicMedicine(e.target.value)
-                        }}
-                        label="Allergic_medicine"
-                    />
+                <TextField
+                    variant="standard"
+                    id='patientName'
+                    value={patientAllergicMedicine == 'null' ? "" : patientAllergicMedicine}
+                    onChange={(e) => {
+                        setPatientAllergicMedicine(e.target.value)
+                    }}
+                    label="Allergic_medicine"
+                />
                 {/* </div> */}
             </div>
 
