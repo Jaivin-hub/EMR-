@@ -35,6 +35,7 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             allergic_food: patientAllergicFood,
             allergic_medicine: patientAllergicMedicine
         }
+        console.log(obj)
         instance.post('patient_primary_analysis', obj).then((response) => {
             console.log('response----', response)
             if (response) {
@@ -48,11 +49,9 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             _hos_id: hospitalId,
             _pat_id: patientId
         }
-        console.log("obj----", obj)
         instance.post('list_patient_primary_analysis', obj).then((response) => {
-            console.log('particular response', response);
             const data = response.data.patientAnalysis[0]
-            console.log('testing', data.lower_value)
+            console.log('primary analysis data', data)
             setPatientHeight(data.height)
             setPatientWeight(data.weight)
             setDiabetesChecked(data.diabetes)
@@ -63,13 +62,6 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             setPatientUpperValue(data.upper_value)
             setPatientAllergicFood(data.allergic_food)
             setPatientAllergicMedicine(data.allergic_medicine)
-            console.log(patientHeight)
-            console.log(patientWeight)
-            console.log(patientFasting)
-            console.log(patientAfterFood)
-            console.log(patientLowerValue)
-            console.log(patientUpperValue)
-
         })
     }
     console.log('patientHeight', patientHeight)
