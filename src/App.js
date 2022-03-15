@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header";
 import './App.css'
+import './assets/css/style.css'
 import TaskDashboard from "./Components/TaskDashboard";
 import DoctorView from "./Components/DoctorView";
 import Login from "./Components/Login";
