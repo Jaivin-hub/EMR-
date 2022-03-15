@@ -7,7 +7,6 @@ function HospitalView() {
     const [hospitalData, setHospitalData] = useState({})
 
     const addHospitalSubmitHandler = () => {
-        console.log('add hospital function')
         const { Hospital_Name, Email_ID, Hospital_Address_1, Hospital_Address_2, Country, State, City, Pin_Code, Contact_No_1, Contact_No_2, Password } = hospitalData
         const obj = {
             name: Hospital_Name,
@@ -25,7 +24,6 @@ function HospitalView() {
         }
 
         instance.post("/add_hospital", obj).then((response) => {
-            console.log('response of hospital', response)
             if (response) {
                 
             }
