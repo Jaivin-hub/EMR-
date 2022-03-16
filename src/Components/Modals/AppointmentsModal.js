@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Select, MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import instance from '../../config/api'
 import moment from 'moment'
+import { useNavigate } from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -10,6 +12,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, reload }) {
+    const navigate = useNavigate();
     const HospitalId = localStorage.getItem('HospitalId')
     const classes = useStyles()
     const [appointmentDoctor, setAppointmentDoctor] = useState('')
@@ -62,6 +65,7 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
         instance.post('/patient_appointment', obj).then((res) => {
             setShowNewAppointmentsModal(false)
             setReload(!reload)
+            navigate('/taskDashboard')
         }).catch((err) => {
             console.log('error', err)
         })

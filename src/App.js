@@ -21,6 +21,7 @@ import './index.css'
 import MedicineListing from "./Components/MedicineListing";
 import DoctorDashboard from "./Components/Doctor/DoctorDashboard";
 import PatientHistory from "./Components/PatientHistory";
+import Settings from './Components/Settings'
 function App() {
   const verification = localStorage.getItem('handleLogin')
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path='/VoiceRecorder' element={<VoiceRecorder />} />
         <Route path='/doctordashboard' element={<DoctorDashboard />} />
         <Route path='/patientHistory' element={<PatientHistory />} />
+        <Route path='/settings' element={<Settings />} />
       </Routes>
     </Router>
   );

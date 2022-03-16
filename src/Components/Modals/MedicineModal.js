@@ -186,8 +186,6 @@ function MedicineModal({ setShowMedicineView, setOpenModal, setReload, reload })
                 </div>
                 <div className="col-md-3 mt-4">
                     <Button className="btn btn-primary" onClick={submitHandler}>ADD</Button>
-
-
                 </div>
             </div>
             {/* </div> */}

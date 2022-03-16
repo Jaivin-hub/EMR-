@@ -293,7 +293,6 @@ function AddDoctorModal({ setOpenModal, setReload, reload }) {
     }
 
     const submitHandler = () => {
-
         const { doc_name, doc_qualification, doc_address, doc_spec, doc_contact, doc_email, doc_password } = doctorDetails
 
         if (!doctorName == '' && !qualification == "" && !specialization == "" && !phone == "" && !email == "" && !password == "") {

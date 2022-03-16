@@ -46,7 +46,6 @@ function AddDosage({setShowDosageModal}) {
                         }}
                         label="Dosage"
                     />
-                    {/* <p className="" style={{ color: "red" }}>{medicineNameErr}</p> */}
                 </div>
 
                 <div className="col-md-3 mt-3">

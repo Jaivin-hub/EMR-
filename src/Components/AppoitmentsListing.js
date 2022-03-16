@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '.././assets/css/dashboard.css'
 import 'react-dropdown/style.css';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import instance from '../config/api'
 import moment from 'moment';
 import { Tab, Nav, Tabs, Form, Button, Accordion } from 'react-bootstrap';
@@ -16,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
+import Dropdown from 'react-dropdown';
 
 
 // import Box from '@mui/material/Box';
@@ -34,6 +28,11 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     // const [patientId, setPatientId] = useState('')
 
     // const [reload, setReload] = useState(false)
+
+    const options = [
+        'PENDING', 'ALL COMPLETED'
+    ];
+    const defaultOption = options[0];
 
     const columns = [
         { title: 'Patient Name', field: '_pat_id.p_firstname', sorting: false },
@@ -139,9 +138,12 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     return (
         <>
             <div className=" addPatient navbar-light mt-4 " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                <input defaultValue={date} onChange={handleChange} className="mt-4" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
-                    appointmentsDateHandler(e)
-                }} />
+                <div className="row space-x-5">
+                    <input defaultValue={date} onChange={handleChange} className="mt-3 h-10" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
+                        appointmentsDateHandler(e)
+                    }} />
+                    {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+                </div>
                 <div className="row">
                     <div className="col-md-12 ">
 
@@ -185,7 +187,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                             </Table>
                         </TableContainer> */}
                         <MaterialTable
-                        
+
                             options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
                             className="mt-5" columns={columns} data={appointments} title=''
 
