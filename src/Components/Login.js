@@ -33,7 +33,7 @@ function Login() {
 
   return (
     <div className='centered loginWrapper d-flex justify-content-center' style={{ height: '60em', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-      <div className="login_container" style={{ marginTop: "10em", width: '60%' }}>
+      <div className="login_container" >
         <div className="card">
           <div className="d-flex loginBoxs">
             <div className="col-md-12">
