@@ -151,9 +151,7 @@ function SignIn() {
 
     }
 
-    const signUpchangeHandler = () => {
-        // navigate('/login');
-    }
+    
     return (
         <>
             <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
