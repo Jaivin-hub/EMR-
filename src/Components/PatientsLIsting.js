@@ -26,6 +26,7 @@ import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
 import AddDosage from './Modals/AddDosage';
+import Footer from './Footer';
 
 
 
@@ -176,9 +177,9 @@ function PatientsLIsting() {
 
 
     return (
-        <div className="div w-screen h-screen fixed">
+        <div className="div flex flex-col w-screen h-screen fixed">
             <Header />
-            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
+            <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="row">
                     <div className="hospitalName mt-3">
                         {/* <label htmlFor="">{hospitalName}</label> */}
@@ -196,11 +197,15 @@ function PatientsLIsting() {
                                 </div>
                                 <div className="col-md-8">
                                     <div className="row">
-                                        <div className="col-md-7 d-flex">
+                                        <div className="col-md-7 d-flex justify-content-end">
                                             {pendingList?.length >= 1 ?
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + pendingCount} />
+                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                    Pending Appointments {pendingCount}
+                                                </div>
                                                 :
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
+                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                    Pending Appointments 0
+                                                </div>
                                             }
                                         </div>
                                         <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
@@ -220,7 +225,7 @@ function PatientsLIsting() {
                         <div className="mt-5">
                             <MaterialTable
                                 options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
-                                className="mt-5" columns={columns} data={patientList} title='Patient Details'
+                                className="mt-5" columns={columns} data={patientList} title=''
 
                                 actions={[
                                     {
@@ -276,6 +281,7 @@ function PatientsLIsting() {
                     </div>
                     : null}
             </div>
+            <Footer />
         </div>
     )
 }

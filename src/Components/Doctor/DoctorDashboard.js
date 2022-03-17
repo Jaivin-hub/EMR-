@@ -39,8 +39,15 @@ function DoctorDashboard() {
             app_date: date_format
         }
         instance.post('/list_appointment', obj).then((res) => {
-            const arr = res.data.appointment
-            setAppointments(arr)
+            const arr = res?.data.appointment
+            const dummyId = '621689b5434b88e821bdcb99'
+            const filteredData = arr.filter((val) => {
+                if (val._doc_id._id == dummyId) {
+                    return val
+                }
+            })
+            console.log('arr', filteredData)
+            setAppointments(filteredData)
             setPendingList(arr)
         })
     }

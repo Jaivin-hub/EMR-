@@ -41,7 +41,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     const [medicineList, setMedicineList] = useState([])
     const [reload, setreload] = useState(false)
     let [inputFields, setInputFields] = useState([
-        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', day: '', dayCount: '', qty: '', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '1-1-1', Duration: '5', day: '', dayCount: '', qty: '', comments: '' },
     ])
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
     const [medicineScientificName, setMedicineScientificName] = useState('')
@@ -324,6 +324,10 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
 
     console.log("new Data" + data)
 
+    const addDrugChoiceHandler = () => {
+
+    }
+
     // })
 
     return (
@@ -394,6 +398,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                                                     className="primary w-32"
                                                     name="singleSelect"
                                                     value={value.Dosage}
+                                                    defaultValue={value.Dosage}
                                                     options={selectedDosageList}
                                                     onChange={(value) => dosageChangeHandler(value, index)}
                                                 />
@@ -442,6 +447,13 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                         </Table>
                     </TableContainer>
                     <div className="d-flex mt-3 justify-content-end space-x-5">
+                    <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                        onClick={addDrugChoiceHandler}
+                    >Save As Drug Choice</button>
                         <button type="button" className="inline-block px-6 py-2.5 
                     bg-red-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-red-500 hover:shadow-lg 

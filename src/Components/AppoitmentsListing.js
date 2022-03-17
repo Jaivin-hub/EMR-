@@ -86,29 +86,11 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
     //     })
     // }
 
-    const fetchAppointmentWithDate = (dateData) => {
-        const obj = {
-            _hos_id: hospitalId,
-            app_date: dateData
-
-        }
-        instance.post('/list_appointment', obj).then((res) => {
-            setAppointments(res?.data.appointment)
-            setPendingList(res?.data.appointment)
-
-        })
-    }
 
 
-    const appointmentsDateHandler = (e) => {
-        const date = e.target.value
-        setToday(e.target.value)
-        const dateData = moment(date).format('DD-MM-YYYY');
-        // setAppointmentCurrentDate(dateData)
-        fetchAppointmentWithDate(dateData)
-    }
 
-    const [value, setValue] = React.useState('1');
+
+
     const [today, setToday] = useState()
 
 
@@ -118,9 +100,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setShowPrimaryAnalysis(true)
     }
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+
 
     const consultationHandler = (patientId, doctorId, index, appId) => {
         const selectedData = []
@@ -132,65 +112,25 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         navigate('/consultation', { state: selectedData })
     }
 
-    var curr = new Date();
-    curr.setDate(curr.getDate());
-    var date = curr.toISOString().substr(0, 10);
+
     return (
         <>
-            <div className=" addPatient navbar-light mt-4 " style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
-                <div className="row space-x-5">
-                    <input defaultValue={date} onChange={handleChange} className="mt-3 h-10" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
-                        appointmentsDateHandler(e)
-                    }} />
-                    {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+            <div className=" addPatient navbar-light mt-5 rounded-md" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="row">
+                            <div className="col-md-2 ml-3">
+                                <Dropdown className="mt-3   rounded-md  text-gray-700 font-semibold py-2 px-4   items-center" options={options} value={defaultOption} placeholder="Select an option" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12 ">
-
-                        {/* <TableContainer component={Paper} className=''>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell >Patient Name</TableCell>
-                                        <TableCell >Age</TableCell>
-                                        <TableCell >Appointment date</TableCell>
-                                        <TableCell >Appointment Time</TableCell>
-                                        <TableCell >Doctor Name</TableCell>
-                                        <TableCell >Specialization</TableCell>
-                                        <TableCell >Actions</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {appointments?.map((value, index) => (
-                                        <TableRow
-                                            key={index}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {value._pat_id.p_firstname}
-                                            </TableCell>
-                                            <TableCell >{value._pat_id.p_dob}</TableCell>
-                                            <TableCell >{value.app_date}</TableCell>
-                                            <TableCell >{value.app_time}</TableCell>
-                                            <TableCell >{value._doc_id.doc_name}</TableCell>
-                                            <TableCell >{value._doc_id.doc_spec}</TableCell>
-                                            <TableCell >
-                                                <div className="d-flex">
-                                                    <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
-                                                        onClick={() => { primaryAnalysisHandler(value._pat_id._id) }}>Primary Analysis</button>
-                                                    <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#6c757d' }}
-                                                        onClick={() => { consultationHandler(value._pat_id._id, value._doc_id._id, index,value._id) }}>consultation</button>
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer> */}
+                    <div className="col-md-12 mt-4">
                         <MaterialTable
-
                             options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
                             className="mt-5" columns={columns} data={appointments} title=''
-
+                            style={{ scroll: 'none' }}
                             actions={[
                                 {
                                     icon: () => <button style={{ color: 'white', backgroundColor: '#6c757d' }} className="btn btn- rounded-md">Primary Analysis</button>,
@@ -202,9 +142,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                                 }
                             ]}
                         />
-
                     </div>
-
                 </div>
             </div>
             {showAddDetailsModal ?

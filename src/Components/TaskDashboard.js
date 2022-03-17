@@ -13,6 +13,9 @@ import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AddDetailsModal from './Modals/AddDetailsModal';
 import MedicineModal from './Modals/MedicineModal';
 import AddDosage from './Modals/AddDosage';
+import Footer from './Footer';
+import moment from 'moment';
+
 
 
 
@@ -116,6 +119,35 @@ function TaskDashboard() {
         }
     }
 
+    const [value, setValue] = React.useState('1');
+    const [today, setToday] = useState()
+
+    const appointmentsDateHandler = (e) => {
+        const date = e.target.value
+        setToday(e.target.value)
+        const dateData = moment(date).format('DD-MM-YYYY');
+        // setAppointmentCurrentDate(dateData)
+        fetchAppointmentWithDate(dateData)
+    }
+
+    const fetchAppointmentWithDate = (dateData) => {
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: dateData
+
+        }
+        instance.post('/list_appointment', obj).then((res) => {
+            setAppointments(res?.data.appointment)
+            setPendingList(res?.data.appointment)
+
+        })
+    }
+
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
 
     useEffect(() => {
         fetchAppointment()
@@ -126,21 +158,33 @@ function TaskDashboard() {
 
     const pendingCount = pendingList?.length
 
+    var curr = new Date();
+    curr.setDate(curr.getDate());
+    var date = curr.toISOString().substr(0, 10);
+
     return (
-        <div className="div h-screen w-screen fixed" >
+        <div className="div flex flex-col h-screen w-screen fixed" >
 
             <Header />
-            <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
+            <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
                 <div className="row">
                     <div className="hospitalName mt-3">
                         {/* <label htmlFor="">{hospitalName}</label> */}
                     </div>
                 </div>
                 {/* s */}
-                <div className="mainContainer " style={{ margin: '2%' }}>
+                <div className="mainContainer" style={{ margin: '2%' }}>
                     <div className="row">
-                        <div className="col-md-6">
-                            <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
+                        <div className="col-md-6 d-flex space-x-5">
+                            <div>
+                                <h5 className="pt-3 text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
+                            </div>
+                            <div className="row space-x-5">
+                                    <input defaultValue={date} onChange={handleChange} className="mt-1 h-12 shadow-md" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
+                                        appointmentsDateHandler(e)
+                                    }} />
+                                    {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+                            </div>
                         </div>
                         <div className="col-md-6">
                             <div className="row">
@@ -149,11 +193,15 @@ function TaskDashboard() {
                                 </div>
                                 <div className="col-md-8">
                                     <div className="row">
-                                        <div className="col-md-7 d-flex">
+                                        <div className="col-md-7 d-flex justify-content-end">
                                             {pendingList?.length >= 1 ?
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + pendingCount} />
+                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                    Pending Appointments {pendingCount}
+                                                </div>
                                                 :
-                                                <input className="form-control" type="text" style={{ width: '100%', height: "3em", borderRadius: "5px" }} readonly="true" Value={"Pending Appointments" + "  " + " " + '0'} />
+                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                    Pending Appointments 0
+                                                </div>
                                             }
                                         </div>
                                         <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
@@ -230,6 +278,7 @@ function TaskDashboard() {
                 </div>
 
             </div>
+            <Footer />
         </div>
     )
 }

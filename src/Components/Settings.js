@@ -413,16 +413,34 @@ function Settings() {
     }
 
     const dosageSubmitHandler = () => {
+        let keepValue
+        selectedDosageList.map((item, i) => {
+            if (item.dosage != dosage) {
+                // console.log('checkin 1');
+                keepValue = dosage
+            } else {
+                keepValue = 0
+                // console.log('checkin 2');
+
+            }
+        })
+        console.log('keepValue', keepValue)
+        // if (keepValue == dosage) {
+        // } else {
+        //     console.log('keep', keepValue)
+
+        // }
         const obj = {
             _hos_id: HospitalId,
             dosage: dosage,
             isActive: true
         }
-        instance.post('/add_dosage', obj).then((res) => {
-            setReload(!reload)
-            // setShowDosageModal(false)
-            // setDosage('')
-        })
+        // console.log('obj', obj)
+        // instance.post('/add_dosage', obj).then((res) => {
+        //     setReload(!reload)
+        //     // setShowDosageModal(false)
+        //     // setDosage('')
+        // })
     }
 
     const fetchDosageList = () => {

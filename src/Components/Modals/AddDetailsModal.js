@@ -11,13 +11,12 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
 
     return (
         <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs rounded-md" style={{ zIndex: 10001 }}>
-            <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
+            {/* <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
                 changeContentHandler('Add Doctor')
                 setShowAddDetailsModal(false)
             }}>
                 <div className="col-md-2 ">
                     <FcBusinessman size={20} />
-                    {/* Add Doctor */}
                 </div>
                 <div className="col-md-7 space-x-2 d-flex font-bold">
                     Add Doctor
@@ -27,8 +26,8 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                     </svg>
                 </div>
-            </div>
-            {/* <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex"
+            </div> */}
+            <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex"
                 onClick={() => {
                     changeContentHandler('Add Patients')
                     setShowAddDetailsModal(false)
@@ -44,7 +43,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                     </svg>
                 </div>
-            </div> */}
+            </div>
             {/* <div className="font-bold text-gray-500 cursor-pointer mt-2 d-flex"
                 onClick={() => {
                     changeContentHandler('Add Medicines')
