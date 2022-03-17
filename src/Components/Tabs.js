@@ -327,7 +327,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     const addDrugChoiceHandler = () => {
 
     }
-
     // })
 
     return (
@@ -398,7 +397,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                                                     className="primary w-32"
                                                     name="singleSelect"
                                                     value={value.Dosage}
-                                                    defaultValue={value.Dosage}
                                                     options={selectedDosageList}
                                                     onChange={(value) => dosageChangeHandler(value, index)}
                                                 />
