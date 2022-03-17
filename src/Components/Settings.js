@@ -35,6 +35,7 @@ function Settings() {
     const [dosage, setDosage] = useState('')
     const [selectedDosageList, setSelectedDosageList] = useState([])
     const [reload, setReload] = useState(false)
+    const [showDosageErr, setShowDosageErr] = useState(false)
 
     const columns = [
         { title: 'Dosage', field: 'dosage' },
@@ -413,34 +414,28 @@ function Settings() {
     }
 
     const dosageSubmitHandler = () => {
-        let keepValue
-        selectedDosageList.map((item, i) => {
-            if (item.dosage != dosage) {
-                // console.log('checkin 1');
-                keepValue = dosage
-            } else {
-                keepValue = 0
-                // console.log('checkin 2');
-
-            }
+        let keepValue = []
+        selectedDosageList.map((itm, i) => {
+            keepValue.push(itm.dosage)
         })
-        console.log('keepValue', keepValue)
-        // if (keepValue == dosage) {
-        // } else {
-        //     console.log('keep', keepValue)
-
-        // }
-        const obj = {
-            _hos_id: HospitalId,
-            dosage: dosage,
-            isActive: true
+        // console.log('keepValue', keepValue)
+        const checkValue = keepValue.includes(dosage)
+        if (checkValue == false) {
+            const obj = {
+                _hos_id: HospitalId,
+                dosage: dosage,
+                isActive: true
+            }
+            instance.post('/add_dosage', obj).then((res) => {
+                setReload(!reload)
+                // setShowDosageModal(false)
+                // setDosage('')
+            })
+        } else {
+            setShowDosageErr(true)
+            console.log('already in the list')
         }
-        // console.log('obj', obj)
-        // instance.post('/add_dosage', obj).then((res) => {
-        //     setReload(!reload)
-        //     // setShowDosageModal(false)
-        //     // setDosage('')
-        // })
+
     }
 
     const fetchDosageList = () => {
@@ -696,6 +691,7 @@ function Settings() {
                                                                     variant="standard"
                                                                     id=""
                                                                     onChange={(e) => {
+                                                                        setShowDosageErr(false);
                                                                         setDosage(e.target.value)
                                                                         // medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
                                                                     }}
@@ -704,6 +700,9 @@ function Settings() {
                                                                     }}
                                                                     label="Dosage"
                                                                 />
+                                                                {showDosageErr ?
+                                                                    <p className=" text-red-700">Already in the list</p>
+                                                                    : null}
                                                                 <div className="row mt-1 d-flex justify-content-end">
                                                                     <div className="col-md-3 mt-4 mb-3" >
                                                                         <button type="button" className="inline-block px-6 py-2.5 
@@ -719,7 +718,7 @@ function Settings() {
                                                             <div className="col-md-6">
                                                                 <MaterialTable
                                                                     options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
-                                                                    className="mt-5" columns={columns} data={selectedDosageList} title='Dosage'
+                                                                    className="mt-5" columns={columns} data={selectedDosageList} title=''
                                                                 />
                                                             </div>
                                                         </div>

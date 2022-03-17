@@ -17,7 +17,7 @@ input[type="date"]{
 }
 
 input[type="time"]{
-    background-color: #ECF0F1;
+    /* background-color: #ECF0F1; */
     padding:15px;
     color: black;
     font-family: 'Roboto Mono',monospace;

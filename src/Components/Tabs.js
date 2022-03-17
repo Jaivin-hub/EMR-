@@ -41,7 +41,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     const [medicineList, setMedicineList] = useState([])
     const [reload, setreload] = useState(false)
     let [inputFields, setInputFields] = useState([
-        { medicineName: '', Sname: '', type: '', Dosage: '1-1-1', Duration: '5', day: '', dayCount: '', qty: '', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '15', comments: '' },
     ])
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
     const [medicineScientificName, setMedicineScientificName] = useState('')
@@ -206,7 +206,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     // #################### Validating ScientificName! ###########################
 
     const addInputFieldHandler = () => {
-        setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '', day: '', dayCount: '', qty: '', comments: '' }])
+        setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '15', comments: '' }])
     }
 
     const removeInputFieldHandler = (index, value) => {
@@ -267,11 +267,29 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
 
     const durationHandler = (value, index) => {
         const newData = [...inputFields]
+        console.log('inputFields', inputFields[index].Dosage)
         newData[index]['Duration'] = value
-        const selectedQty = inputFields[index].qty
-        const multipleData = dummyQty * value
-        newData[index]['qty'] = multipleData
-        setInputFields(newData)
+
+        if (inputFields[index].Dosage == "") {
+            const multiple = 3 * value
+            newData[index]['qty'] = multiple
+            setInputFields(newData)
+        } else {
+            let total = 0
+            const dosageByIndex = inputFields[index].Dosage
+            let a = dosageByIndex.label.split("-")
+            a.forEach(element => {
+                total += eval(element);
+            });
+            const multipleData = total * value
+            newData[index]['qty'] = multipleData
+            setInputFields(newData)
+
+
+        }
+        // console.log('index', index);
+        // console.log('dosageByIndex', dosageByIndex)
+        // const selectedQty = inputFields[index].qty
     }
 
 
@@ -396,7 +414,8 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                                                 <Select
                                                     className="primary w-32"
                                                     name="singleSelect"
-                                                    value={value.Dosage}
+                                                    value={value.Dosage == "" ? selectedDosageList[0] : value.Dosage}
+                                                    // value={"" ? { label: value.Dosage, value: value.Dosage } : null}
                                                     options={selectedDosageList}
                                                     onChange={(value) => dosageChangeHandler(value, index)}
                                                 />
@@ -445,13 +464,13 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                         </Table>
                     </TableContainer>
                     <div className="d-flex mt-3 justify-content-end space-x-5">
-                    <button type="button" className="inline-block px-6 py-2.5 
+                        <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
                     active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                        onClick={addDrugChoiceHandler}
-                    >Save As Drug Choice</button>
+                            onClick={addDrugChoiceHandler}
+                        >Save As Drug Choice</button>
                         <button type="button" className="inline-block px-6 py-2.5 
                     bg-red-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-red-500 hover:shadow-lg 
