@@ -3,9 +3,9 @@ import { FaRegCopyright } from 'react-icons/fa'
 
 function Footer() {
     return (
-        <footer className="row d-flex justify-content-center bg-gray-300 shadow-lg space-x-3 font-bold text-gray-700">
+        <footer className="footer-sec">
             <div>
-                <FaRegCopyright className="mt-1" />
+                <FaRegCopyright className="" />
             </div>
             <div>
                 Meddbot. All rights reserved

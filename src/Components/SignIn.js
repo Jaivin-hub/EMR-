@@ -154,7 +154,7 @@ function SignIn() {
     
     return (
         <>
-            <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
+            <div className='centered loginWrapper d-flex justify-content-center align-items-center login-background'>
                 <div className="login_container login-box-custom">
                     <div className="card mt-5">
                         <div className="d-flex loginBoxs">

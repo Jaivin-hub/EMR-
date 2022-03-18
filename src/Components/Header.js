@@ -46,7 +46,7 @@ function Header() {
                 <Navbar.Brand ><img onClick={() => { navigateHandler('dashboard') }} style={{ cursor: 'pointer' }} src={MainLogo} alt="" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto" style={{ marginLeft: "10%" }}>
+                    <Nav className="me-auto menu-list" >
                         {pathname == '/project/emr/adminDashboard' ?
                             <Nav.Link className=" decoration-sky-500 underline decoration-4">Hospitals</Nav.Link>
                             :
