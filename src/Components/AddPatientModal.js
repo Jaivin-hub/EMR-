@@ -60,7 +60,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const [timeX, setTimeX] = useState('')
 
     const timeChangeHandler = (e) => {
-        console.log('e.target.value', e.target.value)
         let time = e.target.value
         setTimeX(time)
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -185,7 +184,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             const { co, dist, gender, gname, house, name, pc, po, state, street, uid, vtc, yob } = adharData
             const patientAge = currentYear - yob
             const [first, middle, last] = name.split(' ');
-            // console.log('patietName--------------------------------', first, "----", last)
             setPatientLastName(middle + " " + last)
             setAdharNo(uid)
             setPatientName(first)
@@ -214,7 +212,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         }
         instance.post('/list_doctors', obj).then((res) => {
             setDoctorList(res?.data.doctors)
-            console.log('res?.data.doctors', res.data.doctors)
             const doctorSelectedList = []
             res?.data.doctors.map((item, index) => {
                 const value = { value: item._id, label: item.doc_name }
@@ -320,8 +317,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     }
 
 
-
-
     const addPatientHandler = () => {
         const { bloodBloodGroup, patientPhoneNo } = patientData
         if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
@@ -343,8 +338,11 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                 app_time: appointmentTime
             }
 
+            console.log('obj', obj)
+
 
             instance.post('/add_patient', obj).then((response) => {
+                console.log(response)
                 setMainErr('')
                 if (response) {
                     // appointmentHandler()
@@ -654,6 +652,14 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const addNewPatientHandler = () => {
         setOpenModal(true)
     }
+
+    useEffect(() => {
+        var curr = new Date();
+        curr.setDate(curr.getDate());
+        var date = curr.toISOString().substr(0, 10);
+        const dateData = moment(date).format('DD-MM-YYYY');
+        setAppoinmentDate(dateData)
+    }, [])
 
     var curr = new Date();
     curr.setDate(curr.getDate());

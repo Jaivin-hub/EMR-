@@ -34,7 +34,6 @@ function Consultation() {
     })
     const hospitalId = localStorage.getItem('HospitalId')
     const state = useLocation()
-    console.log('state[[[', state.state)
     const referDoctorId = state.state[0]._doc_id._id
     const appointmentId = state.state[0]._id
     const patientFirstName = state.state[0]._pat_id.p_firstname
@@ -58,9 +57,11 @@ function Consultation() {
     const [patientAllergicMedicine, setPatientAllergicMedicine] = useState('')
     const [showPrimaryAnalysisDetails, setShowPrimaryAnalysisDetails] = useState(true)
     const [showPrimaryAnalysis, setShowPrimaryAnalysis] = useState(false)
+    const [reload, setReload] = useState(true)
     const [toggleMic, setToggleMic] = useState(true)
     const [showStatus, setShowStatus] = useState(false)
     const [records, updateRecords] = useState([]);
+    const [showAddPrimaryAnalysis, setShowAddPrimaryAnalysis] = useState(false)
     const { isRecording, stop, start } = useVoiceRecorder((data) => {
         updateRecords([...records, window.URL.createObjectURL(data)]);
     });
@@ -86,8 +87,7 @@ function Consultation() {
         }
 
         instance.post('list_patient_primary_analysis', obj).then((response) => {
-            console.log('res--ponse--', response);
-            if (response == undefined) {
+            if (response == undefined || response.data.patientAnalysis?.length == 0) {
                 setShowPrimaryAnalysisDetails(false)
             } else {
                 const data = response?.data.patientAnalysis[0]
@@ -120,7 +120,7 @@ function Consultation() {
 
     useEffect(() => {
         fetchPatientPrimaryAnalysis()
-    }, [])
+    }, [reload])
 
     const backButtonHandler = () => {
         navigate('/taskDashboard')
@@ -148,7 +148,6 @@ function Consultation() {
     const navigateHandler = () => {
         navigate('/patientHistory');
     }
-
 
     return (
         <div ref={componentRef}>
@@ -211,8 +210,6 @@ function Consultation() {
                                             <TableCell >Upper Value</TableCell>
                                             <TableCell >Allergic Food</TableCell>
                                             <TableCell >Allergic Medicine</TableCell>
-
-
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -245,7 +242,7 @@ function Consultation() {
                 </div>
                 {showPrimaryAnalysis ?
                     <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                        <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
+                        <PrimaryAnalysisModal patientId={patientId} setReload={setReload} reload={reload} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
                     </div>
                     : null}
             </div>

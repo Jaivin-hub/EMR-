@@ -40,6 +40,7 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
             console.log('response----', response)
             if (response) {
                 setShowPrimaryAnalysis(false)
+                setReload(!reload)
             }
         })
     }

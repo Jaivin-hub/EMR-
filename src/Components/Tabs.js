@@ -88,7 +88,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
             setSelectedDosageList(val)
         })
     }
-    console.log('selectedDosageList', selectedDosageList)
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -210,7 +209,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     }
 
     const removeInputFieldHandler = (index, value) => {
-        console.log(value)
         // const newData = [...inputFields]
         // newData[index]['Sname'] = ""
         // newData[index]['type'] = ""
@@ -221,11 +219,8 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
         setreload(!reload)
     }
 
-    console.log('medicineList', medicineList)
 
     const medNameHandler = (value, index) => {
-        console.log('value', value.label)
-        // const data = opt[0]?.label
 
         medicineList?.map((item, i) => {
             if (item.med_name == value.label) {
@@ -267,7 +262,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
 
     const durationHandler = (value, index) => {
         const newData = [...inputFields]
-        console.log('inputFields', inputFields[index].Dosage)
         newData[index]['Duration'] = value
 
         if (inputFields[index].Dosage == "") {
@@ -287,9 +281,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
 
 
         }
-        // console.log('index', index);
-        // console.log('dosageByIndex', dosageByIndex)
-        // const selectedQty = inputFields[index].qty
     }
 
 
@@ -321,7 +312,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
             _refer_doc_id: referDoctorId,
             dosages: newList
         }
-        console.log("obj", obj)
         instance.post('/patient_prescription', obj).then((res) => {
             navigate("/taskDashboard")
         })
@@ -339,8 +329,6 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
         const parseData = parseInt(value)
         data += parseData
     })
-
-    console.log("new Data" + data)
 
     const addDrugChoiceHandler = () => {
 
