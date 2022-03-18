@@ -87,9 +87,12 @@ function Consultation() {
         }
 
         instance.post('list_patient_primary_analysis', obj).then((response) => {
+            console.log('res', response)
             if (response == undefined || response.data.patientAnalysis?.length == 0) {
                 setShowPrimaryAnalysisDetails(false)
             } else {
+                setShowPrimaryAnalysisDetails(true)
+                console.log('else case')
                 const data = response?.data.patientAnalysis[0]
                 setPatientHeight(data.height)
                 setPatientWeight(data.weight)
@@ -119,6 +122,7 @@ function Consultation() {
     }
 
     useEffect(() => {
+        console.log('mounting')
         fetchPatientPrimaryAnalysis()
     }, [reload])
 
