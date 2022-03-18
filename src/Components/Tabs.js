@@ -41,7 +41,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     const [medicineList, setMedicineList] = useState([])
     const [reload, setreload] = useState(false)
     let [inputFields, setInputFields] = useState([
-        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '15', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
     ])
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
     const [medicineScientificName, setMedicineScientificName] = useState('')
@@ -80,7 +80,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
         }
         instance.post('/list_dosage', obj).then((res) => {
             const dosageList = res?.data.dosage
-            let val = []
+            let val = [{ value: '0-0-0', label: '0-0-0' }]
             dosageList?.map((item, i) => {
                 const data = { value: item.dosage, label: item.dosage }
                 val.push(data)
@@ -206,7 +206,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     // #################### Validating ScientificName! ###########################
 
     const addInputFieldHandler = () => {
-        setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '15', comments: '' }])
+        setInputFields([...inputFields, { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' }])
     }
 
     const removeInputFieldHandler = (index, value) => {
