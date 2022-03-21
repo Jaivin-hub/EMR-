@@ -3,6 +3,7 @@ import { TextField, Button, IconButton, Remove } from '@mui/material'
 import instance from '../../config/api'
 import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import Select from 'react-select';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 
 
@@ -340,10 +341,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
 
 
     const address2InputBlurHandler = (address2, setAddress2Err) => {
-        if (address2 === '') {
-            setAddress2Err('This field cannot be empty!')
-            return false
-        } else {
+        if (!address2 === '') {
             setAddress2Err('')
             return true
         }
@@ -351,10 +349,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
 
 
     const address2InputChangeHandler = (address2, setAddress2Err) => {
-        if (address2.length === 0) {
-            setAddress2Err('This field cannot be empty!')
-            return false
-        } else if (address2.charAt(0) === ' ') {
+        if (address2.charAt(0) === ' ') {
             setAddress2Err('should not start with space.')
             return false
         } else if (address2.includes('  ')) {
@@ -380,7 +375,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
     }
 
     const addHospitalSubmitHandler = () => {
-        if (!firstName == "" && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "" && !address2 == "") {
+        if (!firstName == "" && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "") {
             const obj = {
                 name: firstName,
                 email_id: email,
@@ -448,6 +443,19 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         setState(value.label)
         setStateErr('')
     }
+    const [passwordType, setPasswordType] = useState('password')
+    const [showEyeIcon, setShowEyeIcon] = useState(true)
+
+    const changePasswordTypeHandler = (value) => {
+        if (value == 'Text') {
+            setPasswordType('Text')
+            setShowEyeIcon(false)
+        } else {
+            setPasswordType('password')
+            setShowEyeIcon(true)
+        }
+    }
+
     return (
         <div className="Modal_Container" style={{ maxWidth: '90%' }}>
             <div className="row">
@@ -657,20 +665,28 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                                     <span style={{ color: "red" }}>{secondaryPhoneErr}</span>
                                 </div>
                             </div>
-                            <div className="col-md-3">
-                                <TextField
-                                    variant="standard"
-                                    id='Password'
-                                    type='password'
-                                    onChange={(e) => {
-                                        setPassword(e.target.value)
-                                        passwordInputChangeHandler(e.target.value, setPasswordErr)
-                                    }}
-                                    onBlur={(e) => {
-                                        passwordInputBlurHandler(e.target.value, setPasswordErr)
-                                    }}
-                                    label="Password"
-                                />
+                            <div className="col-md-3 ">
+                                <div className="row d-flex ">
+
+                                    <TextField
+                                        variant="standard"
+                                        id='Password'
+                                        type={passwordType}
+                                        onChange={(e) => {
+                                            setPassword(e.target.value)
+                                            passwordInputChangeHandler(e.target.value, setPasswordErr)
+                                        }}
+                                        onBlur={(e) => {
+                                            passwordInputBlurHandler(e.target.value, setPasswordErr)
+                                        }}
+                                        label="Password"
+                                    />
+                                    {showEyeIcon ?
+                                        <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "10%" }} size={20} />
+                                        :
+                                        <AiOutlineEyeInvisible onClick={() => { changePasswordTypeHandler('password') }} cursor="pointer" style={{ marginTop: "10%" }} size={20} />
+                                    }
+                                </div>
                                 <div className="row d-flex justify-content-center">
                                     <span style={{ color: "red" }}>{passwordErr}</span>
                                 </div>
@@ -678,7 +694,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                         </div>
                         <div className="row mt-1 d-flex justify-content-end">
                             <div className="col-md-3 mt-4" >
-                            <button type="button" className="inline-block px-6 py-2.5 
+                                <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 

@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import instance from '../config/api'
 import backGroundImage from '../assets/imgs/Rectangle 55.png'
 import Footer from './Footer';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+
 
 
 function SignIn() {
@@ -83,7 +85,7 @@ function SignIn() {
     console.log('email', email)
     console.log('password', password)
 
-    
+
 
     // #################### Validating Password! ###########################
 
@@ -113,7 +115,7 @@ function SignIn() {
                         const id = response.data.hospital[0]._id
                         localStorage.setItem('HospitalName', Data)
                         localStorage.setItem('HospitalId', id)
-                        localStorage.setItem('handleLogin',true)
+                        localStorage.setItem('handleLogin', true)
                         navigate('/taskDashboard');
                     } else if (response.data.msg == 'Email or Password is invalid') {
                         setMainErr(response.data.msg)
@@ -152,9 +154,36 @@ function SignIn() {
         // }
 
     }
+    const [passwordType, setPasswordType] = useState('password')
+    const [showEyeIcon, setShowEyeIcon] = useState(true)
+
+    const changePasswordTypeHandler = (value) => {
+        if (value == 'Text') {
+            setPasswordType('Text')
+            setShowEyeIcon(false)
+        } else {
+            setPasswordType('password')
+            setShowEyeIcon(true)
+        }
+    }
 
     const signUpchangeHandler = () => {
         // navigate('/login');
+    }
+    const selectedStateCites = () => {
+        var headers = new Headers();
+        headers.append("X-CSCAPI-KEY", "API_KEY");
+
+        var requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
+        // https://api.countrystatecity.in/v1/countries/[ciso]/states/[siso]/cities
+        fetch("https://api.countrystatecity.in/v1/countries/IN/states/MH/cities", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
     return (
         <>
@@ -190,11 +219,11 @@ function SignIn() {
                                     <div className="col-md-12">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
                                     </div>
-                                    <div className="col-md-12 mt-3 d-flex justify-content-center">
+                                    <div className="col-md-12 mt-3 d-flex justify-content-center space-x-8">
                                         <input
                                             className="form-control"
                                             id='password'
-                                            type="password"
+                                            type={passwordType}
                                             onChange={(e) => {
                                                 setPassword(e.target.value)
                                                 passwordInputChangeHandler(e.target.value, setPasswordErr)
@@ -203,7 +232,12 @@ function SignIn() {
                                                 passwordInputBlurHandler(e.target.value, setPasswordErr)
                                             }}
                                             placeholder="  Password"
-                                            style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                            style={{ width: '70%', height: "3em", borderRadius: '5px' }} />
+                                        {showEyeIcon ?
+                                            <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
+                                            :
+                                            <AiOutlineEyeInvisible onClick={() => { changePasswordTypeHandler('password') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
+                                        }
                                     </div>
                                     <div className="col-md-12">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>

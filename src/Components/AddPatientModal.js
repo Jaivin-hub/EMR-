@@ -491,6 +491,9 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         if (patientDOB === '') {
             setPatientDOBErr('This field cannot be empty!')
             return false
+        } else if (patientDOB.length > 3) {
+            setPatientDOBErr('Enter valid age!')
+            return false
         } else {
             setPatientDOBErr('')
             return true
@@ -501,8 +504,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         if (!patientDOB.match(/^[0-9][-\s\./0-9]*$/g)) {
             setPatientDOBErr("Enter numbers only!");
             return false
-        }
-        else {
+        } else if (patientDOB.length > 3) {
+            setPatientDOBErr('Enter valid age!')
+            return false
+        } else {
             setPatientDOBErr('')
             return true
         }

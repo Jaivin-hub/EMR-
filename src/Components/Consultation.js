@@ -113,7 +113,6 @@ function Consultation() {
                 setPatientAllergicFood(data.allergic_food)
                 setPatientAllergicMedicine(data.allergic_medicine)
             }
-
         })
     }
 

@@ -28,7 +28,7 @@ function Settings() {
     const [specializationErr, setsPecializationErr] = useState('')
     const [doctorDetails, setDoctorDetails] = useState({})
     const [mainErr, setMainErr] = useState('')
-    const [showDoctorView, setShowDoctorView] = useState(false)
+    const [showDoctorView, setShowDoctorView] = useState(true)
     const [showMedicineView, setShowMedicineView] = useState(false)
     const [medicineType, setMedicineType] = useState('')
     const [showDosage, setShowDosage] = useState(false)
@@ -499,7 +499,7 @@ function Settings() {
                                             <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
                                                 <div className="col-md-1">
                                                     <GiLevelEndFlag size={20} />
-                                                </div>
+                                              </div>
                                                 <div className="col-md-11">
                                                     ADD DOSAGE
                                                 </div>
@@ -512,14 +512,14 @@ function Settings() {
                                                     ADD LAB PROCEDURES
                                                 </div>
                                             </div>
-                                            <div className="row font-bold p-3 text-gray-400 cursor-pointer">
+                                            {/* <div className="row font-bold p-3 text-gray-400 cursor-pointer">
                                                 <div className="col-md-1">
                                                     <HiOutlineDatabase size={20} />
                                                 </div>
                                                 <div className="col-md-11">
                                                     ADD DRUG CHOICE
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div className="col-md-8">
