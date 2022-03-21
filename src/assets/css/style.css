@@ -1,6 +1,6 @@
 :root {
   --blue-bg: #0298D5;
-  --green: #02BCB1;
+  --green-bg: #02BCB1;
 }
 .Dropdown-control {
   position: relative;
@@ -80,6 +80,7 @@ p.text-danger {
 }
 .mainContainer {
   background: #efeeee;
+  height: 100%;
 }
 .appoinment-sec {
   display: flex;
@@ -130,11 +131,12 @@ h5.text-label {
   left: 8px;
   border-radius: 30px;
 }
-.addPatient.navbar-light.rounded-md {
+.common-content {
   margin: 0px 20px;
   border-radius: 7px;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   padding: 30px;
+  height: calc(100% - 60px);
 }
 .date-f{
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
@@ -230,6 +232,130 @@ button.pass-eye {
 }
 
 
+tr.MuiTableRow-root {
+  height: inherit !important;
+}
+.main-div-fl{
+  flex: 1;
+    height: calc(100% - 5em) !important;
+}
+.flex-col {
+  height: 100vh !important;
+}
+.main-content{
+  height: calc(100% - 70px) !important;
+}
+.Modal_Container {
+  top: 50% !important;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+}
+.Modal_Container .MuiInputBase-root {
+  border: 0;
+  border-bottom: 1px solid #9d9999;
+  border-radius: 0px;
+  padding: 0px 20px !important;
+}
+.scanning button {
+  background: #ff5722;
+  padding: 7px 19px;
+  width: 100%;
+  border-radius: 5px;
+  color: white;
+}
+.scanning button:first-child {
+  background: #4caf50;
+}
+
+.scanning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.row.apoinment-bk {
+  background: #cccccc7a;
+  margin-top: 30px !important;
+  margin: 0;
+  
+}
+.row.apoinment-bk input, .css-1pahdxg-control {
+  height: 38px !important;
+  background: #fff !important;
+  color: #b5abab;
+}
+.row.apoinment-bk .css-yk16xz-control {
+  border: 0;
+  height: 15px !important;
+}
+.css-1wa3eu0-placeholder, .css-1uccc91-singleValue {
+  top: 38% !important;
+}
+.css-1okebmr-indicatorSeparator {
+  width: 0px !important;
+}
+.div.adr-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.div.adr-img img {
+  margin-bottom: 20px;
+  width: 240px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.add-main {
+  background: var(--blue-bg);
+  padding: 8px 50px;
+  border-radius: 5px;
+  color: #fff;
+  margin-top: 30px;
+}
+i.fa.fa-window-close {
+  color: #b1b1b1;
+  font-size: 33px;
+}
+button:hover {
+  /* background: #0e0e0e !important;
+  transition: .5s;
+  color: #fff 1important; */
+  box-shadow: inset 0 0 100px 100px rgb(70 70 70 / 18%);
+}
+i.fa.fa-window-close:hover {
+  color: #0e0e0e !important;
+  transition: .5s;
+}
+.right-side {
+  padding-right: 30px !important;
+}
+.left-side {
+  padding-left: 20px !important;
+  /* margin-right: 0px !important; */
+}
+span.patient-det {
+  font-weight: 500;
+  font-size: larger;
+  color: #000000a1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -306,10 +432,33 @@ div#basic-navbar-nav {
   padding-right: 0px !important;
   margin-bottom: 24px;
 }
-
-
-
-
-
-
+.common-content {
+  height: 100%;
+  margin-bottom: 20px;
+}
+.flex-col {
+  height: 100% !important
+}
+.right-side {
+  padding-right: 16px !important;
+}
+.left-side {
+  padding-left: 16px !important;
+  /* margin-right: 0px !important; */
+}
+.Modal_Container {
+  max-width: 100% !important;
+  /* padding: 0; */
+  /* margin: 0; */
+  bottom: -390px !important;
+  height: 100%;
+  background: #ffff !important;
+}
+.row.mobile-ls {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.css-2b097c-container {
+  width: 100%;
+}
   }

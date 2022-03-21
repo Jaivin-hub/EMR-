@@ -115,7 +115,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
     return (
         <>
-            <div className=" addPatient navbar-light rounded-md" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            <div className=" addPatient navbar-light rounded-md common-content" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="row">

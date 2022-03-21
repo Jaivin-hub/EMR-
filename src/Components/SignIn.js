@@ -203,7 +203,9 @@ function SignIn() {
                                             }}
                                             placeholder="Password"
                                              />
-                                             <button className="pass-eye" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                             <button className="pass-eye" ><i class="fa fa-eye" aria-hidden="true"></i>
+                                             {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
+                                             </button>
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger" >{passwordErr}</p>

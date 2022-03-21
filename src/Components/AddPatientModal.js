@@ -658,12 +658,12 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
     return (
         <div className="Modal_Container" style={{ maxWidth: '90%' }}>
-            <div className="row">
+            <div className="row  mobile-ls">
                 <div className="col-md-8 ">
                     <h4 className="underline"><strong>Add Patient</strong></h4>
                 </div>
                 <div style={{ cursor: 'pointer' }} onClick={() => { setOpenModal(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
-                    <h4>x</h4>
+                    <h4><i class="fa fa-window-close" aria-hidden="true"></i></h4>
                 </div>
             </div>
             <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '' }}>
@@ -675,7 +675,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                     </div>
                 </div>
                 <div className="row text-center ">
-                    <div className="col-md-2 mt-4">
+                    <div className="col-md-3 mt-4">
                         {showUploadFile ?
                             <QrReader
                                 ref={qrRef}
@@ -694,35 +694,27 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                     onScan={handleScanWebCam}
                                 />
                                 :
-                                <div className="div ">
+                                <div className="div adr-img">
 
                                     <img className="" onClick={() => { setOpenScanner(!openScanner) }} style={{ cursor: 'pointer' }} src="https://image.winudf.com/v2/image/Y29tLmppZ3MucXJjb2Rlc2Nhbm5lcl9pY29uXzE1MzkxODE2NjVfMDk5/icon.png?w=&fakeurl=1" alt="" />
                                 </div>
                         }
-                        <div className="row mt-4">
-                            <div className="col-md-12 d-flex space-x-2">
-                                <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                        <div className="row ">
+                            <div className="col-md-12 d-flex space-x-2 scanning">
+                                <button type="button" className="add-adarfile"
                                     onClick={connectionHandler}
                                 >Upload file</button>
-                                <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                <button type="button" className="add-adarfile"
                                     onClick={connectionScanHandler}
                                 >Scan Qr</button>
                             </div>
                         </div>
                         <h4>{scanResultWebCam}</h4>
                     </div>
-                    <div className="col-md-10">
-                        <div className="row">
-                            <div className="col-md-2">
-                                Patient details
+                    <div className="col-md-9">
+                        <div className="row custom fields">
+                            <div className="col-md-2 pl-0 ml-0">
+                                <span className='patient-det' >Patient details</span>
                             </div>
                             <div className="col-md-10">
                                 <hr />
@@ -861,7 +853,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row apoinment-bk">
                             <div className="col-md-3 mt-3 d-flex justify-content-center">
                                 <Select
                                     className="primary mt-2 w-52 "
@@ -883,25 +875,21 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                     onChange={(value) => selectDoctorHandler(value)}
                                 />
                             </div>
-                            <div className="col-md-3 mt-1" >
-                                <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
+                            <div className="col-md-3 mt-3" >
+                                <input className='form-control mt-2' type="date" onChange={(e) => { dateChangeHandler(e) }} />
                             </div>
-                            <div className="col-md-3 mt-1">
-                                <input type="time" onChange={(e) => timeChangeHandler(e)} />
+                            <div className="col-md-3 mt-3">
+                                <input className='form-control mt-2' type="time" onChange={(e) => timeChangeHandler(e)} />
                             </div>
                             <div className="col-md-3 mt-3">
                             </div>
                         </div>
-                        <div className="row mt-1 d-flex justify-content-end">
-                            <div className="col-md-3">
-                                <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                        <div className=" mt-3 d-flex justify-content-end">
+                            
+                                <button type="button" className="add-main"
                                     onClick={addPatientHandler}
                                 >ADD</button>
-                            </div>
+                            
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
                         </div>

@@ -166,7 +166,7 @@ function TaskDashboard() {
         <div className="div flex flex-col  w-screen " >
 
             <Header />
-            <div className="div mb-auto h-screen" >
+            <div className="div mb-auto main-div-fl" >
                 {/* <div className="row"> */}
                     {/* <div className="hospitalName mt-3"> */}
                         {/* <label htmlFor="">{hospitalName}</label> */}
@@ -176,7 +176,7 @@ function TaskDashboard() {
                 <div className="mainContainer">
                     <div className="container-fluid padd-2">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6 left-side">
                            <div className='d-flex main-hos'>
                                 <div>
                                     <h5 className=" text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
@@ -189,7 +189,7 @@ function TaskDashboard() {
                                 </div>
                            </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 right-side">
                             <div className="">
                                 <div className="">
                                     <div className="appoinment-sec">
@@ -218,7 +218,7 @@ function TaskDashboard() {
 
 
                     {showAppointmentView ?
-                        <div className="">
+                        <div className="main-content">
                             <AppoitmentsListing
                                 setAppointments={setAppointments}
                                 appointments={appointments}
