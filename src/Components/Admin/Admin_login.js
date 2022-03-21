@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import instance from '../../config/api'
 import backGroundImage from '../../assets/imgs/Rectangle 55.png'
 import { SiGmail } from 'react-icons/si';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+
 function Admin_login() {
     const navigate = useNavigate();
 
@@ -159,12 +161,25 @@ function Admin_login() {
         // }
     }
 
+    const [passwordType, setPasswordType] = useState('password')
+    const [showEyeIcon, setShowEyeIcon] = useState(true)
+
+    const changePasswordTypeHandler = (value) => {
+        if (value == 'Text') {
+            setPasswordType('Text')
+            setShowEyeIcon(false)
+        } else {
+            setPasswordType('password')
+            setShowEyeIcon(true)
+        }
+    }
+
     const signUpchangeHandler = () => {
         navigate('/login');
     }
     return (
         <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ height: '100vh', background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-            <div className="login_container" style={{maxWidth: '30%' }}>
+            <div className="login_container" style={{ maxWidth: '30%' }}>
                 {/* <div className="login_container align-items-center"> */}
                 <div className="card mt-5">
                     <div className="d-flex loginBoxs">
@@ -196,11 +211,11 @@ function Admin_login() {
                                 <div className="col-md-12">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
                                 </div>
-                                <div className="col-md-12 mt-2 d-flex justify-content-center">
+                                <div className="col-md-12 mt-2 d-flex justify-content-center space-x-8">
                                     <input
                                         className="form-control"
                                         id='password'
-                                        type="password"
+                                        type={passwordType}
                                         onChange={(e) => {
                                             setPassword(e.target.value)
                                             passwordInputChangeHandler(e.target.value, setPasswordErr)
@@ -209,7 +224,12 @@ function Admin_login() {
                                             passwordInputBlurHandler(e.target.value, setPasswordErr)
                                         }}
                                         placeholder="  password"
-                                        style={{ width: '80%', height: "3em", borderRadius: '5px' }} />
+                                        style={{ width: '70%', height: "3em", borderRadius: '5px' }} />
+                                    {showEyeIcon ?
+                                        <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
+                                        :
+                                        <AiOutlineEyeInvisible onClick={() => { changePasswordTypeHandler('password') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
+                                    }
                                 </div>
                                 <div className="col-md-12">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
