@@ -150,8 +150,9 @@ function SignIn() {
         // }
 
     }
-
     
+    const signUpchangeHandler = ()=>{}
+
     return (
         <>
             <div className='centered loginWrapper d-flex justify-content-center align-items-center login-background'>
