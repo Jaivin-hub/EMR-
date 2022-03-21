@@ -136,7 +136,7 @@ h5.text-label {
   border-radius: 7px;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   padding: 30px;
-  height: calc(100% - 60px);
+  min-height: calc(100% - 60px);
 }
 .date-f{
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
@@ -240,7 +240,7 @@ tr.MuiTableRow-root {
     height: calc(100% - 5em) !important;
 }
 .flex-col {
-  height: 100vh !important;
+  min-height: 100vh !important;
 }
 .main-content{
   height: calc(100% - 70px) !important;
@@ -342,17 +342,50 @@ span.patient-det {
   color: #000000a1;
 }
 
+td.MuiTableCell-root.MuiTableCell-body {
+  padding-top: 20px !important;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+.pending-app {
+  background: var(--blue-bg);
+  margin-right: 20px;
+  padding: 5px 20px;
+  color: #fff !important;
+}
+.MuiIconButton-root:hover {
+  border-radius: 0px !important;
+  background: #fffc;
+}
+span.MuiIconButton-label button.btn {
+  background: var(--blue-bg) !important;
+}
+td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:last-child span.MuiIconButton-label button.btn{
+  background: var(--green-bg) !important;
+}
 
+.css-yk16xz-control {
+  border: 0 !important;
+  border-bottom: 1px solid #9d9999 !important;
+  /* margin: 0px 29px; */
+  border-radius: 0px  !important;
+}
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  min-width: 100% !important;
+}
 
-
-
-
-
-
-
-
-
-
+.row.apoinment-bk .css-yk16xz-control {
+  border: 0 !important;
+  border-bottom: 0px solid #9d9999 !important;
+  /* margin: 0px 29px; */
+  border-radius: 0px !important;
+}
 
 
 

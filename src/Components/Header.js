@@ -41,7 +41,7 @@ function Header() {
     }
     // alert(pathname)
     return (
-        <div className="headerNav navbar-light" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)', width: '100%' }}>
+        <div className="headerNav navbar-light sticky-top" style={{ height: "4em", backgroundColor: "#FFFFFF", border: '5px', width: '100%' }}>
             <Navbar expand="lg">
                 <Navbar.Brand ><img onClick={() => { navigateHandler('dashboard') }} style={{ cursor: 'pointer' }} src={MainLogo} alt="" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

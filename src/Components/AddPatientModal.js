@@ -722,7 +722,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                         </div>
                         <p style={{ color: 'red' }}>{mainErr}</p>
                         <div className="row">
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='adharCardNo'
@@ -738,7 +738,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{adharErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='patientName'
@@ -754,7 +754,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{patientNameErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='patientName'
@@ -770,7 +770,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{patientLastNameErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            
+                        </div>
+                        <div className="row">
+                        <div className="col-md-4 mt-3">
                                 <TextField
                                     com variant="standard"
                                     id='patiantDOB'
@@ -786,9 +789,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{patientDOBErr}</p>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='patientAddress'
@@ -804,7 +805,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{addressErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='city'
@@ -820,7 +821,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{cityErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='State'
@@ -836,7 +837,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{stateErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     variant="standard"
                                     id='patientPhoneNo'
@@ -852,22 +853,27 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 <p style={{ color: "red" }}>{patientPhoneErr}</p>
 
                             </div>
-                        </div>
-                        <div className="row apoinment-bk">
-                            <div className="col-md-3 mt-3 d-flex justify-content-center">
+                            <div className="col-md-4 mt-3 d-flex justify-content-center">
                                 <Select
-                                    className="primary mt-2 w-52 "
+                                    className="primary mt-2  w-100"
                                     name="singleSelect"
                                     placeholder="Patient Blood Group"
                                     // value={value.medicineName}
                                     options={bloodGroups}
                                     onChange={(value) => bloodGroupHandler(value)}
                                 />
+
+                                    
+
+
                                 <p style={{ color: "red" }}>{bloodGroupErr}</p>
                             </div>
-                            <div className="col-md-3 mt-3 d-flex justify-content-center">
+                        </div>
+                        <div className="row apoinment-bk">
+                            
+                            <div className="col-md-4 mt-3 d-flex justify-content-center">
                                 <Select
-                                    className="primary mt-2 w-52 "
+                                    className="primary mt-2 w-100 "
                                     name="singleSelect"
                                     placeholder="Select Doctor"
                                     // value={value.medicineName}
@@ -875,10 +881,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                     onChange={(value) => selectDoctorHandler(value)}
                                 />
                             </div>
-                            <div className="col-md-3 mt-3" >
+                            <div className="col-md-4 mt-3" >
                                 <input className='form-control mt-2' type="date" onChange={(e) => { dateChangeHandler(e) }} />
                             </div>
-                            <div className="col-md-3 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <input className='form-control mt-2' type="time" onChange={(e) => timeChangeHandler(e)} />
                             </div>
                             <div className="col-md-3 mt-3">
