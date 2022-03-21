@@ -168,9 +168,10 @@ function SignIn() {
                                     <p className='text-danger'>{mainErr}</p>
                                 </div>
                                 <div className="row ">
-                                    <div className="col-md-12  d-flex justify-content-center px-0">
+                                    <div className="col-md-12  d-flex justify-content-center px-0 login-field">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
                                         <input
-                                            className="form-control"
+                                            className="form-control "
                                             id='email_id'
                                             type="email"
                                             onChange={(e) => {
@@ -187,9 +188,10 @@ function SignIn() {
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger">{emailError}</p>
                                     </div>
-                                    <div className="col-md-12  d-flex justify-content-center px-0">
+                                    <div className="col-md-12  d-flex justify-content-center px-0 login-field">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
                                         <input
-                                            className="form-control"
+                                            className="form-control "
                                             id='password'
                                             type="password"
                                             onChange={(e) => {
@@ -201,6 +203,7 @@ function SignIn() {
                                             }}
                                             placeholder="Password"
                                              />
+                                             <button className="pass-eye" ><i class="fa fa-eye" aria-hidden="true"></i></button>
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger" >{passwordErr}</p>

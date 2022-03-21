@@ -195,10 +195,39 @@ table thead {
   border-radius: 1px;
   padding: 7px 20px !important;
 }
+.login-field i {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #6a6666;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-
-
-
+.login-field {
+  position: relative;
+}
+.login-field input {
+  padding: 0px 35px;
+}
+button.pass-eye i {
+  color: #0298d5;
+}
+button.pass-eye {
+  position: absolute;
+  right: 40px;
+  color: #ccc !important;
+}button.pass-eye i {
+  color: #0298d5;
+}
+button.pass-eye {
+  position: absolute;
+  right: 40px;
+  color: #ccc !important;
+}
 
 
 
