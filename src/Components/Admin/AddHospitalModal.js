@@ -102,7 +102,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload, hospitalList }) {
             setError('This email id is not valid.')
             return false
         } else if (keepValue.includes(email)) {
-            setError('Existing adhar id!')
+            setError('Existing email id!')
             return false
         } else {
             setError('')
