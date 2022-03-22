@@ -227,11 +227,12 @@ function Admin_login() {
                                         }}
                                         placeholder="  password"
                                          />
-                                    {showEyeIcon ?
+                                         <button class="pass-eye"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    {/* {showEyeIcon ?
                                         <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
                                         :
                                         <AiOutlineEyeInvisible onClick={() => { changePasswordTypeHandler('password') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
-                                    }
+                                    } */}
                                 </div>
                                 <div className="col-md-12 px-0">
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
