@@ -214,6 +214,7 @@ table thead {
 }
 .login-field input {
   padding: 0px 35px;
+  width: 100% !important;
 }
 button.pass-eye i {
   color: #0298d5;
@@ -225,7 +226,7 @@ button.pass-eye {
 }button.pass-eye i {
   color: #0298d5;
 }
-button.pass-eye {
+button.pass-eye, .col-md-12.d-flex.justify-content-center.px-0.login-field svg {
   position: absolute;
   right: 40px;
   color: #ccc !important;
@@ -246,9 +247,9 @@ tr.MuiTableRow-root {
   height: calc(100% - 70px) !important;
 }
 .Modal_Container {
-  top: 50% !important;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
+  top: 90px !important;
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%) !important; */
   width: 100%;
 }
 .Modal_Container .MuiInputBase-root {
@@ -278,6 +279,7 @@ tr.MuiTableRow-root {
   background: #cccccc7a;
   margin-top: 30px !important;
   margin: 0;
+  padding-bottom: 20px;
   
 }
 .row.apoinment-bk input, .css-1pahdxg-control {
@@ -364,7 +366,7 @@ td.MuiTableCell-root.MuiTableCell-body {
   background: #fffc;
 }
 span.MuiIconButton-label button.btn {
-  background: var(--blue-bg) !important;
+  background: #858585 !important;
 }
 td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:last-child span.MuiIconButton-label button.btn{
   background: var(--green-bg) !important;
@@ -386,9 +388,17 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:las
   /* margin: 0px 29px; */
   border-radius: 0px !important;
 }
-
-
-
+.medium-modal {
+  max-width: 60% !important;
+}
+.row.Primary-Analysis label {
+  margin-bottom: 0px !important;
+}
+.col-md-12.d-flex.justify-content-center.px-0.login-field svg {
+  position: absolute;
+  right: 10px;
+  top: -4px;
+}
 
 
 
@@ -468,6 +478,7 @@ div#basic-navbar-nav {
 .common-content {
   height: 100%;
   margin-bottom: 20px;
+  padding: 10px;
 }
 .flex-col {
   height: 100% !important
@@ -494,4 +505,28 @@ div#basic-navbar-nav {
 .css-2b097c-container {
   width: 100%;
 }
+.pending-app {
+  margin: 15px 0px;
+  width: 100%;
+}
+.Modal_Container {
+  top: 50% !important;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }

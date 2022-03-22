@@ -72,17 +72,18 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
         fetchPatientPrimaryAnalysis()
     }, [])
     return (
-        <div className="Modal_Container bg-white" style={{ maxWidth: '90%' }}>
+        <div className="Modal_Container bg-white medium-modal" style={{ maxWidth: '90%' }}>
             <div className="row">
                 <div className="col-md-8 ">
                     <h4 className="underline"><strong>Primary Analysis</strong></h4>
                 </div>
                 <div style={{ cursor: 'pointer' }} onClick={() => { setShowPrimaryAnalysis(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
-                    <h4>x</h4>
+                    <h4><i class="fa fa-window-close" aria-hidden="true"></i></h4>
                 </div>
             </div>
-            <div className="row p-5 d-flex space-x-5 " style={{ backgroundColor: "#FFFFFF" }}>
+            <div className="row Primary-Analysis" style={{ backgroundColor: "#FFFFFF" }}>
                 {/* <div className="col-md-2 mt-3"> */}
+                <div className='col-md-6'>
                 <TextField
                     variant="standard"
                     id='patientHeight'
@@ -92,8 +93,10 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="Patient Height"
                 />
+                </div>
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-3"> */}
+                <div className='col-md-6'>
                 <TextField
                     variant="standard"
                     id='patientWeight'
@@ -103,12 +106,53 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="Patient Weight"
                 />
+                </div>
                 {/* </div> */}
                 {/* <div className="col-md-2 mt-4"> */}
+                
+                <div className="col-lg-12 mt-3">
+                {/* <div className="col-md-2 mt-4"> */}
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox color="primary" checked={bpChecked} onChange={() => { setBpChecked(!bpChecked) }} />} label="bp" />
+                </FormGroup>
+                {/* </div> */}
+                {/* <div className="col-md-2 mt-3"> */}
+
+                </div>
+
+                <div className="col-lg-6">
+                <TextField
+                    variant="standard"
+                    id='patientLowervalue'
+                    value={patientLowerValue == 'null' ? "" : patientLowerValue}
+                    onChange={(e) => {
+                        setPatientLowerValue(e.target.value)
+                    }}
+                    label="Lower_value"
+                />
+                </div>
+                {/* <div className="col-md-2 mt-3"> */}
+                <div className="col-lg-6">
+                <TextField
+                    variant="standard"
+                    id='patientUpperValue'
+                    value={patientUpperValue == 'null' ? "" : patientUpperValue}
+                    onChange={(e) => {
+                        setPatientUpperValue(e.target.value)
+                    }}
+                    label="Upper_value"
+                />
+                </div>
+                {/* <div className="col-md-2 mt-3"> */}
+                
+            
+                <div className="col-lg-12 mt-3">
                 <FormGroup>
                     <FormControlLabel control={<Checkbox color="primary" checked={diabetesChecked} onChange={() => { setDiabetesChecked(!diabetesChecked) }} />} label="Diabetes" />
                 </FormGroup>
-                {/* </div> */}
+                </div>
+
+                <div className="col-lg-6">
                 {/* <div className="col-md-2 mt-3"> */}
                 <TextField
                     variant="standard"
@@ -119,8 +163,10 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="Fasting"
                 />
-                {/* </div> */}
+                </div>
                 {/* <div className="col-md-2 mt-3"> */}
+
+                <div className="col-lg-6">
                 <TextField
                     variant="standard"
                     id='patientName'
@@ -130,37 +176,8 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="After_food"
                 />
-                {/* </div> */}
-            </div>
-            <div className="row p-5 d-flex space-x-5">
-                {/* <div className="col-md-2 mt-4"> */}
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox color="primary" checked={bpChecked} onChange={() => { setBpChecked(!bpChecked) }} />} label="bp" />
-                </FormGroup>
-                {/* </div> */}
-                {/* <div className="col-md-2 mt-3"> */}
-                <TextField
-                    variant="standard"
-                    id='patientLowervalue'
-                    value={patientLowerValue == 'null' ? "" : patientLowerValue}
-                    onChange={(e) => {
-                        setPatientLowerValue(e.target.value)
-                    }}
-                    label="Lower_value"
-                />
-                {/* </div> */}
-                {/* <div className="col-md-2 mt-3"> */}
-                <TextField
-                    variant="standard"
-                    id='patientUpperValue'
-                    value={patientUpperValue == 'null' ? "" : patientUpperValue}
-                    onChange={(e) => {
-                        setPatientUpperValue(e.target.value)
-                    }}
-                    label="Upper_value"
-                />
-                {/* </div> */}
-                {/* <div className="col-md-2 mt-3"> */}
+                </div>
+                <div className="col-lg-6 mt-3">
                 <TextField
                     variant="standard"
                     id='patientName'
@@ -170,8 +187,9 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="Allergic_food"
                 />
-                {/* </div> */}
+                </div>
                 {/* <div className="col-md-2 mt-3"> */}
+                <div className="col-lg-6 mt-3">
                 <TextField
                     variant="standard"
                     id='patientName'
@@ -181,12 +199,13 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
                     }}
                     label="Allergic_medicine"
                 />
-                {/* </div> */}
+                </div>
             </div>
+            
 
-            <div className="row d-flex justify-content-end align-items-end text-end">
+            <div className="row d-flex justify-content-end align-items-end text-end mt-3">
                 <div className="col-md-3">
-                    <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={submitHandler}>Add Details</button>
+                    <button className="btn main-btn"  onClick={submitHandler}>Add Details</button>
                 </div>
             </div>
         </div>
