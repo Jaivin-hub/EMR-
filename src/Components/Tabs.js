@@ -451,7 +451,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <div className="d-flex mt-3 justify-content-end space-x-5">
+                    <div className="d-flex mt-3 justify-content-end space-x-5 prescription-btn">
                         <button type="button" className="inline-block px-6 py-2.5 
                     bg-blue-400 text-white font-medium text-xs leading-tight 
                     uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 

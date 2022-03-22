@@ -353,7 +353,7 @@ td.MuiTableCell-root.MuiTableCell-body {
 }
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-  background: #FF0000;
+  /* background: #FF0000; */
 }
 .pending-app {
   background: var(--blue-bg);
@@ -399,6 +399,34 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:las
   right: 10px;
   top: -4px;
 }
+.mobile-marg {
+  margin: 30px !important;
+}
+.active-tabs::before {
+  background: var(--blue-bg) !important;
+}
+
+.prescription-btn button:first-child {
+  background: var(--green-bg) !important;
+}
+.prescription-btn button:last-child {
+  background: var(--blue-bg) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -515,8 +543,12 @@ div#basic-navbar-nav {
   transform: translate(-50%, -50%) !important;
   width: 100%;
 }
-
-
+.mobile-marg {
+  margin: 10px !important;
+}
+.css-1ygcj2i-MuiTableCell-root {
+  min-width: 140px !important;
+}
 
 
 
