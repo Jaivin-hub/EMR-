@@ -46,7 +46,7 @@ function App() {
         <Route path='/VoiceRecorder' element={<VoiceRecorder />} />
         <Route path='/doctordashboard' element={<DoctorDashboard />} />
         <Route path='/patientHistory' element={<PatientHistory />} />
-        <Route path='/settings' element={<Settings />} />
+        <Route path='/settings/:value' element={<Settings />} />
         <Route path='/doctorDashboard' element={<DoctorDashboard />} />
       </Routes>
     </Router>

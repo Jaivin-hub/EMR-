@@ -319,7 +319,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                     // appointmentHandler()
                     setOpenModal(false)
                     setReload(true)
-                    navigate('/taskDashboard')
+                    navigate('/patientlisting')
                 }
             }).catch((err) => {
                 console.log('error', err)

@@ -21,11 +21,13 @@ import AddDetailsModal from './Modals/AddDetailsModal';
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
 import AddDosage from './Modals/AddDosage';
+import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
 
 
 function TakeAppoiment() {
+    const navigate = useNavigate();
     const [hospitalName, setHospitalName] = useState('')
     const [doctorList, setDoctorList] = useState([])
     const [appoinmentDate, setAppoinmentDate] = useState('Monday')
@@ -125,8 +127,9 @@ function TakeAppoiment() {
             setShowPatientView(true)
             setShowDoctorView(false)
         } else if (value == 'Add Doctor') {
-            setShowDoctorView(true)
-            setShowPatientView(false)
+            navigate(`/settings/${value}`)
+            // setShowDoctorView(true)
+            // setShowPatientView(false)
         } else if (value == 'Appointments') {
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -211,11 +214,11 @@ function TakeAppoiment() {
                             className="mt-5" columns={columns} data={doctorList} title=''
                         />
                     </div>
-                    {showDoctorView ?
+                    {/* {showDoctorView ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                             <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
                         </div>
-                        : null}
+                        : null} */}
                     {showAddDetailsModal ?
                         <div className="d-flex top-0 justify-content-end bg-primary">
                             <AddDetailsModal

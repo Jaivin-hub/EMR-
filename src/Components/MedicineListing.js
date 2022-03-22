@@ -17,6 +17,7 @@ import AddDoctorModal from './Modals/AddDoctorModal';
 import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
 import AppointmentsModal from './Modals/AppointmentsModal';
 import { makeStyles } from "@material-ui/core/styles";
+import { useNavigate } from 'react-router-dom';
 import MaterialTable from 'material-table';
 import MedicineModal from './Modals/MedicineModal';
 import AddDosage from './Modals/AddDosage';
@@ -25,6 +26,7 @@ import Footer from './Footer';
 
 
 function MedicineListing() {
+    const navigate = useNavigate();
     const hospitalName = localStorage.getItem('HospitalName')
     const [reload, setReload] = useState(false)
     const hospitalId = localStorage.getItem('HospitalId')
@@ -79,10 +81,12 @@ function MedicineListing() {
             setShowSettingsView(true)
             setShowAddDetailsModal(false)
         } else if (value == 'Add Medicines') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(true)
+            // setShowDoctorView(false)
+            // setShowPatientView(false)
+            // setShowMedicineView(false)
+            // setShowMedicineView(true)
+            // , { state: value }
+            navigate(`/settings/${value}`)
         } else if (value == 'dosage') {
             setShowDoctorView(false)
             setShowPatientView(false)

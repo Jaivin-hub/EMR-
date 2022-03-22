@@ -7,10 +7,13 @@ import { GiLevelEndFlag } from 'react-icons/gi'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
 import Select from 'react-select';
 import instance from '../config/api'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import MaterialTable from 'material-table';
 import { HiOutlineDatabase } from 'react-icons/hi'
+import { useParams } from 'react-router-dom'
+
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,8 +24,13 @@ const useStyles = makeStyles(theme => ({
 
 
 function Settings() {
+    const value = useParams()
+    const pathVar = value.value
+    console.log('checking:', value)
     const classes = useStyles()
     const navigate = useNavigate();
+    const { state } = useLocation();
+    console.log('statefrom---xxx', state);
     const HospitalId = localStorage.getItem('HospitalId')
     const [specialization, setSpecialization] = useState('')
     const [specializationErr, setsPecializationErr] = useState('')
@@ -36,6 +44,23 @@ function Settings() {
     const [selectedDosageList, setSelectedDosageList] = useState([])
     const [reload, setReload] = useState(false)
     const [showDosageErr, setShowDosageErr] = useState(false)
+    // const [holdPath, setHoldPath] = useState(false)
+
+    useEffect(() => {
+        changeViewHandler()
+    }, [pathVar])
+
+    const changeViewHandler = () => {
+        if (pathVar == "Add Medicines") {
+            setShowMedicineView(true)
+            setShowDoctorView(false)
+            setShowDosage(false)
+        } else if (pathVar == 'Add Doctor') {
+            setShowMedicineView(false)
+            setShowDoctorView(true)
+            setShowDosage(false)
+        }
+    }
 
     const columns = [
         { title: 'Dosage', field: 'dosage' },
@@ -450,7 +475,7 @@ function Settings() {
             //     const data = { value: item.dosage, label: item.dosage }
             //     val.push(data)
             // })
-            setSelectedDosageList(dosageList.reverse())
+            setSelectedDosageList(dosageList?.reverse())
         })
     }
 
@@ -499,7 +524,7 @@ function Settings() {
                                             <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
                                                 <div className="col-md-1">
                                                     <GiLevelEndFlag size={20} />
-                                              </div>
+                                                </div>
                                                 <div className="col-md-11">
                                                     ADD DOSAGE
                                                 </div>
