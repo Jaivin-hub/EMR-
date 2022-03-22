@@ -199,7 +199,7 @@ function SignIn() {
                                 </div>
                                 <div className="row ">
                                     <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
                                         <input
                                             className="form-control "
                                             id='email_id'
@@ -212,14 +212,14 @@ function SignIn() {
                                                 emailInputBlurHandler(e.target.value, setEmailError)
                                             }}
                                             placeholder="Email id"
-                                            
+
                                         />
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger">{emailError}</p>
                                     </div>
                                     <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
                                         <input
                                             className="form-control "
                                             id='password'
@@ -232,10 +232,18 @@ function SignIn() {
                                                 passwordInputBlurHandler(e.target.value, setPasswordErr)
                                             }}
                                             placeholder="Password"
-                                             />
-                                             <button className="pass-eye" ><i class="fa fa-eye" aria-hidden="true"></i>
-                                             {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
-                                             </button>
+                                        />
+                                        {showEyeIcon ?
+                                            <button onClick={()=>{changePasswordTypeHandler('Text')}} className="pass-eye" >
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
+                                            </button>
+                                            :
+                                            <button onClick={()=>{changePasswordTypeHandler('password')}} className="pass-eye" >
+                                                {/* <i class="fa fa-eye" aria-hidden="true"></i> */}
+                                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            </button>
+                                        }
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger" >{passwordErr}</p>
@@ -244,7 +252,7 @@ function SignIn() {
                                         <a href="" className="links-main" >Forget password?</a>
                                     </div>
                                     <div className="col-md-12 mt-3 d-flex justify-content-center px-0">
-                                        <button className="btn main-btn"  onClick={submitHandler}>login now</button>
+                                        <button className="btn main-btn" onClick={submitHandler}>login now</button>
                                     </div>
                                     <div className="col-md-12 mt-5 d-flex justify-content-center px-0" style={{ display: 'flex' }}>
                                         {/* <div className="row"> */}

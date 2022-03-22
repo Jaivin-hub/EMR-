@@ -313,6 +313,7 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
             dosages: newList
         }
         instance.post('/patient_prescription', obj).then((res) => {
+            console.log('res from tab----------',res)
             navigate("/taskDashboard")
         })
     }
@@ -349,13 +350,13 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
                     className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                     onClick={() => toggleTab(2)}
                 >
-                    Investigation
+                    {/* Investigation */}
                 </button>
                 <button
                     className={toggleState === 4 ? "tabs active-tabs" : "tabs"}
                     onClick={() => toggleTab(4)}
                 >
-                    Stock
+                    {/* Stock */}
                 </button>
             </div>
 

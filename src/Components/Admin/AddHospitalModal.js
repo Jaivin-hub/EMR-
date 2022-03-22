@@ -635,8 +635,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                         </div>
                         <div className="row mt-5">
 
-
-                            <div className="col-md-3 bg-dark">
+                            <div className="col-md-3">
                                 <TextField
                                     variant="standard"
                                     id='Contact_No_1'

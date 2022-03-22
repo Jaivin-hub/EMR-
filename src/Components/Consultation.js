@@ -149,7 +149,8 @@ function Consultation() {
     }
 
     const navigateHandler = () => {
-        navigate('/patientHistory');
+
+        navigate('/patientHistory', { state: patientId });
     }
 
     return (

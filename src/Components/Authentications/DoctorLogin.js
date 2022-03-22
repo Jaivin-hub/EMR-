@@ -103,7 +103,6 @@ function DoctorLogin() {
                         console.log('here')
                         localStorage.setItem('doctorDetails', response?.data.doctor[0]._id);
                         navigate('/doctorDashboard');
-
                         // localStorage.setItem('doctorDetails', response?.data.doctor[0])
                         // response.data.doctor
                     } else {
