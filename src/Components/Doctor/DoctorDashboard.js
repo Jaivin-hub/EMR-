@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import instance from '../../config/api'
 import AppoitmentsListing from '../AppoitmentsListing'
 import Header from '../Header'
+import moment from 'moment';
+import PrimaryAnalysisModal from '../Modals/PrimaryAnalysisModal';
+
 
 function DoctorDashboard() {
     const hospitalName = localStorage.getItem('HospitalName')
@@ -14,12 +17,17 @@ function DoctorDashboard() {
     const [reload, setReload] = useState(false)
     const [appointmentCurrentDate, setAppointmentCurrentDate] = useState('')
     const hospitalId = localStorage.getItem('HospitalId')
+    const [value, setValue] = React.useState('1');
+    const [today, setToday] = useState()
+
+
 
 
     const changeContentHandler = (value) => {
 
     }
     const fetchAppointment = () => {
+        const doctorId = localStorage.getItem('doctorDetails')
         const Data = localStorage.getItem('HospitalName')
         var today = new Date();
         var dd = today.getDate();
@@ -38,12 +46,16 @@ function DoctorDashboard() {
             _hos_id: hospitalId,
             app_date: date_format
         }
+        console.log(obj);
         instance.post('/list_appointment', obj).then((res) => {
+            console.log(res);
             const arr = res?.data.appointment
-            const dummyId = '621689b5434b88e821bdcb99'
             const filteredData = arr.filter((val) => {
-                if (val._doc_id._id == dummyId) {
+                if (val._doc_id._id === doctorId) {
+                    console.log('if', val)
                     return val
+                } else {
+                    console.log('else', val._doc_id._id);
                 }
             })
             console.log('arr', filteredData)
@@ -52,15 +64,45 @@ function DoctorDashboard() {
         })
     }
 
+    const fetchAppointmentWithDate = (dateData) => {
+        const obj = {
+            _hos_id: hospitalId,
+            app_date: dateData
+
+        }
+        instance.post('/list_appointment', obj).then((res) => {
+            setAppointments(res?.data.appointment)
+            setPendingList(res?.data.appointment)
+
+        })
+    }
+
+
+
     useEffect(() => {
         fetchAppointment()
     }, [reload])
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const appointmentsDateHandler = (e) => {
+        const date = e.target.value
+        setToday(e.target.value)
+        const dateData = moment(date).format('DD-MM-YYYY');
+        // setAppointmentCurrentDate(dateData)
+        fetchAppointmentWithDate(dateData)
+    }
+
 
     const pendingCount = pendingList?.length
+    var curr = new Date();
+    curr.setDate(curr.getDate());
+    var date = curr.toISOString().substr(0, 10);
     return (
         <div>
-            <div className="div h-screen w-screen fixed" >
+            <div className="div h-screen w-screen fixed " >
 
                 <Header />
                 <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
@@ -72,8 +114,17 @@ function DoctorDashboard() {
                     {/* s */}
                     <div className="mainContainer " style={{ margin: '2%' }}>
                         <div className="row">
-                            <div className="col-md-6">
-                                <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
+                            <div className="col-md-6 d-flex space-x-5">
+                                <div>
+
+                                    <h5 className="pt-3 text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
+                                </div>
+                                <div className="row space-x-5">
+                                    <input defaultValue={date} onChange={handleChange} className="mt-1 h-12 shadow-md" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
+                                        appointmentsDateHandler(e)
+                                    }} />
+                                    {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+                                </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="row">
@@ -117,6 +168,11 @@ function DoctorDashboard() {
                             </div>
                             : null
                         }
+                        {showPrimaryAnalysis ?
+                            <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                                <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
+                            </div>
+                            : null}
                     </div>
                 </div>
             </div>

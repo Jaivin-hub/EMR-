@@ -214,8 +214,6 @@ function TaskDashboard() {
                             </div>
                         </div>
                     </div>
-
-
                     {showAppointmentView ?
                         <div className="">
                             <AppoitmentsListing

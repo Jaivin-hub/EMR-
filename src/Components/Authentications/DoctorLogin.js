@@ -88,27 +88,42 @@ function DoctorLogin() {
     // // console.log(loginData)
 
     const submitHandler = () => {
+        console.log('inside function')
         const obj = {
-            email_id: email,
-            password: password
+            doc_email: email,
+            doc_password: password
         }
+        console.log('obj', obj)
         if (emailError == "" && passwordErr == "") {
             if (!email == "", !password == "") {
-                // instance.post('/login_hospital', obj).then((response) => {
-                //     if (response.data.msg == 'Success') {
-                //         const Data = response.data.hospital[0].name
-                //         const id = response.data.hospital[0]._id
-                //         localStorage.setItem('HospitalName', Data)
-                //         localStorage.setItem('HospitalId', id)
-                //         localStorage.setItem('handleLogin', true)
-                //         navigate('/taskDashboard');
-                //     } else if (response.data.msg == 'Email or Password is invalid') {
-                //         setMainErr(response.data.msg)
-                //     }
-                // }).catch((err) => {
-                //     console.log('Error from login : ', err)
-                // })
-                navigate('/doctordashboard');
+                instance.post('/login_doctor', obj).then((response) => {
+                    console.log('if', response)
+                    if (response?.data.msg == "Success") {
+                        setMainErr('')
+                        console.log('here')
+                        localStorage.setItem('doctorDetails', response?.data.doctor[0]._id);
+                        navigate('/doctorDashboard');
+
+                        // localStorage.setItem('doctorDetails', response?.data.doctor[0])
+                        // response.data.doctor
+                    } else {
+                        console.log('else')
+                        setMainErr(response?.data.msg)
+                    }
+                    //     if (response.data.msg == 'Success') {
+                    //         const Data = response.data.hospital[0].name
+                    //         const id = response.data.hospital[0]._id
+                    //         localStorage.setItem('HospitalName', Data)
+                    //         localStorage.setItem('HospitalId', id)
+                    //         localStorage.setItem('handleLogin', true)
+                    //         navigate('/taskDashboard');
+                    //     } else if (response.data.msg == 'Email or Password is invalid') {
+                    //         setMainErr(response.data.msg)
+                    //     }
+                }).catch((err) => {
+                    console.log('Error from login : ', err)
+                })
+                // navigate('/doctordashboard');
             } else {
                 setMainErr('All fields are required!')
             }
@@ -137,6 +152,11 @@ function DoctorLogin() {
         // }
 
     }
+
+
+
+
+
     return (
         <div>
             <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>

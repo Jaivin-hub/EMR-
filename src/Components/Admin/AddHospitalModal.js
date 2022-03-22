@@ -158,6 +158,10 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         if (phone === '') {
             setPhoneErr('This field cannot be empty!')
             return false
+        } else if (phone.slice(-1) === ' ') {
+            setPhoneErr('should not end with space.')
+        } else if (phone.charAt(0) === ' ') {
+            setPhoneErr('should not start with space.')
         } else if (phone.length < 10) {
             setPhoneErr('Phone number does not have 10 digits')
             return false
@@ -177,8 +181,11 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         } else if (phone.length > 10) {
             setPhoneErr('Phone number has more than 10 digits')
             return false
-        }
-        else {
+        } else if (phone.charAt(0) === ' ') {
+            setPhoneErr('should not start with space.')
+        } else if (phone.slice(-1) === ' ') {
+            setPhoneErr('should not end with space.')
+        } else {
             setPhoneErr('')
             return true
         }
@@ -629,7 +636,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
                         <div className="row mt-5">
 
 
-                            <div className="col-md-3">
+                            <div className="col-md-3 bg-dark">
                                 <TextField
                                     variant="standard"
                                     id='Contact_No_1'

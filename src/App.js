@@ -47,6 +47,7 @@ function App() {
         <Route path='/doctordashboard' element={<DoctorDashboard />} />
         <Route path='/patientHistory' element={<PatientHistory />} />
         <Route path='/settings' element={<Settings />} />
+        <Route path='/doctorDashboard' element={<DoctorDashboard />} />
       </Routes>
     </Router>
   );

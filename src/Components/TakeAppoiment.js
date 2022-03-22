@@ -106,6 +106,7 @@ function TakeAppoiment() {
             _hos_id: HospitalId
         }
         instance.post('/list_doctors', obj).then((response) => {
+            console.log('doctores lilst', response)
             const doctorData = response?.data.doctors
             setDoctorList(doctorData.reverse())
         }).catch((err) => {
