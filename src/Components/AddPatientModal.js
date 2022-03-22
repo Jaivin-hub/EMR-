@@ -121,54 +121,6 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         }
     }
 
-    // // #################### Validating Name! ###########################
-
-    // const [patientNameErr, setPatientNameErr] = useState('')
-
-
-    // const patientNameInputBlurHandler = (patientName, setPatientNameErr) => {
-    //     if (patientName === '') {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.slice(-1) === ' ') {
-    //         setPatientNameErr('should not end with space.')
-    //         return false
-    //     } else {
-    //         setPatientNameErr('')
-    //         return true
-    //     }
-    // }
-
-
-    // const patientNameInputChangeHandler = (patientName, setPatientNameErr) => {
-    //     if (patientName.length === 0) {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.charAt(0) === ' ') {
-    //         setPatientNameErr('should not start with space.')
-    //         return false
-    //     } else if (patientName.includes('  ')) {
-    //         setPatientNameErr('should not contain consecutive spaces.')
-    //         return false
-    //     } else if (/\d/.test(patientName)) {
-    //         setPatientNameErr('should not contain numbers.')
-    //         return false
-    //     } else if (!patientName.match(/^[a-zA-Z ]+$/)) {
-    //         setPatientNameErr('Invalid charecter!')
-    //         return false
-    //     } else if (patientName === '') {
-    //         setPatientNameErr('This field cannot be empty!')
-    //         return false
-    //     } else if (patientName.slice(-1) === ' ') {
-    //         setPatientNameErr('should not end with space.')
-    //         return false
-    //     } else {
-    //         setPatientNameErr('')
-    //         return true
-    //     }
-    // }
-
-    // // #################### Validating Name! ###########################
 
 
     const handleErrFile = (err) => {
@@ -273,6 +225,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     const [adharErr, setAdharErr] = useState('')
 
     const adharInputBlurHandler = (AdharNo, setAdharErr) => {
+        let keepValue = []
+        selectePatientList?.map((itm, i) => {
+            keepValue.push(itm.aadhar_card_no)
+        })
         if (AdharNo === '') {
             setAdharErr('This field cannot be empty!')
             return false
@@ -282,6 +238,8 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
         } else if (AdharNo.length > 12) {
             setAdharErr('Enter valid adhar no!')
             return false
+        } else if (keepValue.includes(AdharNo)) {
+            setAdharErr('Existing email id!')
         }
         else {
             setAdharErr('')
@@ -290,12 +248,23 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     }
 
     const adharInputChangeHandler = (AdharNo, setAdharErr) => {
+        let keepValue = []
+        selectePatientList?.map((itm, i) => {
+            keepValue.push(itm.aadhar_card_no)
+        })
+        if (keepValue.includes(AdharNo)) {
+            console.log('if');
+        } else {
+            console.log('else')
+        }
         if (!AdharNo.match(/^[0-9][-\s\./0-9]*$/g)) {
             setAdharErr("Enter numbers only!");
             return false
         } else if (AdharNo.length > 12) {
             setAdharErr('Enter valid adhar no!')
             return false
+        } else if (keepValue.includes(AdharNo)) {
+            setAdharErr('Existing email id!')
         }
         else {
             setAdharErr('')
@@ -318,8 +287,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
 
 
     const addPatientHandler = () => {
+        console.log('inthe function',adharErr)
+
         const { bloodBloodGroup, patientPhoneNo } = patientData
-        if (!AdharNo == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
+        if (!AdharNo == "" && adharErr == "" && !patientName == "" && !patientDOB == "" && !address == "" && !Phone == "" && !patientLastName == "" && !patientBloodGroup == "" && !district == "" && !state == "") {
             const obj = {
                 aadhar_card_no: AdharNo,
                 p_firstname: patientName,
@@ -643,6 +614,25 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
     }
 
     // #################### Validating Address! ###########################
+    const [selectePatientList, setSelectedPatientList] = useState([])
+
+    useEffect(() => {
+        const Data = localStorage.getItem('HospitalName')
+        // setHospitalName(Data)
+        const obj = {
+            _hos_id: HospitalId
+        }
+        instance.post('/list_patients', obj).then((response) => {
+            const PatientData = response?.data.patientList
+            console.log('PatientData', PatientData)
+            setSelectedPatientList(PatientData.reverse())
+        }).catch((err) => {
+            console.log('error', err)
+        })
+        // fetchAppointment()
+    }, [])
+
+
 
     //Get current lists
 
@@ -785,10 +775,10 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 />
                                 <p style={{ color: "red" }}>{patientLastNameErr}</p>
                             </div>
-                            
+
                         </div>
                         <div className="row">
-                        <div className="col-md-4 mt-3">
+                            <div className="col-md-4 mt-3">
                                 <TextField
                                     com variant="standard"
                                     id='patiantDOB'
@@ -878,14 +868,14 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                     onChange={(value) => bloodGroupHandler(value)}
                                 />
 
-                                    
+
 
 
                                 <p style={{ color: "red" }}>{bloodGroupErr}</p>
                             </div>
                         </div>
                         <div className="row apoinment-bk">
-                            
+
                             <div className="col-md-4 mt-3 d-flex justify-content-center">
                                 <Select
                                     className="primary mt-2 w-100 "
@@ -904,11 +894,11 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                             </div>
                         </div>
                         <div className=" mt-3 d-flex justify-content-end">
-                            
-                                <button type="button" className="add-main"
-                                    onClick={addPatientHandler}
-                                >ADD</button>
-                            
+
+                            <button type="button" className="add-main"
+                                onClick={addPatientHandler}
+                            >ADD</button>
+
                         </div>
                         <div className="col-md-12 mt-5 d-flex justify-content-center">
                         </div>
