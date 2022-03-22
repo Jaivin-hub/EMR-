@@ -152,6 +152,19 @@ function DoctorLogin() {
 
     }
 
+    const [passwordType, setPasswordType] = useState('password')
+    const [showEyeIcon, setShowEyeIcon] = useState(true)
+
+    const changePasswordTypeHandler = (value) => {
+        if (value == 'Text') {
+            setPasswordType('Text')
+            setShowEyeIcon(false)
+        } else {
+            setPasswordType('password')
+            setShowEyeIcon(true)
+        }
+    }
+
 
 
 
@@ -196,7 +209,7 @@ function DoctorLogin() {
                                         <input
                                             className="form-control"
                                             id='password'
-                                            type="password"
+                                            type={passwordType}
                                             onChange={(e) => {
                                                 setPassword(e.target.value)
                                                 passwordInputChangeHandler(e.target.value, setPasswordErr)
@@ -206,7 +219,17 @@ function DoctorLogin() {
                                             }}
                                             placeholder="  Password"
                                              />
-                                            <button class="pass-eye"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                           {showEyeIcon ?
+                                            <button onClick={()=>{changePasswordTypeHandler('Text')}} className="pass-eye" >
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
+                                            </button>
+                                            :
+                                            <button onClick={()=>{changePasswordTypeHandler('password')}} className="pass-eye" >
+                                                {/* <i class="fa fa-eye" aria-hidden="true"></i> */}
+                                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            </button>
+                                        }
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
