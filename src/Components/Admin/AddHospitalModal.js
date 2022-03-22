@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function AddHospitalModal({ setOpenModal, setReload, reload }) {
+function AddHospitalModal({ setOpenModal, setReload, reload, hospitalList }) {
     const classes = useStyles()
     const [country, setCountry] = useState('India')
     const [hospitalData, setHospitalData] = useState({})
@@ -91,11 +91,18 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
     const [emailError, setEmailError] = useState('')
 
     const emailInputBlurHandler = (email, setError) => {
+        let keepValue = []
+        hospitalList?.map((itm, i) => {
+            keepValue.push(itm.email_id)
+        })
         if (email === '') {
             setError('This field cannot be empty!')
             return false
         } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             setError('This email id is not valid.')
+            return false
+        } else if (keepValue.includes(email)) {
+            setError('Existing adhar id!')
             return false
         } else {
             setError('')
@@ -103,8 +110,15 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
         }
     }
     const emailInputChangeHandler = (email, setError) => {
+        let keepValue = []
+        hospitalList?.map((itm, i) => {
+            keepValue.push(itm.email_id)
+        })
         if (email.includes(' ')) {
             setError('Email id should not contain space.')
+            return false
+        } else if (keepValue.includes(email)) {
+            setError('Existing email id!')
             return false
         }
         else {
@@ -382,7 +396,7 @@ function AddHospitalModal({ setOpenModal, setReload, reload }) {
     }
 
     const addHospitalSubmitHandler = () => {
-        if (!firstName == "" && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "") {
+        if (!firstName == "" && emailError == '' && !email == "" && !country == "" && !state == "" && !postalCode == "" && !phone == "" && !secondaryPhone == "" && !password == "" && !city == "" && !address1 == "") {
             const obj = {
                 name: firstName,
                 email_id: email,

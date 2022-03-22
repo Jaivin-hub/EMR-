@@ -113,6 +113,7 @@ function TaskDashboard() {
         instance.post('/list_hospital').then((res) => {
             const data = res?.data.hospital
             setHospitalList(data.reverse());
+            
         }).catch((err) => {
             console.log('error:', err)
         })
@@ -181,7 +182,7 @@ function TaskDashboard() {
                         : null}
                     {openModal ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                            <AddHospitalModal setOpenModal={setOpenModal} setReload={setReload} reload={reload} />
+                            <AddHospitalModal setOpenModal={setOpenModal} hospitalList={hospitalList} setReload={setReload} reload={reload} />
                         </div>
                         : null}
                 </div>
