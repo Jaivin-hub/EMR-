@@ -239,7 +239,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             setAdharErr('Enter valid adhar no!')
             return false
         } else if (keepValue.includes(AdharNo)) {
-            setAdharErr('Existing email id!')
+            setAdharErr('Existing adhar id!')
         }
         else {
             setAdharErr('')
@@ -264,7 +264,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
             setAdharErr('Enter valid adhar no!')
             return false
         } else if (keepValue.includes(AdharNo)) {
-            setAdharErr('Existing email id!')
+            setAdharErr('Existing adhar id!')
         }
         else {
             setAdharErr('')
