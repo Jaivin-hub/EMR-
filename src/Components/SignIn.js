@@ -9,9 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import instance from '../config/api'
 import backGroundImage from '../assets/imgs/Rectangle 55.png'
 import Footer from './Footer';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-
-
+import loginbg from '../assets/imgs/login-bg.png';
 
 function SignIn() {
     const navigate = useNavigate();
@@ -187,22 +185,23 @@ function SignIn() {
     }
     return (
         <>
-            <div className='centered loginWrapper d-flex justify-content-center align-items-center' style={{ minHeight: "100vh", background: 'linear-gradient(180deg, #02BCB1 0%, #0298D5 100%)' }}>
-                <div className="login_container" style={{ maxWidth: '30%' }}>
+            <div className='centered loginWrapper d-flex justify-content-center align-items-center login-background'>
+                <div className="login_container login-box-custom">
                     <div className="card mt-5">
                         <div className="d-flex loginBoxs">
                             <div className="col-md-12">
                                 <div className="row d-flex justify-content-center">
-                                    <h4 className='mt-5' style={{ fontFamily: "Roboto" }}><strong>Login</strong></h4>
+                                    <h4 className='' style={{ fontFamily: "Roboto" }}><strong>Login</strong></h4>
                                 </div>
-                                <div className="row pt-3 d-flex justify-content-center">
+                                <div className="row  d-flex justify-content-center">
                                     {/* --- */}
                                     <p className='text-danger'>{mainErr}</p>
                                 </div>
                                 <div className="row ">
-                                    <div className="col-md-12 mt-2 d-flex justify-content-center">
+                                    <div className="col-md-12  d-flex justify-content-center px-0 login-field">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
                                         <input
-                                            className="form-control"
+                                            className="form-control "
                                             id='email_id'
                                             type="email"
                                             onChange={(e) => {
@@ -212,16 +211,17 @@ function SignIn() {
                                             onBlur={(e) => {
                                                 emailInputBlurHandler(e.target.value, setEmailError)
                                             }}
-                                            placeholder=" Email id"
-                                            style={{ width: '80%', height: "3em", borderRadius: '5px' }}
+                                            placeholder="Email id"
+                                            
                                         />
                                     </div>
-                                    <div className="col-md-12">
-                                        <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
+                                    <div className="col-md-12 px-0">
+                                        <p className="text-danger">{emailError}</p>
                                     </div>
-                                    <div className="col-md-12 mt-3 d-flex justify-content-center space-x-8">
+                                    <div className="col-md-12  d-flex justify-content-center px-0 login-field">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
                                         <input
-                                            className="form-control"
+                                            className="form-control "
                                             id='password'
                                             type={passwordType}
                                             onChange={(e) => {
@@ -231,26 +231,24 @@ function SignIn() {
                                             onBlur={(e) => {
                                                 passwordInputBlurHandler(e.target.value, setPasswordErr)
                                             }}
-                                            placeholder="  Password"
-                                            style={{ width: '70%', height: "3em", borderRadius: '5px' }} />
-                                        {showEyeIcon ?
-                                            <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
-                                            :
-                                            <AiOutlineEyeInvisible onClick={() => { changePasswordTypeHandler('password') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
-                                        }
+                                            placeholder="Password"
+                                             />
+                                             <button className="pass-eye" ><i class="fa fa-eye" aria-hidden="true"></i>
+                                             {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
+                                             </button>
                                     </div>
-                                    <div className="col-md-12">
-                                        <p className="text-danger" style={{ marginLeft: '10%' }}>{passwordErr}</p>
+                                    <div className="col-md-12 px-0">
+                                        <p className="text-danger" >{passwordErr}</p>
                                     </div>
-                                    <div className="col-md-12">
-                                        <a href="" className="" style={{ marginLeft: '10%' }}>Forget password?</a>
+                                    <div className="col-md-12 px-0">
+                                        <a href="" className="links-main" >Forget password?</a>
                                     </div>
-                                    <div className="col-md-12 mt-3 d-flex justify-content-center">
-                                        <button className="btn" style={{ borderRadius: '5px', width: '50%', color: 'white', backgroundColor: '#0298D5' }} onClick={submitHandler}>login now</button>
+                                    <div className="col-md-12 mt-3 d-flex justify-content-center px-0">
+                                        <button className="btn main-btn"  onClick={submitHandler}>login now</button>
                                     </div>
-                                    <div className="col-md-12 mt-5 d-flex justify-content-center" style={{ display: 'flex' }}>
+                                    <div className="col-md-12 mt-5 d-flex justify-content-center px-0" style={{ display: 'flex' }}>
                                         {/* <div className="row"> */}
-                                        <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a style={{ color: "#007bff" }}>9072442200</a> </a></label>
+                                        <label >Not a member? <a style={{ cursor: 'pointer', }} onClick={signUpchangeHandler}>Contact- <a className="links-main">9072442200</a> </a></label>
                                         {/* </div> */}
                                     </div>
                                 </div>

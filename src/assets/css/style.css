@@ -1,0 +1,497 @@
+:root {
+  --blue-bg: #0298D5;
+  --green-bg: #02BCB1;
+}
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  background-color: #adafaf4f !important;
+  border: 0px solid #ccc !important;
+  border-radius: 5px !important;
+  box-sizing: border-box;
+  color: #333;
+  cursor: default;
+  outline: none;
+  padding: 8px 52px 8px 10px;
+  transition: all 200ms ease;
+}
+.login_container.login-box-custom .row {
+  padding: 0;
+}
+.login_container.login-box-custom .col-md-12 {
+  width: 100%;
+}
+.login-box-custom {
+  width: 350px;
+  background: #fff;
+  padding: 25px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 5px;
+}
+.login-box-custom .card {
+  font-weight: 400;
+  border: 0;
+  box-shadow: none !important;
+}
+
+.main-btn {
+  padding: 10px 0px !important;
+  width: 100%;
+  border-radius: 5px !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: var(--blue-bg) !important;
+  color: #fff !important;
+  margin: 20px 0px 0px 0px !important;
+  font-size: 16px !important;
+}
+button.btn.main-btn:hover {
+  background: #07709b !important;
+}
+input {
+  height: 40px !important;
+  border-radius: 5px !important;
+}
+.form-control:focus {
+  border-color: var(--blue-bg);
+  outline: 0;
+  box-shadow: none !important;
+}
+a.links-main {
+  color: var(--blue-bg) !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+p.text-danger {
+  font-size: 13px;
+}
+.login-background {
+  min-height: 100vh;
+  background: url("../imgs/login-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main-hos {
+  align-items: center;
+}
+.main-hos > div {
+ margin-right: 10px;
+}
+.mainContainer {
+  background: #efeeee;
+  height: 100%;
+}
+.appoinment-sec {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.padd-2 {
+  padding: 30px 20px;
+}
+.pending-n {
+  background: #0298d5;
+  padding: 7px 20px;
+  /* border-radius: 5px; */
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  margin-right: 23px;
+  color: #fff;
+}
+h5.text-label {
+  margin: 0px 0px 0px 10px !important;
+  font-size: 16px;
+}
+.menu-list {
+  margin-left: 100px;
+}
+.menu-list a {
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.decoration-4 {
+  text-decoration-thickness: 0px;
+}
+.decoration-sky-500 {
+  color: var(--blue-bg) !important;
+}
+
+.underline {
+  text-decoration-line: none !important;
+}
+.menu-list a.decoration-sky-500::after {
+  position: absolute;
+  content: "";
+  width: 59px;
+  height: 3px;
+  background-color: var(--blue-bg);
+  bottom: -4px;
+  left: 8px;
+  border-radius: 30px;
+}
+.common-content {
+  margin: 0px 20px;
+  border-radius: 7px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  padding: 30px;
+  min-height: calc(100% - 60px);
+}
+.date-f{
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+footer.footer-sec {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ccc;
+  /* padding: 7px 10px; */
+  height: 2.3em;
+}
+.h-screen {
+  height: 100% !important;
+}
+button.addnew {
+  background: #00bcd469;
+  color: var(--blue-bg) !important;
+}
+.MuiInput-underline:before {
+  border-bottom: 0px !important;
+}
+.MuiInputBase-root {
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 0px 20px !important;
+}
+.MuiInput-underline:after {
+  border-bottom: 0px !important;
+}
+.MuiInputBase-input {
+  padding: 1px 0px !important;
+}
+.MuiTableCell-root {
+  border-bottom: 0px solid rgba(224, 224, 224, 1) !important;
+}
+.MuiPaper-elevation2 {
+  box-shadow: none !important;
+}
+
+.Component-horizontalScrollContainer-12 {
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0px 0px;
+  padding: 20px;
+}
+table thead {
+  border-bottom: 1px solid;
+}
+.Component-paginationToolbar-2 {
+  border: 1px solid #ccc;
+  border-top: 0;
+}
+
+
+
+.Component-paginationToolbar-2 .MuiInputBase-root {
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  padding: 7px 20px !important;
+}
+.login-field i {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #6a6666;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-field {
+  position: relative;
+}
+.login-field input {
+  padding: 0px 35px;
+}
+button.pass-eye i {
+  color: #0298d5;
+}
+button.pass-eye {
+  position: absolute;
+  right: 40px;
+  color: #ccc !important;
+}button.pass-eye i {
+  color: #0298d5;
+}
+button.pass-eye {
+  position: absolute;
+  right: 40px;
+  color: #ccc !important;
+}
+
+
+tr.MuiTableRow-root {
+  height: inherit !important;
+}
+.main-div-fl{
+  flex: 1;
+    height: calc(100% - 5em) !important;
+}
+.flex-col {
+  min-height: 100vh !important;
+}
+.main-content{
+  height: calc(100% - 70px) !important;
+}
+.Modal_Container {
+  top: 50% !important;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+}
+.Modal_Container .MuiInputBase-root {
+  border: 0;
+  border-bottom: 1px solid #9d9999;
+  border-radius: 0px;
+  padding: 0px 20px !important;
+}
+.scanning button {
+  background: #ff5722;
+  padding: 7px 19px;
+  width: 100%;
+  border-radius: 5px;
+  color: white;
+}
+.scanning button:first-child {
+  background: #4caf50;
+}
+
+.scanning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.row.apoinment-bk {
+  background: #cccccc7a;
+  margin-top: 30px !important;
+  margin: 0;
+  
+}
+.row.apoinment-bk input, .css-1pahdxg-control {
+  height: 38px !important;
+  background: #fff !important;
+  color: #b5abab;
+}
+.row.apoinment-bk .css-yk16xz-control {
+  border: 0;
+  height: 15px !important;
+}
+.css-1wa3eu0-placeholder, .css-1uccc91-singleValue {
+  top: 38% !important;
+}
+.css-1okebmr-indicatorSeparator {
+  width: 0px !important;
+}
+.div.adr-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.div.adr-img img {
+  margin-bottom: 20px;
+  width: 240px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.add-main {
+  background: var(--blue-bg);
+  padding: 8px 50px;
+  border-radius: 5px;
+  color: #fff;
+  margin-top: 30px;
+}
+i.fa.fa-window-close {
+  color: #b1b1b1;
+  font-size: 33px;
+}
+button:hover {
+  /* background: #0e0e0e !important;
+  transition: .5s;
+  color: #fff 1important; */
+  box-shadow: inset 0 0 100px 100px rgb(70 70 70 / 18%);
+}
+i.fa.fa-window-close:hover {
+  color: #0e0e0e !important;
+  transition: .5s;
+}
+.right-side {
+  padding-right: 30px !important;
+}
+.left-side {
+  padding-left: 20px !important;
+  /* margin-right: 0px !important; */
+}
+span.patient-det {
+  font-weight: 500;
+  font-size: larger;
+  color: #000000a1;
+}
+
+td.MuiTableCell-root.MuiTableCell-body {
+  padding-top: 20px !important;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+.pending-app {
+  background: var(--blue-bg);
+  margin-right: 20px;
+  padding: 5px 20px;
+  color: #fff !important;
+}
+.MuiIconButton-root:hover {
+  border-radius: 0px !important;
+  background: #fffc;
+}
+span.MuiIconButton-label button.btn {
+  background: var(--blue-bg) !important;
+}
+td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:last-child span.MuiIconButton-label button.btn{
+  background: var(--green-bg) !important;
+}
+
+.css-yk16xz-control {
+  border: 0 !important;
+  border-bottom: 1px solid #9d9999 !important;
+  /* margin: 0px 29px; */
+  border-radius: 0px  !important;
+}
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  min-width: 100% !important;
+}
+
+.row.apoinment-bk .css-yk16xz-control {
+  border: 0 !important;
+  border-bottom: 0px solid #9d9999 !important;
+  /* margin: 0px 29px; */
+  border-radius: 0px !important;
+}
+
+
+
+
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------MEDIA CSS START -----------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------- */
+@media only screen and (max-width: 991px) {
+  .menu-list {
+    margin-left: 0px;
+    padding: 20px 20px !important;
+    padding-bottom: 0px !important;
+}
+div#basic-navbar-nav {
+  background: var(--blue-bg);
+  z-index: 999;
+  color: #fff;
+  top: 60px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: auto;
+}
+.nav-link {
+  color: #fff !important;
+  border-bottom: 1px solid #ccc;
+  padding: 6px !important;
+}
+.ml-auto.navbar-nav {
+  padding: 20px;
+  padding-top: 0px !important;
+}
+
+
+
+
+
+
+
+
+}
+
+@media only screen and (max-width: 767px) {
+  .login-box-custom {
+    width: 100%;
+    margin: 20px;
+}
+.main-hos, .appoinment-sec {
+  flex-direction: column;
+  align-items: baseline;
+}
+.main-hos > div {
+  margin-right: 0px;
+  width: 100%;
+}
+.main-hos > div input {
+  width: 100%;
+}
+.pending-n {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  margin: 18px 0px;
+  width: 100%;
+}
+.d-flex.justify-content-end.pending {
+  width: 100%;
+}
+.MTableToolbar-searchField-10 {
+  /* min-width: 150px; */
+  padding-left: 0px !important;
+  width: 100% !important;
+}
+
+.MTableToolbar-root-5 {
+  padding-right: 0px !important;
+  margin-bottom: 24px;
+}
+.common-content {
+  height: 100%;
+  margin-bottom: 20px;
+}
+.flex-col {
+  height: 100% !important
+}
+.right-side {
+  padding-right: 16px !important;
+}
+.left-side {
+  padding-left: 16px !important;
+  /* margin-right: 0px !important; */
+}
+.Modal_Container {
+  max-width: 100% !important;
+  /* padding: 0; */
+  /* margin: 0; */
+  bottom: -390px !important;
+  height: 100%;
+  background: #ffff !important;
+}
+.row.mobile-ls {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.css-2b097c-container {
+  width: 100%;
+}
+  }

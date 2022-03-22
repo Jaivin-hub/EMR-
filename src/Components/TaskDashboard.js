@@ -163,50 +163,50 @@ function TaskDashboard() {
     var date = curr.toISOString().substr(0, 10);
 
     return (
-        <div className="div flex flex-col h-screen w-screen fixed" >
+        <div className="div flex flex-col  w-screen " >
 
             <Header />
-            <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
-                <div className="row">
-                    <div className="hospitalName mt-3">
+            <div className="div mb-auto main-div-fl" >
+                {/* <div className="row"> */}
+                    {/* <div className="hospitalName mt-3"> */}
                         {/* <label htmlFor="">{hospitalName}</label> */}
-                    </div>
-                </div>
+                    {/* </div> */}
+                {/* </div> */}
                 {/* s */}
-                <div className="mainContainer" style={{ margin: '2%' }}>
+                <div className="mainContainer">
+                    <div className="container-fluid padd-2">
                     <div className="row">
-                        <div className="col-md-6 d-flex space-x-5">
-                            <div>
-                                <h5 className="pt-3 text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
-                            </div>
-                            <div className="row space-x-5">
-                                    <input defaultValue={date} onChange={handleChange} className="mt-1 h-12 shadow-md" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {
-                                        appointmentsDateHandler(e)
-                                    }} />
-                                    {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="row">
-                                <div className="col-md-4">
-
+                        <div className="col-md-6 left-side">
+                           <div className='d-flex main-hos'>
+                                <div>
+                                    <h5 className=" text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
                                 </div>
-                                <div className="col-md-8">
-                                    <div className="row">
-                                        <div className="col-md-7 d-flex justify-content-end">
+                                <div className="">
+                                        <input defaultValue={date} onChange={handleChange} className=" date-f"  type="date" onChange={(e) => {
+                                            appointmentsDateHandler(e)
+                                        }} />
+                                        {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+                                </div>
+                           </div>
+                        </div>
+                        <div className="col-md-6 right-side">
+                            <div className="">
+                                <div className="">
+                                    <div className="appoinment-sec">
+                                        <div className=" d-flex justify-content-end pending">
                                             {pendingList?.length >= 1 ?
-                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                <div className="pending-app">
                                                     Pending Appointments {pendingCount}
                                                 </div>
                                                 :
-                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                <div className="pending-n">
                                                     Pending Appointments 0
                                                 </div>
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
-                                            <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
-                                            <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
+                                        <div className="align-items-center  d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
+                                            <button type="button" className=" addnew inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
+                                            <h5 className="text-label  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
                                     </div>
@@ -214,8 +214,11 @@ function TaskDashboard() {
                             </div>
                         </div>
                     </div>
+                    </div>
+
+
                     {showAppointmentView ?
-                        <div className="">
+                        <div className="main-content">
                             <AppoitmentsListing
                                 setAppointments={setAppointments}
                                 appointments={appointments}

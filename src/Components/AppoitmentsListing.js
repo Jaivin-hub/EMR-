@@ -115,12 +115,12 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
 
     return (
         <>
-            <div className=" addPatient navbar-light mt-5 rounded-md" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
+            <div className=" addPatient navbar-light rounded-md common-content" style={{ backgroundColor: "#FFFFFF", border: '', boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)' }}>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="row">
-                            <div className="col-md-2 ml-3">
-                                <Dropdown className="mt-3   rounded-md  text-gray-700 font-semibold py-2 px-4   items-center" options={options} value={defaultOption} placeholder="Select an option" />
+                            <div className="col-md-2 ">
+                                <Dropdown className="      items-center" options={options} value={defaultOption} placeholder="Select an option" />
                             </div>
                         </div>
                     </div>
