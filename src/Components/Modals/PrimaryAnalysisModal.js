@@ -39,6 +39,7 @@ function PrimaryAnalysisModal({ patientId, setShowPrimaryAnalysis, setReload, re
         instance.post('patient_primary_analysis', obj).then((response) => {
             console.log('response----', response)
             if (response) {
+                console.log('heres ');
                 setShowPrimaryAnalysis(false)
                 setReload(!reload)
             }

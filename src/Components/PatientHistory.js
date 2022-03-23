@@ -32,19 +32,19 @@ function PatientHistory() {
         }
         // console.log('now', obj)
         instance.post('/list_patient_prescription', obj).then((res) => {
-            // console.log('history response', res?.data.prescription[0]._id)
             let resValue = []
-            for (let i = 0; i < res?.data.prescription.length; i++) {
-                // console.log('here is the data---', res?.data.prescription[i]._id)
+            for (let i = 0; i < res?.data.prescription?.length; i++) {
                 const patientHistoryDetails = {
                     _pat_presc_id: res?.data.prescription[i]._id
                 }
                 instance.post('/list_patient_prescription_dosage', patientHistoryDetails).then((response) => {
-                    console.log('second response', response.data.dosage[0]._med_id.med_name);
-                    resValue.push(response?.data.dosage[0])
+                    resValue.push(response?.data.dosage)
+                    let newData = [...prescriptionHistoryList]
+                    newData = response?.data.dosage
+                    setPrescriptionHistoryList(newData)
                 })
             }
-            setPrescriptionHistoryList(resValue)
+            // setPrescriptionHistoryList(resValue);
         })
     }
 
@@ -53,7 +53,9 @@ function PatientHistory() {
 
 
     useEffect(() => {
+        let mount = true;
         fetchPatientHistory()
+        return mount = false
     }, [])
 
 
@@ -72,46 +74,49 @@ function PatientHistory() {
                     </div>
                 </div>
             </div>
-            <div className="navbar-light  m-5 bg-white shadow-md">
-                <div className="row">
-                    <div className="col-md-12 d-flex justify-content-center">
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell >SI No</TableCell>
-                                        <TableCell >Medicine Name</TableCell>
-                                        <TableCell >Pharmacological Name</TableCell>
-                                        <TableCell >Type</TableCell>
-                                        <TableCell >Dosage</TableCell>
-                                        <TableCell >Duration</TableCell>
-                                        <TableCell >Quantity</TableCell>
-                                        <TableCell >Comments</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {prescriptionHistoryList?.map((item, i) => {
-                                        return (
+            <div className="navbar-light  m-5 ">
+                {prescriptionHistoryList?.map((item, index) => {
+                    return (
+                        <div className="row mt-3">
+                            <div className="col-md-12 d-flex justify-content-center">
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                        <TableHead>
                                             <TableRow>
-                                                <TableCell component="th" scope="row">
-                                                    {i + 1}
-                                                </TableCell>
-                                                {/* <TableCell >{item._med_id.med_name}</TableCell>
-                                                <TableCell >{item._med_id.s_med_name}</TableCell>
-                                                <TableCell >{item._med_id.med_type}</TableCell>
-                                                <TableCell >{item.dosage}</TableCell>
-                                                <TableCell >{item.days}</TableCell>
-                                                <TableCell >{item.total_quantity}</TableCell> */}
+                                                <TableCell >SI No</TableCell>
+                                                <TableCell >Medicine Name</TableCell>
+                                                <TableCell >Pharmacological Name</TableCell>
+                                                <TableCell >Type</TableCell>
+                                                <TableCell >Dosage</TableCell>
+                                                <TableCell >Duration</TableCell>
+                                                <TableCell >Quantity</TableCell>
+                                                <TableCell >Comments</TableCell>
                                             </TableRow>
-                                        )
-                                    })}
+                                        </TableHead>
+                                        <TableBody>
+                                            {/* {item?.map((val, i) => {
+                                                
+                                                    <TableRow>
+                                                        <TableCell component="th" scope="row">
+                                                            {i + 1}
+                                                        </TableCell>
+                                                        <TableCell >{val._med_id.med_name}</TableCell>
+                                                        <TableCell >{val._med_id.s_med_name}</TableCell>
+                                                        <TableCell >{val._med_id.med_type}</TableCell>
+                                                        <TableCell >{val.dosage}</TableCell>
+                                                        <TableCell >{val.days}</TableCell>
+                                                        <TableCell >{val.total_quantity}</TableCell>
+                                                    </TableRow>
+                                                
+                                            })} */}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
 
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

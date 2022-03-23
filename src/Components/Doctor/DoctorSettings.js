@@ -490,9 +490,9 @@ function DoctorSettings() {
     }, [reload])
     return (
         <div className="div w-screen h-screen fixed">
-           
-                <DoctorHeader />
-               
+
+            <DoctorHeader />
+
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="mainContainer" >
                     <div className="navbar-light  ml-5 mr-5 mt-5 bg-white shadow-md">
@@ -513,14 +513,14 @@ function DoctorSettings() {
                                 <div className="row grid grid-cols-2 divide-x">
                                     <div className="col-md-4">
                                         <div className="col-md-12">
-                                            <div className="row d-flex font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDoctorView(true); setShowDosage(false); setShowMedicineView(false); }}>
+                                            {/* <div className="row d-flex font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDoctorView(true); setShowDosage(false); setShowMedicineView(false); }}>
                                                 <div className="col-md-1">
                                                     <FcBusinessman size={20} />
                                                 </div>
                                                 <div className="col-md-11">
                                                     ADD DOCTOR
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowMedicineView(true); setShowDoctorView(false); setShowDosage(true); }}>
                                                 <div className="col-md-1">
                                                     <GiMedicines size={20} />
@@ -532,208 +532,61 @@ function DoctorSettings() {
                                         </div>
                                     </div>
                                     <div className="col-md-8">
-                                        {showDoctorView ?
-                                            <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
-                                                <div className="row m-3">
-                                                    <div className="col-md-4">
-                                                        <TextField
-                                                            variant="standard"
-                                                            id="doc_name"
-                                                            onChange={(e) => {
-                                                                setDoctorName(e.target.value)
-                                                                nameInputChangeHandler(e.target.value, setDoctorNameErr)
-                                                            }}
-                                                            onBlur={(e) => {
-                                                                nameInputBlurHandler(e.target.value, setDoctorNameErr)
-                                                            }}
-                                                            label="Doctor Name"
-                                                        />
-                                                        <p className="" style={{ color: "red" }}>{doctorNameErr}</p>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <TextField
-                                                            variant="standard"
-                                                            id="doc_qualification"
-                                                            onChange={(e) => {
-                                                                setQualification(e.target.value)
-                                                                qualificationInputChangeHandler(e.target.value, setQualificationErr)
-                                                            }}
-                                                            onBlur={(e) => {
-                                                                qualificationInputBlurHandler(e.target.value, setQualificationErr)
-                                                            }}
-                                                            label="Qualification"
-                                                        />
-                                                        <p className="" style={{ color: "red" }}>{qualificationErr}</p>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <Select
-                                                            className="primary mt-2 w-48"
-                                                            name="singleSelect"
-                                                            placeholder="Specialization"
-                                                            options={Specialization}
-                                                            onChange={(value) => SpecializationHandler(value)}
-                                                        />
-                                                        <p style={{ color: "red" }}>{specializationErr}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="row ml-3 mr-3 mt-3">
-                                                    <div className="col-md-4">
-                                                        <TextField
-                                                            variant="standard"
-                                                            id="doc_contact"
-                                                            onChange={(e) => {
-                                                                setPhone(e.target.value)
-                                                                phoneInputChangeHandler(e.target.value, setPhoneErr)
-                                                            }}
 
-                                                            onBlur={(e) => {
-                                                                phoneInputBlurHandler(e.target.value, setPhoneErr)
-                                                            }}
-                                                            label="Contact No"
-                                                        />
-                                                        <p style={{ color: "red" }}>{phoneErr}</p>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <TextField
-                                                            variant="standard"
-                                                            id="doc_email"
-                                                            onChange={(e) => {
-                                                                setEmail(e.target.value)
-                                                                emailInputChangeHandler(e.target.value, setEmailError)
-                                                            }}
-                                                            onBlur={(e) => {
-                                                                emailInputBlurHandler(e.target.value, setEmailError)
-                                                            }}
-                                                            label="Email ID"
-                                                        />
-                                                        <p style={{ color: "red" }}>{emailError}</p>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <TextField
-                                                            variant="standard"
-                                                            id="doc_password"
-                                                            type='password'
-                                                            onChange={(e) => {
-                                                                setPassword(e.target.value)
-                                                                passwordInputChangeHandler(e.target.value, setPasswordErr)
-                                                            }}
-                                                            onBlur={(e) => {
-                                                                passwordInputBlurHandler(e.target.value, setPasswordErr)
-                                                            }}
-                                                            label="Password"
-                                                        />
-                                                        <p style={{ color: "red" }}>{passwordErr}</p>
-                                                    </div>
+                                        <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
+                                            <div className="row m-3">
+                                                <div className="col-md-4">
+                                                    <Select
+                                                        className="primary mt-2 w-48"
+                                                        name="singleSelect"
+                                                        placeholder="Medicine Type"
+                                                        options={medType}
+                                                        onChange={(value) => selectMedTypeHandler(value)}
+                                                    />
                                                 </div>
-                                                <div className="row mt-1 d-flex justify-content-end">
-                                                    <div className="col-md-3 mt-4 mb-3" >
-                                                        <button type="button" className="inline-block px-6 py-2.5 
-            bg-blue-400 text-white font-medium text-xs leading-tight 
-            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                                                            onClick={submitHandler}
-                                                        >Add Doctor</button>
-                                                    </div>
+                                                <div className="col-md-4">
+                                                    <TextField
+                                                        variant="standard"
+                                                        id=""
+                                                        onChange={(e) => {
+                                                            setMedicineName(e.target.value)
+                                                            medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
+                                                        }}
+                                                        onBlur={(e) => {
+                                                            medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
+                                                        }}
+                                                        label="Medicine name"
+                                                    />
+                                                    <p className="" style={{ color: "red" }}>{medicineNameErr}</p>
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <TextField
+                                                        variant="standard"
+                                                        id=""
+                                                        onChange={(e) => {
+                                                            setScientificName(e.target.value)
+                                                            scientificNameInputChangeHandler(e.target.value, setScientificNameErr)
+                                                        }}
+                                                        onBlur={(e) => {
+                                                            scientificNameInputBlurHandler(e.target.value, setScientificNameErr)
+                                                        }}
+                                                        label="Pharmacological Name"
+                                                    />
+                                                    <p className="" style={{ color: "red" }}>{scientificNameErr}</p>
                                                 </div>
                                             </div>
-                                            : showMedicineView ?
-                                                <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
-                                                    <div className="row m-3">
-                                                        <div className="col-md-4">
-                                                            <Select
-                                                                className="primary mt-2 w-48"
-                                                                name="singleSelect"
-                                                                placeholder="Medicine Type"
-                                                                options={medType}
-                                                                onChange={(value) => selectMedTypeHandler(value)}
-                                                            />
-                                                        </div>
-                                                        <div className="col-md-4">
-                                                            <TextField
-                                                                variant="standard"
-                                                                id=""
-                                                                onChange={(e) => {
-                                                                    setMedicineName(e.target.value)
-                                                                    medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
-                                                                }}
-                                                                onBlur={(e) => {
-                                                                    medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
-                                                                }}
-                                                                label="Medicine name"
-                                                            />
-                                                            <p className="" style={{ color: "red" }}>{medicineNameErr}</p>
-                                                        </div>
-                                                        <div className="col-md-4">
-                                                            <TextField
-                                                                variant="standard"
-                                                                id=""
-                                                                onChange={(e) => {
-                                                                    setScientificName(e.target.value)
-                                                                    scientificNameInputChangeHandler(e.target.value, setScientificNameErr)
-                                                                }}
-                                                                onBlur={(e) => {
-                                                                    scientificNameInputBlurHandler(e.target.value, setScientificNameErr)
-                                                                }}
-                                                                label="Pharmacological Name"
-                                                            />
-                                                            <p className="" style={{ color: "red" }}>{scientificNameErr}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-1 d-flex justify-content-end">
-                                                        <div className="col-md-3 mt-4 mb-3" >
-                                                            <button type="button" className="inline-block px-6 py-2.5 
+                                            <div className="row mt-1 d-flex justify-content-end">
+                                                <div className="col-md-3 mt-4 mb-3" >
+                                                    <button type="button" className="inline-block px-6 py-2.5 
             bg-blue-400 text-white font-medium text-xs leading-tight 
             uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
             focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
             active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                                                                onClick={medicineSubmitHandler}
-                                                            >ADD</button>
-                                                        </div>
-                                                    </div>
+                                                        onClick={medicineSubmitHandler}
+                                                    >ADD</button>
                                                 </div>
-                                                : showDosage ?
-                                                    <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
-                                                        <div className="row m-3">
-                                                            <div className="col-md-6">
-                                                                <TextField
-                                                                    variant="standard"
-                                                                    id=""
-                                                                    onChange={(e) => {
-                                                                        setShowDosageErr(false);
-                                                                        setDosage(e.target.value)
-                                                                        // medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
-                                                                    }}
-                                                                    onBlur={(e) => {
-                                                                        // medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
-                                                                    }}
-                                                                    label="Dosage"
-                                                                />
-                                                                {showDosageErr ?
-                                                                    <p className=" text-red-700">Already in the list</p>
-                                                                    : null}
-                                                                <div className="row mt-1 d-flex justify-content-end">
-                                                                    <div className="col-md-3 mt-4 mb-3" >
-                                                                        <button type="button" className="inline-block px-6 py-2.5 
-            bg-blue-400 text-white font-medium text-xs leading-tight 
-            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                                                                            onClick={dosageSubmitHandler}
-                                                                        >ADD</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <MaterialTable
-                                                                    options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
-                                                                    className="mt-5" columns={columns} data={selectedDosageList} title=''
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    : null}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
