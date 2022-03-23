@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Header from './Header'
+import Header from '.././Header'
 import { FcManager, FcBusinessman } from 'react-icons/fc'
 import { GiMedicines } from 'react-icons/gi'
 import { ImLab } from 'react-icons/im'
 import { GiLevelEndFlag } from 'react-icons/gi'
 import { TextField, Button, IconButton, Remove } from '@mui/material'
 import Select from 'react-select';
-import instance from '../config/api'
+import instance from '../../config/api'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MenuItem, FormControl, InputLabel, makeStyles } from '@material-ui/core'
 import MaterialTable from 'material-table';
 import { HiOutlineDatabase } from 'react-icons/hi'
 import { useParams } from 'react-router-dom'
-import DoctorHeader from './Doctor/DoctorHeader'
-
-
-
+import DoctorHeader from '.././Doctor/DoctorHeader'
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -23,8 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-
-function Settings() {
+function DoctorSettings() {
     const value = useParams()
     const pathVar = value.value
     console.log('checking:', value)
@@ -53,7 +49,7 @@ function Settings() {
     }, [pathVar])
 
     const changeViewHandler = () => {
-        if (pathVar == "Add Medicines") {
+        if (pathVar == "Add_Medicines") {
             setShowMedicineView(true)
             setShowDoctorView(false)
             setShowDosage(false)
@@ -432,7 +428,7 @@ function Settings() {
         }
         instance.post('/add_medicine', obj).then((res) => {
             if (res) {
-                navigate('/MedicineListing')
+                navigate('/doctorMedicineListing')
                 // setShowMedicineView(false)
                 // setReload(!reload)
             }
@@ -446,29 +442,24 @@ function Settings() {
     }
 
     const dosageSubmitHandler = () => {
-        console.log('function---')
         let keepValue = []
-        selectedDosageList?.map((itm, i) => {
+        selectedDosageList.map((itm, i) => {
             keepValue.push(itm.dosage)
         })
         // console.log('keepValue', keepValue)
         const checkValue = keepValue.includes(dosage)
-        console.log(checkValue);
         if (checkValue == false) {
             const obj = {
                 _hos_id: HospitalId,
                 dosage: dosage,
                 isActive: true
             }
-            console.log(obj)
             instance.post('/add_dosage', obj).then((res) => {
-                console.log('response--', res)
                 setReload(!reload)
                 // setShowDosageModal(false)
                 // setDosage('')
             })
         } else {
-            console.log('else');
             setShowDosageErr(true)
             console.log('already in the list')
         }
@@ -499,11 +490,9 @@ function Settings() {
     }, [reload])
     return (
         <div className="div w-screen h-screen fixed">
-            {pathname == '/project/emr/settings/Add-Doctor' ?
+           
                 <DoctorHeader />
-                :
-                <Header />
-            }
+               
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="mainContainer" >
                     <div className="navbar-light  ml-5 mr-5 mt-5 bg-white shadow-md">
@@ -540,34 +529,6 @@ function Settings() {
                                                     ADD MEDICINE
                                                 </div>
                                             </div>
-                                            {showOptions ?
-                                                <>
-                                                    <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
-                                                        <div className="col-md-1">
-                                                            <GiLevelEndFlag size={20} />
-                                                        </div>
-                                                        <div className="col-md-11">
-                                                            ADD DOSAGE
-                                                        </div>
-                                                    </div>
-                                                </>
-                                                : null}
-                                            {/* <div className="row font-bold p-3 text-gray-400 cursor-pointer">
-                                                <div className="col-md-1">
-                                                    <ImLab size={20} />
-                                                </div>
-                                                <div className="col-md-11">
-                                                    ADD LAB PROCEDURES
-                                                </div>
-                                            </div> */}
-                                            {/* <div className="row font-bold p-3 text-gray-400 cursor-pointer">
-                                                <div className="col-md-1">
-                                                    <HiOutlineDatabase size={20} />
-                                                </div>
-                                                <div className="col-md-11">
-                                                    ADD DRUG CHOICE
-                                                </div>
-                                            </div> */}
                                         </div>
                                     </div>
                                     <div className="col-md-8">
@@ -667,10 +628,10 @@ function Settings() {
                                                 <div className="row mt-1 d-flex justify-content-end">
                                                     <div className="col-md-3 mt-4 mb-3" >
                                                         <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            bg-blue-400 text-white font-medium text-xs leading-tight 
+            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
                                                             onClick={submitHandler}
                                                         >Add Doctor</button>
                                                     </div>
@@ -722,10 +683,10 @@ function Settings() {
                                                     <div className="row mt-1 d-flex justify-content-end">
                                                         <div className="col-md-3 mt-4 mb-3" >
                                                             <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            bg-blue-400 text-white font-medium text-xs leading-tight 
+            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
                                                                 onClick={medicineSubmitHandler}
                                                             >ADD</button>
                                                         </div>
@@ -754,10 +715,10 @@ function Settings() {
                                                                 <div className="row mt-1 d-flex justify-content-end">
                                                                     <div className="col-md-3 mt-4 mb-3" >
                                                                         <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            bg-blue-400 text-white font-medium text-xs leading-tight 
+            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
                                                                             onClick={dosageSubmitHandler}
                                                                         >ADD</button>
                                                                     </div>
@@ -784,4 +745,4 @@ function Settings() {
     )
 }
 
-export default Settings
+export default DoctorSettings

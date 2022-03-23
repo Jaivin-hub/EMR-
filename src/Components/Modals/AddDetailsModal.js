@@ -11,7 +11,7 @@ function AddDetailsModal({ changeContentHandler, setShowAddDetailsModal }) {
     const pathname = window.location.pathname
     return (
         <div className="absolute top-40 shadow-md p-8 bg-white w-full max-w-xs rounded-md" style={{ zIndex: 10001 }}>
-            {pathname == '/project/emr/hospitallisting' ?
+            {pathname == '/project/emr/doctorListing' ?
 
                 <div className=" cursor-pointer text-gray-500 d-flex " onClick={() => {
                     changeContentHandler('Add Doctor')

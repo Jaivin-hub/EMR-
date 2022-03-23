@@ -198,7 +198,7 @@ function TakeAppoiment() {
                                                 </div>
                                             }
                                         </div>
-                                        <div className="align-items-center d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
+                                        <div className="align-items-center d-flex  space-x-3 cursor-pointer" onClick={() => { changeContentHandler('Add Doctor') }}>
                                             <button type="button" className="addnew inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
                                             <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
