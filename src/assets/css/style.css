@@ -414,7 +414,11 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:las
 .prescription-btn button:last-child {
   background: var(--blue-bg) !important;
 }
-
+.newapp{
+  border-bottom: 1px solid #9d9999 !important;
+    border-radius: 0px !important;
+    margin-top: 17px;
+}
 
 
 

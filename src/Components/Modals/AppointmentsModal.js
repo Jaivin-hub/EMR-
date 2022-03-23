@@ -72,13 +72,13 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
     }
 
     return (
-        <div className="Modal_Container">
+        <div className="Modal_Container medium-modal">
             <div className="row">
                 <div className="col-md-8 ">
                     <h4 className="underline"><strong>New appointments</strong></h4>
                 </div>
                 <div style={{ cursor: 'pointer' }} onClick={() => { setShowNewAppointmentsModal(false) }} className="col-md-4  d-flex justify-content-end align-items-end">
-                    <h4>x</h4>
+                    <h4><i class="fa fa-window-close" aria-hidden="true"></i></h4>
                 </div>
                 <div className="addPatient navbar-light " style={{ backgroundColor: "#FFFFFF", border: '' }}>
                     <div className="row " >
@@ -89,7 +89,7 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
                 <div className="col-md-4">
                     <FormControl className={classes.formControl}>
                         <InputLabel>Select Doctor</InputLabel>
-                        <Select onChange={selectDoctorHandler}>
+                        <Select className='form-control' onChange={selectDoctorHandler}>
                             {doctorList?.map((item, index) => {
                                 return (
                                     <MenuItem id={item._id} name={item._id} value={item._id} key={index}>{item.doc_name}</MenuItem>
@@ -99,15 +99,15 @@ function AppointmentsModal({ patientId, setShowNewAppointmentsModal, setReload, 
                     </FormControl>
                 </div>
                 <div className="col-md-4">
-                    <input type="date" onChange={(e) => { dateChangeHandler(e) }} />
+                    <input className='form-control newapp' type="date" onChange={(e) => { dateChangeHandler(e) }} />
                 </div>
                 <div className="col-md-4">
-                    <input type="time" onChange={(e) => timeChangeHandler(e)} />
+                    <input className='form-control newapp' type="time" onChange={(e) => timeChangeHandler(e)} />
                 </div>
             </div>
-            <div className="row pl-20 mt-2">
-                <div className="button ml-80 ">
-                    <button className="btn" style={{ borderRadius: '5px', width: '100%', color: 'white', backgroundColor: '#6c757d' }} onClick={submitAppointmentsHandler}>Take Appointment</button>
+            <div className=" mt-3">
+                <div className=" flex justify-content-end">
+                    <button className=" add-main" >Take Appointment</button>
                 </div>
             </div>
         </div>
