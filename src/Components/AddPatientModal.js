@@ -910,8 +910,8 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                                 >ADD</button>
                             
                         </div>
-                        <div className="col-md-12 mt-5 d-flex justify-content-center">
-                        </div>
+                        {/* <div className="col-md-12 mt-5 d-flex justify-content-center">
+                        </div> */}
                     </div>
                 </div>
             </div>
