@@ -23,11 +23,10 @@ import { useNavigate } from 'react-router-dom';
 import SuccessModal from './Modals/SuccessModal';
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import ReferDoctor from './Modals/ReferDoctor';
+import DoctorHeader from './DoctorHeader'
 
 
-
-
-function Consultation() {
+function DoctorConsultation() {
     const navigate = useNavigate();
     const componentRef = useRef()
     const handlePrint = useReactToPrint({
@@ -157,20 +156,19 @@ function Consultation() {
     const doctorReferChangeHandler = () => {
         setShowRefer(true)
     }
-
     return (
         <div ref={componentRef}>
-            <Header />
+            <DoctorHeader />
             <div className="row m-3">
                 <div className="col-md-12">
-                    <IoMdArrowRoundBack className='' onClick={backButtonHandler} size={20} cursor='pointer' />
+                    <IoMdArrowRoundBack onClick={backButtonHandler} size={20} cursor='pointer' />
                 </div>
             </div>
-            <div className="navbar-light   bg-white shadow-md mobile-marg">
+            <div className="navbar-light  m-5 bg-white shadow-md">
 
                 <div className="row ">
                     <div className="col-md-12">
-                        <TableContainer className='p-3' component={Paper}>
+                        <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
@@ -181,16 +179,16 @@ function Consultation() {
                                         <TableCell >Contact No1 : {patientPhone}</TableCell>
                                         <TableCell >
                                             <button type="button" className="inline-block px-6 py-2 border-2 
-                                          border-gray-800 text-gray-800 font-medium text-xs leading-tight 
-                                            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
-                                            focus:ring-0 transition duration-150 ease-in-out d-flex"
+                                  border-gray-800 text-gray-800 font-medium text-xs leading-tight 
+                                    uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
+                                    focus:ring-0 transition duration-150 ease-in-out d-flex"
                                                 onClick={navigateHandler} >History<BsArrowRightShort /></button>
                                         </TableCell>
                                         <TableCell >
                                             <button type="button" class="inline-block px-6 py-2 border-2 
-                                          border-gray-800 text-gray-800 font-medium text-xs leading-tight 
-                                            uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
-                                            focus:ring-0 transition duration-150 ease-in-out"
+                                  border-gray-800 text-gray-800 font-medium text-xs leading-tight 
+                                    uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
+                                    focus:ring-0 transition duration-150 ease-in-out"
                                                 onClick={handlePrint}><GrDocumentPdf size={25} /></button>
                                         </TableCell>
 
@@ -201,11 +199,11 @@ function Consultation() {
                     </div>
                 </div>
             </div>
-            <div className="navbar-light   bg-white shadow-md mobile-marg">
+            <div className="navbar-light  m-5 bg-white shadow-md">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
                         {showPrimaryAnalysisDetails ?
-                            <TableContainer className='p-3 details-listing-mobile'  component={Paper}>
+                            <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
@@ -241,10 +239,10 @@ function Consultation() {
                             </TableContainer>
                             :
                             <button type="button" className="inline-block px-6 py-2 
-                         border-2 border-blue-400 text-blue-400 font-medium 
-                         text-xs leading-tight uppercase rounded hover:bg-black 
-                         hover:bg-opacity-5 focus:outline-none focus:ring-0 transition 
-                         duration-150 ease-in-out h-16" onClick={primaryAnalysisHandler}>Add Primary Analysis</button>
+                 border-2 border-blue-400 text-blue-400 font-medium 
+                 text-xs leading-tight uppercase rounded hover:bg-black 
+                 hover:bg-opacity-5 focus:outline-none focus:ring-0 transition 
+                 duration-150 ease-in-out h-16" onClick={primaryAnalysisHandler}>Add Primary Analysis</button>
                         }
 
                     </div>
@@ -255,25 +253,21 @@ function Consultation() {
                     </div>
                     : null}
             </div>
-            <div className="row  mobile-marg">
-                <div className='col-lg-12 px-0'>
-                <textarea className='border-2 rounded-md w-100 p-3' placeholder="Doctor note..." name="" id="" cols="50" rows="2"></textarea>
-                    </div>
-                <div className='col-lg-4 px-0 mt-3'>
-                <input type="text" placeholder="" className='border-2 rounded-md w-100' />
-                </div>
+            <div className="row space-x-3 m-5">
+                <textarea className='border-2 rounded-md' placeholder="Doctor note..." name="" id="" cols="50" rows="2"></textarea>
+                <input type="text" placeholder="" className='border-2 rounded-md' />
                 <div>
                     {/* <div>
-                        <h3>On air: {isRecording ? 'on' : 'off'}</h3>
-                        <button onClick={start}>Start</button>
-                        <button onClick={stop}>Stop</button>
-                    </div> */}
+                <h3>On air: {isRecording ? 'on' : 'off'}</h3>
+                <button onClick={start}>Start</button>
+                <button onClick={stop}>Stop</button>
+            </div> */}
                     <div>
 
                     </div>
                 </div>
                 {status == "idle" ?
-                    <BsFillMicFill cursor='pointer' onClick={startRecording} className='mt-3 record' size={30} />
+                    <BsFillMicFill cursor='pointer' onClick={startRecording} className='mt-3' size={30} />
                     :
                     <>
                         <p className='mt-4'>{new Date(timer * 1000).toISOString().substr(11, 8)}</p>
@@ -286,15 +280,15 @@ function Consultation() {
                     <audio controls src={audioResult} />
                     : null}
                 {/* {records.map((data, idx) => (
-                    <div key={idx} className='pt-3'>
-                        <audio src={data} controls preload={'metadata'} />
-                    </div>
-                ))} */}
+            <div key={idx} className='pt-3'>
+                <audio src={data} controls preload={'metadata'} />
+            </div>
+        ))} */}
                 <div className=''>
                     <button className="form-control" onClick={doctorReferChangeHandler}>Refer a doctor</button>
                 </div>
             </div>
-            <div className="navbar-light   bg-white shadow-md mobile-marg">
+            <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
@@ -316,4 +310,4 @@ function Consultation() {
     )
 }
 
-export default Consultation
+export default DoctorConsultation

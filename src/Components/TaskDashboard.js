@@ -81,42 +81,42 @@ function TaskDashboard() {
     }
 
     const changeContentHandler = (value) => {
-        if (value == 'Add Patients') {
-            setShowPatientView(true)
-            setShowDoctorView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(false)
-        } else if (value == 'Add Doctor') {
-            setShowDoctorView(true)
-            setShowPatientView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(false)
-        } else if (value == 'Appointments') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowAppointmentView(true)
-            setShowHospitalView(false)
-            setShowSettingsView(false)
-            setShowMedicineView(false)
-        } else if (value == 'Add Medicines') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(true)
-        } else if (value == "settings") {
-            setShowDoctorView(false)
-            setShowAppointmentView(false)
-            setShowPatientView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(false)
-            setShowSettingsView(true)
-        } else if (value == 'dosage') {
-            setShowDoctorView(false)
-            setShowPatientView(false)
-            setShowMedicineView(false)
-            setShowMedicineView(false)
-            setShowDosageModal(true)
-        }
+        // if (value == 'Add Patients') {
+        //     setShowPatientView(true)
+        //     setShowDoctorView(false)
+        //     setShowMedicineView(false)
+        //     setShowMedicineView(false)
+        // } else if (value == 'Add Doctor') {
+        //     setShowDoctorView(true)
+        //     setShowPatientView(false)
+        //     setShowMedicineView(false)
+        //     setShowMedicineView(false)
+        // } else if (value == 'Appointments') {
+        //     setShowDoctorView(false)
+        //     setShowPatientView(false)
+        //     setShowAppointmentView(true)
+        //     setShowHospitalView(false)
+        //     setShowSettingsView(false)
+        //     setShowMedicineView(false)
+        // } else if (value == 'Add Medicines') {
+        //     setShowDoctorView(false)
+        //     setShowPatientView(false)
+        //     setShowMedicineView(false)
+        //     setShowMedicineView(true)
+        // } else if (value == "settings") {
+        //     setShowDoctorView(false)
+        //     setShowAppointmentView(false)
+        //     setShowPatientView(false)
+        //     setShowMedicineView(false)
+        //     setShowMedicineView(false)
+        //     setShowSettingsView(true)
+        // } else if (value == 'dosage') {
+        //     setShowDoctorView(false)
+        //     setShowPatientView(false)
+        //     setShowMedicineView(false)
+        //     setShowMedicineView(false)
+        //     setShowDosageModal(true)
+        // }
     }
 
     const [value, setValue] = React.useState('1');
@@ -164,59 +164,48 @@ function TaskDashboard() {
 
     return (
         <div className="div flex flex-col  w-screen " >
-
             <Header />
             <div className="div mb-auto main-div-fl" >
-                {/* <div className="row"> */}
-                    {/* <div className="hospitalName mt-3"> */}
-                        {/* <label htmlFor="">{hospitalName}</label> */}
-                    {/* </div> */}
-                {/* </div> */}
-                {/* s */}
                 <div className="mainContainer">
                     <div className="container-fluid padd-2">
-                    <div className="row">
-                        <div className="col-md-6 left-side">
-                           <div className='d-flex main-hos'>
-                                <div>
-                                    <h5 className=" text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
-                                </div>
-                                <div className="">
-                                        <input defaultValue={date} onChange={handleChange} className=" date-f"  type="date" onChange={(e) => {
+                        <div className="row">
+                            <div className="col-md-6 left-side">
+                                <div className='d-flex main-hos'>
+                                    <div>
+                                        <h5 className=" text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
+                                    </div>
+                                    <div className="">
+                                        <input defaultValue={date} onChange={handleChange} className=" date-f" type="date" onChange={(e) => {
                                             appointmentsDateHandler(e)
                                         }} />
-                                        {/* <Dropdown className="mt-3 w-42  rounded-lg" options={options} value={defaultOption} placeholder="Select an option" />; */}
+                                    </div>
                                 </div>
-                           </div>
-                        </div>
-                        <div className="col-md-6 right-side">
-                            <div className="">
+                            </div>
+                            <div className="col-md-6 right-side">
                                 <div className="">
-                                    <div className="appoinment-sec">
-                                        <div className=" d-flex justify-content-end pending">
-                                            {pendingList?.length >= 1 ?
-                                                <div className="pending-app">
-                                                    Pending Appointments {pendingCount}
-                                                </div>
-                                                :
-                                                <div className="pending-n">
-                                                    Pending Appointments 0
-                                                </div>
-                                            }
-                                        </div>
-                                        <div className="align-items-center  d-flex  space-x-3 cursor-pointer" onClick={() => { setShowAddDetailsModal(true) }}>
-                                            <button type="button" className=" addnew inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
-                                            <h5 className="text-label  text-gray-700 font-bold">Add New</h5>
-                                            {/* <Dropdown options={options} onChange={(e) => { dropDownHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
+                                    <div className="">
+                                        <div className="appoinment-sec">
+                                            <div className=" d-flex justify-content-end pending">
+                                                {pendingList?.length >= 1 ?
+                                                    <div className="pending-app">
+                                                        Pending Appointments {pendingCount}
+                                                    </div>
+                                                    :
+                                                    <div className="pending-n">
+                                                        Pending Appointments 0
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div className="align-items-center  d-flex  space-x-3 cursor-pointer" onClick={() => { setShowPatientView(true) }}>
+                                                <button type="button" className=" addnew inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
+                                                <h5 className="text-label  text-gray-700 font-bold">Add New</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-
-
                     {showAppointmentView ?
                         <div className="main-content">
                             <AppoitmentsListing
@@ -231,25 +220,10 @@ function TaskDashboard() {
                                 showAddDetailsModal={showAddDetailsModal}
                                 changeContentHandler={changeContentHandler}
                             />
-                            {/* : showAddDetailsModal ?
-                            <div className="centered loginWrapper d-flex justify-content-end align-items-end">
-                                <AddDetailsModal
-                                    changeContentHandler={changeContentHandler}
-                                    setShowAddDetailsModal={setShowAddDetailsModal}
-                                />
-                            </div> */}
+
                         </div>
                         : null
                     }
-
-                    {showDoctorView ?
-                        <div className="">
-                            <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                                <AddDoctorModal setOpenModal={setShowDoctorView} setReload={setReload} reload={reload} />
-                            </div>
-                        </div>
-                        : null}
-
                     {showSettingsView ?
                         <SettingsView changeContentHandler={changeContentHandler} />
                         : null}
@@ -258,26 +232,12 @@ function TaskDashboard() {
                             <AddPatientModal setOpenModal={setShowPatientView} setReload={setReload} reload={reload} />
                         </div>
                         : null}
-                    {showHospitalView ?
-                        <HospitalView />
-                        : null}
                     {showPrimaryAnalysis ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                             <PrimaryAnalysisModal patientId={patientId} setShowPrimaryAnalysis={setShowPrimaryAnalysis} />
                         </div>
                         : null}
-                    {showMedicineView ?
-                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                            <MedicineModal setShowMedicineView={setShowMedicineView} />
-                        </div>
-                        : null}
-                    {showDosageModal ?
-                        <div className="centered loginWrapper d-flex justify-content-center align-items-center">
-                            <AddDosage setShowDosageModal={setShowDosageModal} />
-                        </div>
-                        : null}
                 </div>
-
             </div>
             <Footer />
         </div>

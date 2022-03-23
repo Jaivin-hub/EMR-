@@ -9,11 +9,12 @@ import { IoSettingsOutline } from 'react-icons/io5'
 
 
 function Header() {
+
     const navigate = useNavigate();
 
     const navigateHandler = (value) => {
         if (value == 'doctor') {
-            navigate('/hospitallisting')
+            navigate('/doctorListing')
         } else if (value == 'appointments') {
             navigate('/taskDashboard');
         } else if (value == 'patients') {
@@ -37,7 +38,8 @@ function Header() {
     const pathname = window.location.pathname
 
     const handleSettings = () => {
-        navigate('/settings')
+        const value = 'Add Doctor'
+        navigate(`/settings/${value}`)
     }
     // alert(pathname)
     return (
@@ -59,16 +61,16 @@ function Header() {
                                 :
                                 <Nav.Link onClick={() => { navigateHandler('appointments') }} className="">Appointments</Nav.Link>
                         }
-                        {pathname == '/project/emr/hospitallisting' ?
+                        {pathname == '/project/emr/doctorListing' ?
                             <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }} className=" decoration-sky-500 underline decoration-4">Doctors</Nav.Link>
-                            : pathname == '/project/emr/adminDashboard' ?
+                            : pathname == '/project/emr/adminDashboard' || pathname == '/project/emr/doctorDashboard' || pathname == '/project/emr/settings/Add-Doctor' ?
                                 null
                                 :
                                 <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                         }
                         {pathname == '/project/emr/patientlisting' ?
                             <Nav.Link onClick={() => { navigateHandler('patients') }} className=" decoration-sky-500 underline decoration-4">Patients</Nav.Link>
-                            : pathname == '/project/emr/adminDashboard' ?
+                            : pathname == '/project/emr/adminDashboard' || pathname == '/project/emr/doctorDashboard'|| pathname == '/project/emr/settings/Add-Doctor' ?
                                 null
                                 :
                                 <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>

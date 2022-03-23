@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import Header from './Header'
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import instance from '../config/api';
-import AddDetailsModal from './Modals/AddDetailsModal';
-import SearchPage from './SearchPage'
+import instance from '../../config/api';
+import AddDetailsModal from '.././Modals/AddDetailsModal';
+import SearchPage from '.././SearchPage'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Pagenation from './Pagenation';
-import SettingsView from './SettingsView';
-import AddPatientModal from './AddPatientModal';
-import AddDoctorModal from './Modals/AddDoctorModal';
-import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
-import AppointmentsModal from './Modals/AppointmentsModal';
+import Pagenation from '.././Pagenation';
+import SettingsView from '.././SettingsView';
+import AddPatientModal from '.././AddPatientModal';
+import AddDoctorModal from '.././Modals/AddDoctorModal';
+import PrimaryAnalysisModal from '.././Modals/PrimaryAnalysisModal';
+import AppointmentsModal from '.././Modals/AppointmentsModal';
 import { makeStyles } from "@material-ui/core/styles";
 import { useNavigate } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import MedicineModal from './Modals/MedicineModal';
-import AddDosage from './Modals/AddDosage';
-import Footer from './Footer';
+import MedicineModal from '.././Modals/MedicineModal';
+import AddDosage from '.././Modals/AddDosage';
+import Footer from '.././Footer';
+import DoctorHeader from './DoctorHeader';
 
-
-
-function MedicineListing() {
+function DoctorMedicineListing() {
     const navigate = useNavigate();
     const hospitalName = localStorage.getItem('HospitalName')
     const [reload, setReload] = useState(false)
@@ -80,13 +78,13 @@ function MedicineListing() {
             setShowMedicineView(false)
             setShowSettingsView(true)
             setShowAddDetailsModal(false)
-        } else if (value == 'Add Medicines') {
+        } else if (value == 'Add_Medicines') {
             // setShowDoctorView(false)
             // setShowPatientView(false)
             // setShowMedicineView(false)
             // setShowMedicineView(true)
             // , { state: value }
-            navigate(`/settings/${value}`)
+            navigate(`/doctorSettings/${value}`)
         } else if (value == 'dosage') {
             setShowDoctorView(false)
             setShowPatientView(false)
@@ -144,7 +142,7 @@ function MedicineListing() {
     }
     return (
         <div className="div flex flex-col w-screen h-screen fixed">
-            <Header />
+            <DoctorHeader />
             <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="row">
                     <div className="hospitalName mt-3">
@@ -173,7 +171,7 @@ function MedicineListing() {
                                                 </div>
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { changeContentHandler('Add Medicines') }}>
+                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { changeContentHandler('Add_Medicines') }}>
                                             <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
                                             <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
@@ -241,4 +239,4 @@ function MedicineListing() {
     )
 }
 
-export default MedicineListing
+export default DoctorMedicineListing

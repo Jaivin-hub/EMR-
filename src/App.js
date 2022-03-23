@@ -22,6 +22,8 @@ import MedicineListing from "./Components/MedicineListing";
 import DoctorDashboard from "./Components/Doctor/DoctorDashboard";
 import PatientHistory from "./Components/PatientHistory";
 import Settings from './Components/Settings'
+import DoctorMedicineListing from "./Components/Doctor/DoctorMedicineListing";
+import DoctorSettings from "./Components/Doctor/DoctorSettings";
 
 function App() {
   const verification = localStorage.getItem('handleLogin')
@@ -33,7 +35,7 @@ function App() {
         <Route path='/addDoctor' element={<DoctorView />} />
         <Route path='/login' element={<Login />} />
         <Route path='/hospitalregistration' element={<HospitalRegistration />} />
-        <Route path='/hospitallisting' element={<TakeAppoiment />} />
+        <Route path='/doctorListing' element={<TakeAppoiment />} />
         <Route path='/registerSuccess' element={<RegisterSuccess />} />
         <Route path='/patientlisting' element={<PatientsLIsting />} />
         <Route path='/admin/login' element={<Admin_login />} />
@@ -46,8 +48,10 @@ function App() {
         <Route path='/VoiceRecorder' element={<VoiceRecorder />} />
         <Route path='/doctordashboard' element={<DoctorDashboard />} />
         <Route path='/patientHistory' element={<PatientHistory />} />
-        <Route path='/settings' element={<Settings />} />
+        <Route path='/settings/:value' element={<Settings />} />
         <Route path='/doctorDashboard' element={<DoctorDashboard />} />
+        <Route path='/doctorMedicineListing' element={<DoctorMedicineListing />} />
+        <Route path='/doctorSettings/:value' element={<DoctorSettings />} />
       </Routes>
     </Router>
   );

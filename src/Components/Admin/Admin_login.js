@@ -193,7 +193,7 @@ function Admin_login() {
                             </div>
                             <div className="row ">
                                 <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
                                     <input
                                         className="form-control"
                                         id='email_id'
@@ -213,7 +213,7 @@ function Admin_login() {
                                     <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
                                 </div>
                                 <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
                                     <input
                                         className="form-control"
                                         id='password'
@@ -226,8 +226,18 @@ function Admin_login() {
                                             passwordInputBlurHandler(e.target.value, setPasswordErr)
                                         }}
                                         placeholder="  password"
-                                         />
-                                         <button class="pass-eye"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    />
+                                    {showEyeIcon ?
+                                        <button onClick={() => { changePasswordTypeHandler('Text') }} className="pass-eye" >
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
+                                        </button>
+                                        :
+                                        <button onClick={() => { changePasswordTypeHandler('password') }} className="pass-eye" >
+                                            {/* <i class="fa fa-eye" aria-hidden="true"></i> */}
+                                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                        </button>
+                                    }
                                     {/* {showEyeIcon ?
                                         <AiOutlineEye onClick={() => { changePasswordTypeHandler('Text') }} cursor="pointer" style={{ marginTop: "5%" }} size={20} />
                                         :
@@ -241,7 +251,7 @@ function Admin_login() {
                                     <a href="" className="links-main" >Forget password?</a>
                                 </div>
                                 <div className="col-md-12 mt-3 d-flex justify-content-center px-0">
-                                    <button className="btn main-btn"  onClick={submitHandler}>login now</button>
+                                    <button className="btn main-btn" onClick={submitHandler}>login now</button>
                                 </div>
                                 <div className="col-md-12 mt-5 d-flex justify-content-center px-0" style={{ display: 'flex' }}>
                                     {/* <div className="row"> */}
