@@ -529,14 +529,14 @@ function Settings() {
                                                     ADD DOSAGE
                                                 </div>
                                             </div>
-                                            <div className="row font-bold p-3 text-gray-400 cursor-pointer">
+                                            {/* <div className="row font-bold p-3 text-gray-400 cursor-pointer">
                                                 <div className="col-md-1">
                                                     <ImLab size={20} />
                                                 </div>
                                                 <div className="col-md-11">
                                                     ADD LAB PROCEDURES
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             {/* <div className="row font-bold p-3 text-gray-400 cursor-pointer">
                                                 <div className="col-md-1">
                                                     <HiOutlineDatabase size={20} />

@@ -7,6 +7,7 @@ import PrimaryAnalysisModal from '../Modals/PrimaryAnalysisModal';
 
 
 function DoctorDashboard() {
+    const doctorName = localStorage.getItem('doctorName')
     const hospitalName = localStorage.getItem('HospitalName')
     const [pendingList, setPendingList] = useState()
     const [showAddDetailsModal, setShowAddDetailsModal] = useState(false)
@@ -115,9 +116,11 @@ function DoctorDashboard() {
                     <div className="mainContainer " style={{ margin: '2%' }}>
                         <div className="row">
                             <div className="col-md-6 d-flex space-x-5">
-                                <div>
-
+                                <div className="d-flex space-x-5">
+                                
                                     <h5 className="pt-3 text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
+                                    <h5 className="pt-3 text-gray-600"><strong>{doctorName} </strong></h5>
+
                                 </div>
                                 <div className="row space-x-5">
                                     <input defaultValue={date} onChange={handleChange} className="mt-1 h-12 shadow-md" style={{ marginLeft: '1%' }} type="date" onChange={(e) => {

@@ -308,7 +308,7 @@ function AddPatientModal({ setOpenModal, setReload, reload }) {
                 app_date: appoinmentDate,
                 app_time: appointmentTime
             }
-
+            
             console.log('obj', obj)
 
 

@@ -112,8 +112,15 @@ function TaskDashboard() {
     useEffect(() => {
         instance.post('/list_hospital').then((res) => {
             const data = res?.data.hospital
+            const hosNameList = []
+            // res?.data.medicines.map((item, index) => {
+            //     console.log(item)
+            //     // const value = { value: index, label: item.med_name }
+            //     medNameList.push(value)
+            // })
+            // setSelectedList(medNameList)
             setHospitalList(data.reverse());
-            
+
         }).catch((err) => {
             console.log('error:', err)
         })

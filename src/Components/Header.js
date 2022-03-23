@@ -9,6 +9,7 @@ import { IoSettingsOutline } from 'react-icons/io5'
 
 
 function Header() {
+
     const navigate = useNavigate();
 
     const navigateHandler = (value) => {
@@ -37,7 +38,8 @@ function Header() {
     const pathname = window.location.pathname
 
     const handleSettings = () => {
-        navigate('/settings')
+        const value = 'Add Doctor'
+        navigate(`/settings/${value}`)
     }
     // alert(pathname)
     return (
@@ -61,14 +63,14 @@ function Header() {
                         }
                         {pathname == '/project/emr/hospitallisting' ?
                             <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }} className=" decoration-sky-500 underline decoration-4">Doctors</Nav.Link>
-                            : pathname == '/project/emr/adminDashboard' ?
+                            : pathname == '/project/emr/adminDashboard' || pathname == '/project/emr/doctorDashboard' ?
                                 null
                                 :
                                 <Nav.Link className="navMenu2" onClick={() => { navigateHandler('doctor') }}>Doctors</Nav.Link>
                         }
                         {pathname == '/project/emr/patientlisting' ?
                             <Nav.Link onClick={() => { navigateHandler('patients') }} className=" decoration-sky-500 underline decoration-4">Patients</Nav.Link>
-                            : pathname == '/project/emr/adminDashboard' ?
+                            : pathname == '/project/emr/adminDashboard' || pathname == '/project/emr/doctorDashboard' ?
                                 null
                                 :
                                 <Nav.Link onClick={() => { navigateHandler('patients') }} className="navMenu3">Patients</Nav.Link>

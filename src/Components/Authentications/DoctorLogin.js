@@ -100,8 +100,8 @@ function DoctorLogin() {
                     console.log('if', response)
                     if (response?.data.msg == "Success") {
                         setMainErr('')
-                        console.log('here')
                         localStorage.setItem('doctorDetails', response?.data.doctor[0]._id);
+                        localStorage.setItem('doctorName', response?.data.doctor[0].doc_name)
                         navigate('/doctorDashboard');
                         // localStorage.setItem('doctorDetails', response?.data.doctor[0])
                         // response.data.doctor
@@ -185,7 +185,7 @@ function DoctorLogin() {
                                 </div>
                                 <div className="row ">
                                     <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
                                         <input
                                             className="form-control"
                                             id='email_id'
@@ -198,14 +198,14 @@ function DoctorLogin() {
                                                 emailInputBlurHandler(e.target.value, setEmailError)
                                             }}
                                             placeholder=" Email id"
-                                           
+
                                         />
                                     </div>
                                     <div className="col-md-12 px-0">
                                         <p className="text-danger" style={{ marginLeft: '10%' }}>{emailError}</p>
                                     </div>
                                     <div className="col-md-12  d-flex justify-content-center px-0 login-field">
-                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
                                         <input
                                             className="form-control"
                                             id='password'
@@ -218,14 +218,14 @@ function DoctorLogin() {
                                                 passwordInputBlurHandler(e.target.value, setPasswordErr)
                                             }}
                                             placeholder="  Password"
-                                             />
-                                           {showEyeIcon ?
-                                            <button onClick={()=>{changePasswordTypeHandler('Text')}} className="pass-eye" >
+                                        />
+                                        {showEyeIcon ?
+                                            <button onClick={() => { changePasswordTypeHandler('Text') }} className="pass-eye" >
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                                 {/* <i class="fa fa-eye-slash" aria-hidden="true"></i> */}
                                             </button>
                                             :
-                                            <button onClick={()=>{changePasswordTypeHandler('password')}} className="pass-eye" >
+                                            <button onClick={() => { changePasswordTypeHandler('password') }} className="pass-eye" >
                                                 {/* <i class="fa fa-eye" aria-hidden="true"></i> */}
                                                 <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                             </button>
@@ -238,7 +238,7 @@ function DoctorLogin() {
                                         <a href="" className="links-main" >Forget password?</a>
                                     </div>
                                     <div className="col-md-12 mt-3 d-flex justify-content-center px-0">
-                                        <button className="btn main-btn"  onClick={submitHandler}>login now</button>
+                                        <button className="btn main-btn" onClick={submitHandler}>login now</button>
                                     </div>
                                     <div className="col-md-12 mt-5 d-flex justify-content-center px-0" style={{ display: 'flex' }}>
                                         {/* <div className="row"> */}

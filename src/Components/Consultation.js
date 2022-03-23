@@ -22,6 +22,7 @@ import { GrResume } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom';
 import SuccessModal from './Modals/SuccessModal';
 import { IoMdArrowRoundBack } from 'react-icons/io'
+import ReferDoctor from './Modals/ReferDoctor';
 
 
 
@@ -62,6 +63,7 @@ function Consultation() {
     const [showStatus, setShowStatus] = useState(false)
     const [records, updateRecords] = useState([]);
     const [showAddPrimaryAnalysis, setShowAddPrimaryAnalysis] = useState(false)
+    const [showRefer, setShowRefer] = useState(false)
     const { isRecording, stop, start } = useVoiceRecorder((data) => {
         updateRecords([...records, window.URL.createObjectURL(data)]);
     });
@@ -149,8 +151,11 @@ function Consultation() {
     }
 
     const navigateHandler = () => {
-
         navigate('/patientHistory', { state: patientId });
+    }
+
+    const doctorReferChangeHandler = () => {
+        setShowRefer(true)
     }
 
     return (
@@ -281,6 +286,9 @@ function Consultation() {
                         <audio src={data} controls preload={'metadata'} />
                     </div>
                 ))} */}
+                <div className=''>
+                    <button className="form-control" onClick={doctorReferChangeHandler}>Refer a doctor</button>
+                </div>
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>
@@ -293,6 +301,11 @@ function Consultation() {
             {showSuccessModal ?
                 <div className="centered loginWrapper d-flex justify-content-center align-items-center">
                     <SuccessModal />
+                </div>
+                : null}
+            {showRefer ?
+                <div className="centered loginWrapper d-flex justify-content-center align-items-center">
+                    <ReferDoctor />
                 </div>
                 : null}
         </div>
