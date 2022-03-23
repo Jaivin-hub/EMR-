@@ -25,47 +25,49 @@ function PatientHistory() {
         navigate('/taskDashboard')
     }
 
-    const fetchPatientHistory = () => {
-        const obj = {
-            _hos_id: hospitalId,
-            _pat_id: patientId
-        }
-        // console.log('now', obj)
-        instance.post('/list_patient_prescription', obj).then((res) => {
-            let resValue = []
-            for (let i = 0; i < res?.data.prescription?.length; i++) {
-                const patientHistoryDetails = {
-                    _pat_presc_id: res?.data.prescription[i]._id
-                }
-                instance.post('/list_patient_prescription_dosage', patientHistoryDetails).then((response) => {
-                    resValue.push(response?.data.dosage)
-                    let newData = [...prescriptionHistoryList]
-                    newData = response?.data.dosage
-                    setPrescriptionHistoryList(newData)
-                })
-            }
-            // setPrescriptionHistoryList(resValue);
-        })
-    }
-
-    console.log('prescriptionHistoryList', prescriptionHistoryList)
-
-
-
     useEffect(() => {
+        console.log('mounting');
         let mount = true;
         fetchPatientHistory()
         return mount = false
     }, [])
 
 
+    const fetchPatientHistory = () => {
+        const obj = {
+            _hos_id: hospitalId,
+            _pat_id: patientId
+        }
+        instance.post('/list_patient_prescription', obj).then((res) => {
+            let resValue = []
+            // let newData = [...prescriptionHistoryList]
+            console.log(res?.data.prescription);
+            for (let i = 0; i < res?.data.prescription?.length; i++) {
+                const patientHistoryDetails = {
+                    _pat_presc_id: res?.data.prescription[i]._id
+                }
+                console.log('id--',patientHistoryDetails);
+                instance.post('/list_patient_prescription_dosage', patientHistoryDetails).then((response) => {
+                    for (let j = 0; j < response?.data.dosage.length; j++) {
+                        resValue.push(response?.data.dosage[j]);
+                        // newData = response?.data.dosage[j]
+                        // setPrescriptionHistoryList(newData)
+                    }
+                })
+            }
+            setPrescriptionHistoryList(resValue);
+        })
+    }
+
+    console.log('prescription', prescriptionHistoryList.length)
+
     return (
         <div >
             <Header />
             <div className="row m-3">
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
                     <IoMdArrowRoundBack onClick={backButtonHandler} size={20} cursor='pointer' />
-                </div>
+                </div> */}
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <div className="row">
