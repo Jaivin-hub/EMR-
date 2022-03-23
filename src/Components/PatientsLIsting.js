@@ -177,40 +177,35 @@ function PatientsLIsting() {
 
 
     return (
-        <div className="div flex flex-col w-screen h-screen fixed">
+        <div className="div flex flex-col  w-screen ">
             <Header />
             <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
-                <div className="row">
-                    <div className="hospitalName mt-3">
-                        {/* <label htmlFor="">{hospitalName}</label> */}
-                    </div>
-                </div>
-                <div className="mainContainer" style={{ margin: '2%' }}>
+                
+                <div className="mainContainer" >
+                <div className="container-fluid padd-2">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6 left-side">
                             <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
                         </div>
-                        <div className="col-md-6">
-                            <div className="row">
-                                <div className="col-md-4">
-
-                                </div>
-                                <div className="col-md-8">
-                                    <div className="row">
-                                        <div className="col-md-7 d-flex justify-content-end">
+                        <div className="col-md-6 right-side">
+                            <div className="">
+                                
+                                <div className="">
+                                    <div className="appoinment-sec">
+                                        <div className=" d-flex justify-content-end pending">
                                             {pendingList?.length >= 1 ?
-                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                <div className="pending-app">
                                                     Pending Appointments {pendingCount}
                                                 </div>
                                                 :
-                                                <div className="row w-56 bg-white rounded-md shadow-md font-bold text-gray-400 justify-content-center align-items-center">
+                                                <div className="pending-app">
                                                     Pending Appointments 0
                                                 </div>
                                             }
                                         </div>
-                                        <div className="col-md-5 mt-3 d-flex  space-x-3 cursor-pointer" onClick={() => { setShowPatientView(true) }}>
-                                            <button type="button" className="inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
-                                            <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
+                                        <div className="align-items-center d-flex  space-x-3 cursor-pointer" onClick={() => { setShowPatientView(true) }}>
+                                            <button type="button" className="addnew  inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
+                                            <h5 className="text-label  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
                                     </div>
@@ -221,8 +216,10 @@ function PatientsLIsting() {
                             </div>
                         </div>
                     </div>
+                    </div>
                     {showAppointmentView ?
-                        <div className="mt-5">
+                        <div className="main-content">
+                            <div className='common-content'>
                             <MaterialTable
                                 options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
                                 className="mt-5" columns={columns} data={patientList} title=''
@@ -235,6 +232,7 @@ function PatientsLIsting() {
                                     }
                                 ]}
                             />
+                            </div>
                         </div>
                         : null}
                     {showAddDetailsModal ?

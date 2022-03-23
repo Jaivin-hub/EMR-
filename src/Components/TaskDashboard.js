@@ -172,7 +172,7 @@ function TaskDashboard() {
                             <div className="col-md-6 left-side">
                                 <div className='d-flex main-hos'>
                                     <div>
-                                        <h5 className=" text-gray-600"><strong>{hospitalName} Hospital</strong></h5>
+                                        <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
                                     </div>
                                     <div className="">
                                         <input defaultValue={date} onChange={handleChange} className=" date-f" type="date" onChange={(e) => {
