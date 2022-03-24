@@ -173,12 +173,9 @@ function TakeAppoiment() {
         <div className="div flex flex-col w-screen h-screen fixed">
             <Header />
             <div className="div mb-auto h-screen" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
-                <div className="row">
-                    <div className="hospitalName mt-3">
-                        {/* <label htmlFor="">{hospitalName}</label> */}
-                    </div>
-                </div>
-                <div className="mainContainer " style={{ margin: '2%' }}>
+                
+                <div className="mainContainer " >
+                <div className="container-fluid padd-2">
                     <div className="row">
                         <div className="col-md-6">
                             <h5 className=""><strong>{hospitalName} Hospital</strong></h5>
@@ -200,7 +197,7 @@ function TakeAppoiment() {
                                         </div>
                                         <div className="align-items-center d-flex  space-x-3 cursor-pointer" onClick={() => { changeContentHandler('Add Doctor') }}>
                                             <button type="button" className="addnew inline-block rounded-sm bg-blue-300 text-white leading-normal uppercase shadow-md hover:bg-blue-400 hover:shadow-lg focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out w-7 h-7">+</button>
-                                            <h5 className="mt-1  text-gray-700 font-bold">Add New</h5>
+                                            <h5 className="text-label  text-gray-700 font-bold">Add New</h5>
                                             {/* <Dropdown options={showOptions} onChange={(e) => { showModalsHandler(e) }} value={defaultOption} placeholder="Select an option" /> */}
                                         </div>
                                     </div>
@@ -208,11 +205,14 @@ function TakeAppoiment() {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-5 ">
+                    </div>
+                    <div className="main-content" >
+                        <div className='common-content'>
                         <MaterialTable
                             options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "Doctor Details", }}
-                            className="mt-5" columns={columns} data={doctorList} title=''
+                            className="mt-5 " columns={columns} data={doctorList} title=''
                         />
+                        </div>
                     </div>
                     {/* {showDoctorView ?
                         <div className="centered loginWrapper d-flex justify-content-center align-items-center">

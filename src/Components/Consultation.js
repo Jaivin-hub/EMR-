@@ -163,14 +163,14 @@ function Consultation() {
             <Header />
             <div className="row m-3">
                 <div className="col-md-12">
-                    <IoMdArrowRoundBack onClick={backButtonHandler} size={20} cursor='pointer' />
+                    <IoMdArrowRoundBack className='' onClick={backButtonHandler} size={20} cursor='pointer' />
                 </div>
             </div>
-            <div className="navbar-light  m-5 bg-white shadow-md">
+            <div className="navbar-light   bg-white shadow-md mobile-marg">
 
                 <div className="row ">
                     <div className="col-md-12">
-                        <TableContainer component={Paper}>
+                        <TableContainer className='p-3' component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
@@ -201,11 +201,11 @@ function Consultation() {
                     </div>
                 </div>
             </div>
-            <div className="navbar-light  m-5 bg-white shadow-md">
+            <div className="navbar-light   bg-white shadow-md mobile-marg">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-center">
                         {showPrimaryAnalysisDetails ?
-                            <TableContainer component={Paper}>
+                            <TableContainer className='p-3 details-listing-mobile'  component={Paper}>
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
@@ -255,9 +255,13 @@ function Consultation() {
                     </div>
                     : null}
             </div>
-            <div className="row space-x-3 m-5">
-                <textarea className='border-2 rounded-md' placeholder="Doctor note..." name="" id="" cols="50" rows="2"></textarea>
-                <input type="text" placeholder="" className='border-2 rounded-md' />
+            <div className="row  mobile-marg">
+                <div className='col-lg-12 px-0'>
+                <textarea className='border-2 rounded-md w-100 p-3' placeholder="Doctor note..." name="" id="" cols="50" rows="2"></textarea>
+                    </div>
+                <div className='col-lg-4 px-0 mt-3'>
+                <input type="text" placeholder="" className='border-2 rounded-md w-100' />
+                </div>
                 <div>
                     {/* <div>
                         <h3>On air: {isRecording ? 'on' : 'off'}</h3>
@@ -269,7 +273,7 @@ function Consultation() {
                     </div>
                 </div>
                 {status == "idle" ?
-                    <BsFillMicFill cursor='pointer' onClick={startRecording} className='mt-3' size={30} />
+                    <BsFillMicFill cursor='pointer' onClick={startRecording} className='mt-3 record' size={30} />
                     :
                     <>
                         <p className='mt-4'>{new Date(timer * 1000).toISOString().substr(11, 8)}</p>
@@ -290,7 +294,7 @@ function Consultation() {
                     <button className="form-control" onClick={doctorReferChangeHandler}>Refer a doctor</button>
                 </div>
             </div>
-            <div className="navbar-light  m-5 bg-white shadow-md">
+            <div className="navbar-light   bg-white shadow-md mobile-marg">
                 <label className="font-bold underline "></label>
                 <div className="row">
                     <div className="col-md-12">
