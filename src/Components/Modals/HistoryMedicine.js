@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 
 function HistoryMedicine({ setShowMedicines, selectedList }) {
     return (
-        <div className="Modal_Container" style={{ maxWidth: '90%' }}>
+        <div className="Modal_Container large-modal" >
             <div className="row  mobile-ls">
                 <div className="col-md-8 ">
                     {/* <h4 className="underline"><strong>Add Patient</strong></h4> */}

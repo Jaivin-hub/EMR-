@@ -419,7 +419,11 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:las
     border-radius: 0px !important;
     margin-top: 17px;
 }
-
+.Modal_Container.large-modal {
+  left: 0px !important;
+  top: 0px !important;
+  max-width: 100%;
+}
 
 
 
