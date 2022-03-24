@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Header from './Header'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import instance from '../config/api'
+import instance from '../../config/api'
 import { useLocation } from 'react-router-dom'
 import { Accordion } from 'react-bootstrap'
 
@@ -18,16 +17,11 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import CollapsibleTable from './MiTable';
+import CollapsibleTable from '.././MiTable';
 import { IoIosArrowForward } from 'react-icons/io'
-import HistoryMedicine from './Modals/HistoryMedicine';
-// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
-
-
-
-function PatientHistory() {
+import HistoryMedicine from '.././Modals/HistoryMedicine';
+import DoctorHeader from './DoctorHeader';
+function DoctorPatientHistory() {
     const hospitalId = localStorage.getItem('HospitalId')
     const [prescriptionHistoryList, setPrescriptionHistoryList] = useState([])
     const [selectedList, setSelectedList] = useState([])
@@ -95,38 +89,15 @@ function PatientHistory() {
         console.log(id);
         instance.post('/list_patient_prescription_dosage', patientHistoryDetails).then((response) => {
             // console.log('response.data.dosage', response.data.dosage);
-            setSelectedList(response.data.dosage.reverse());
+            setSelectedList(response.data.dosage)
             setShowMedicines(true)
         })
-    }
-
-    function createData(name, calories, fat, carbs, protein, price) {
-        return {
-            name,
-            calories,
-            fat,
-            carbs,
-            protein,
-            price,
-            history: [
-                {
-                    date: '2020-01-05',
-                    customerId: '11091700',
-                    amount: 3,
-                },
-                {
-                    date: '2020-01-02',
-                    customerId: 'Anonymous',
-                    amount: 1,
-                },
-            ],
-        };
     }
 
 
     return (
         <div >
-            <Header />
+            <DoctorHeader />
             <div className="row m-3">
                 {/* <div className="col-md-12">
                     <IoMdArrowRoundBack onClick={backButtonHandler} size={20} cursor='pointer' />
@@ -219,4 +190,4 @@ function PatientHistory() {
     )
 }
 
-export default PatientHistory
+export default DoctorPatientHistory

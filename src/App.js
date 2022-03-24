@@ -25,6 +25,7 @@ import Settings from './Components/Settings'
 import DoctorMedicineListing from "./Components/Doctor/DoctorMedicineListing";
 import DoctorSettings from "./Components/Doctor/DoctorSettings";
 import DoctorConsultation from "./Components/Doctor/DoctorConsultation";
+import DoctorPatientHistory from "./Components/Doctor/DoctorPatientHistory";
 
 function App() {
   const verification = localStorage.getItem('handleLogin')
@@ -54,8 +55,10 @@ function App() {
         <Route path='/doctorMedicineListing' element={<DoctorMedicineListing />} />
         <Route path='/doctorSettings/:value' element={<DoctorSettings />} />
         <Route path='/doctorConsultation' element={<DoctorConsultation />} />
+        <Route path='/doctorPatientHistory' element={<DoctorPatientHistory />} />
 
-        
+
+
       </Routes>
     </Router>
   );

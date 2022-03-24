@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) {
+    const pathname = window.location.pathname
     // const componentRef = useRef()
     // const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
@@ -42,6 +43,11 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
     const [reload, setreload] = useState(false)
     let [inputFields, setInputFields] = useState([
         { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
+        { medicineName: '', Sname: '', type: '', Dosage: '', Duration: '5', day: '', dayCount: '', qty: '0', comments: '' },
+
     ])
     const [selectedMedicineName, setSelectedMedicineName] = useState('')
     const [medicineScientificName, setMedicineScientificName] = useState('')
@@ -294,15 +300,18 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
         const { medicineName, Sname, type, Dosage, Duration, qty, comments } = inputFields
         const newList = []
         inputFields.map((item, i) => {
-            const dosage = item.Dosage.label
-            const days = item.Duration
-            const Sname = item.Sname
-            const comments = item.comments
-            const _med_id = item.medicineName.value
-            const total_quantity = item.qty
-            const type = item.type
-            const newListData = { _med_id, dosage, days, total_quantity }
-            newList.push(newListData)
+            if(!item.medicineName.value==''&&!item.medicineName.valueundefined){
+                const dosage = item.Dosage.label
+                const days = item.Duration
+                const Sname = item.Sname
+                const comments = item.comments
+                const _med_id = item.medicineName.value
+                const total_quantity = item.qty
+                const type = item.type
+                const newListData = { _med_id, dosage, days, total_quantity }
+                newList.push(newListData)
+
+            }
         })
 
         const obj = {
@@ -312,9 +321,14 @@ function Tabs({ setShowSuccessModal, patientId, referDoctorId, appointmentId }) 
             _refer_doc_id: referDoctorId,
             dosages: newList
         }
+        console.log('checking obj', obj);
         instance.post('/patient_prescription', obj).then((res) => {
-            console.log('res from tab----------',res)
-            navigate("/taskDashboard")
+            console.log('res from tab----------', res)
+            if (pathname == '/project/emr/doctorConsultation') {
+                navigate("/doctorDashboard")
+            } else {
+                navigate("/taskDashboard")
+            }
         })
     }
 
