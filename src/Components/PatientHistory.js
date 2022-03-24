@@ -41,13 +41,13 @@ function PatientHistory() {
         instance.post('/list_patient_prescription', obj).then((res) => {
             let resValue = []
             // let newData = [...prescriptionHistoryList]
-            console.log(res?.data.prescription);
             for (let i = 0; i < res?.data.prescription?.length; i++) {
                 const patientHistoryDetails = {
                     _pat_presc_id: res?.data.prescription[i]._id
                 }
-                console.log('id--',patientHistoryDetails);
+                console.log('id--', patientHistoryDetails);
                 instance.post('/list_patient_prescription_dosage', patientHistoryDetails).then((response) => {
+                    console.log('response----', response.data.dosage);
                     for (let j = 0; j < response?.data.dosage.length; j++) {
                         resValue.push(response?.data.dosage[j]);
                         // newData = response?.data.dosage[j]
@@ -55,11 +55,12 @@ function PatientHistory() {
                     }
                 })
             }
+            console.log('resValue',resValue);
             setPrescriptionHistoryList(resValue);
         })
     }
 
-    console.log('prescription', prescriptionHistoryList.length)
+    console.log('length---', prescriptionHistoryList.length)
 
     return (
         <div >

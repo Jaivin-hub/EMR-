@@ -34,7 +34,7 @@ function DoctorSettings() {
     const [doctorDetails, setDoctorDetails] = useState({})
     const [mainErr, setMainErr] = useState('')
     const [showDoctorView, setShowDoctorView] = useState(true)
-    const [showMedicineView, setShowMedicineView] = useState(false)
+    const [showMedicineView, setShowMedicineView] = useState(true)
     const [medicineType, setMedicineType] = useState('')
     const [showDosage, setShowDosage] = useState(false)
     const [dosage, setDosage] = useState('')
@@ -513,14 +513,6 @@ function DoctorSettings() {
                                 <div className="row grid grid-cols-2 divide-x">
                                     <div className="col-md-4">
                                         <div className="col-md-12">
-                                            {/* <div className="row d-flex font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDoctorView(true); setShowDosage(false); setShowMedicineView(false); }}>
-                                                <div className="col-md-1">
-                                                    <FcBusinessman size={20} />
-                                                </div>
-                                                <div className="col-md-11">
-                                                    ADD DOCTOR
-                                                </div>
-                                            </div> */}
                                             <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowMedicineView(true); setShowDoctorView(false); setShowDosage(true); }}>
                                                 <div className="col-md-1">
                                                     <GiMedicines size={20} />
@@ -529,64 +521,115 @@ function DoctorSettings() {
                                                     ADD MEDICINE
                                                 </div>
                                             </div>
+                                            <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
+                                                <div className="col-md-1">
+                                                    <GiLevelEndFlag size={20} />
+                                                </div>
+                                                <div className="col-md-11">
+                                                    ADD DOSAGE
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="col-md-8">
+                                        {showMedicineView ?
 
-                                        <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
-                                            <div className="row m-3">
-                                                <div className="col-md-4">
-                                                    <Select
-                                                        className="primary mt-2 w-48"
-                                                        name="singleSelect"
-                                                        placeholder="Medicine Type"
-                                                        options={medType}
-                                                        onChange={(value) => selectMedTypeHandler(value)}
-                                                    />
+                                            <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
+                                                <div className="row m-3">
+                                                    <div className="col-md-4">
+                                                        <Select
+                                                            className="primary mt-2 w-48"
+                                                            name="singleSelect"
+                                                            placeholder="Medicine Type"
+                                                            options={medType}
+                                                            onChange={(value) => selectMedTypeHandler(value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <TextField
+                                                            variant="standard"
+                                                            id=""
+                                                            onChange={(e) => {
+                                                                setMedicineName(e.target.value)
+                                                                medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
+                                                            }}
+                                                            onBlur={(e) => {
+                                                                medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
+                                                            }}
+                                                            label="Medicine name"
+                                                        />
+                                                        <p className="" style={{ color: "red" }}>{medicineNameErr}</p>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <TextField
+                                                            variant="standard"
+                                                            id=""
+                                                            onChange={(e) => {
+                                                                setScientificName(e.target.value)
+                                                                scientificNameInputChangeHandler(e.target.value, setScientificNameErr)
+                                                            }}
+                                                            onBlur={(e) => {
+                                                                scientificNameInputBlurHandler(e.target.value, setScientificNameErr)
+                                                            }}
+                                                            label="Pharmacological Name"
+                                                        />
+                                                        <p className="" style={{ color: "red" }}>{scientificNameErr}</p>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-4">
-                                                    <TextField
-                                                        variant="standard"
-                                                        id=""
-                                                        onChange={(e) => {
-                                                            setMedicineName(e.target.value)
-                                                            medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
-                                                        }}
-                                                        onBlur={(e) => {
-                                                            medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
-                                                        }}
-                                                        label="Medicine name"
-                                                    />
-                                                    <p className="" style={{ color: "red" }}>{medicineNameErr}</p>
+                                                <div className="row mt-1 d-flex justify-content-end">
+                                                    <div className="col-md-3 mt-4 mb-3" >
+                                                        <button type="button" className="inline-block px-6 py-2.5 
+                                                     bg-blue-400 text-white font-medium text-xs leading-tight 
+                                                        uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                                                     focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                                                     active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                                            onClick={medicineSubmitHandler}
+                                                        >ADD</button>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-4">
-                                                    <TextField
-                                                        variant="standard"
-                                                        id=""
-                                                        onChange={(e) => {
-                                                            setScientificName(e.target.value)
-                                                            scientificNameInputChangeHandler(e.target.value, setScientificNameErr)
-                                                        }}
-                                                        onBlur={(e) => {
-                                                            scientificNameInputBlurHandler(e.target.value, setScientificNameErr)
-                                                        }}
-                                                        label="Pharmacological Name"
-                                                    />
-                                                    <p className="" style={{ color: "red" }}>{scientificNameErr}</p>
+                                            </div> : null}
+                                        {showDosage ?
+                                            <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
+                                                <div className="row m-3">
+                                                    <div className="col-md-6">
+                                                        <TextField
+                                                            variant="standard"
+                                                            id=""
+                                                            onChange={(e) => {
+                                                                setShowDosageErr(false);
+                                                                setDosage(e.target.value)
+                                                                // medicineNameInputChangeHandler(e.target.value, setMedicineNameErr)
+                                                            }}
+                                                            onBlur={(e) => {
+                                                                // medicineNameInputBlurHandler(e.target.value, setMedicineNameErr)
+                                                            }}
+                                                            label="Dosage"
+                                                        />
+                                                        {showDosageErr ?
+                                                            <p className=" text-red-700">Already in the list</p>
+                                                            : null}
+                                                        <div className="row mt-1 d-flex justify-content-end">
+                                                            <div className="col-md-3 mt-4 mb-3" >
+                                                                <button type="button" className="inline-block px-6 py-2.5 
+                    bg-blue-400 text-white font-medium text-xs leading-tight 
+                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
+                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
+                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                                                    onClick={dosageSubmitHandler}
+                                                                >ADD</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <MaterialTable
+                                                            options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
+                                                            className="mt-5" columns={columns} data={selectedDosageList} title=''
+                                                        />
+                                                    </div>
                                                 </div>
+
                                             </div>
-                                            <div className="row mt-1 d-flex justify-content-end">
-                                                <div className="col-md-3 mt-4 mb-3" >
-                                                    <button type="button" className="inline-block px-6 py-2.5 
-            bg-blue-400 text-white font-medium text-xs leading-tight 
-            uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-            active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-                                                        onClick={medicineSubmitHandler}
-                                                    >ADD</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            : null}
                                     </div>
                                 </div>
                             </div>

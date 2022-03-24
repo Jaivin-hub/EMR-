@@ -100,7 +100,7 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
         setShowPrimaryAnalysis(true)
     }
 
-
+    const pathname = window.location.pathname
 
     const consultationHandler = (patientId, doctorId, index, appId) => {
         const selectedData = []
@@ -109,7 +109,12 @@ function AppoitmentsListing({ setPendingList, setShowPrimaryAnalysis, reload, ap
                 selectedData.push(item);
             }
         })
-        navigate('/consultation', { state: selectedData })
+
+        if (pathname == '/project/emr/doctorDashboard') {
+            navigate('/doctorConsultation', { state: selectedData })
+        } else {
+            navigate('/consultation', { state: selectedData })
+        }
     }
 
 

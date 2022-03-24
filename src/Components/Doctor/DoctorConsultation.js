@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Header from './Header'
+import Header from '.././Header'
 import { useLocation } from 'react-router-dom'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,10 +8,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import instance from '../config/api';
-import Tabs from './Tabs'
+import instance from '../../config/api';
+import Tabs from '.././Tabs'
 import { BsFillMicFill, BsFillMicMuteFill, BsArrowRightShort } from 'react-icons/bs'
-import PrimaryAnalysisModal from './Modals/PrimaryAnalysisModal';
+import PrimaryAnalysisModal from '.././Modals/PrimaryAnalysisModal';
 import { useReactMediaRecorder } from "react-media-recorder";
 import { useReactToPrint } from "react-to-print";
 import { GrDocumentPdf } from 'react-icons/gr'
@@ -20,9 +20,9 @@ import { useAudioRecorder } from '@sarafhbk/react-audio-recorder'
 import { MdPauseCircleFilled } from 'react-icons/md'
 import { GrResume } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom';
-import SuccessModal from './Modals/SuccessModal';
+import SuccessModal from '.././Modals/SuccessModal';
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import ReferDoctor from './Modals/ReferDoctor';
+import ReferDoctor from '.././Modals/ReferDoctor';
 import DoctorHeader from './DoctorHeader'
 
 
@@ -177,13 +177,13 @@ function DoctorConsultation() {
                                         <TableCell >Age : {patientDOB}</TableCell>
                                         <TableCell >Blood Group : {patientBloodGroup}</TableCell>
                                         <TableCell >Contact No1 : {patientPhone}</TableCell>
-                                        <TableCell >
+                                        {/* <TableCell >
                                             <button type="button" className="inline-block px-6 py-2 border-2 
                                   border-gray-800 text-gray-800 font-medium text-xs leading-tight 
                                     uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none 
                                     focus:ring-0 transition duration-150 ease-in-out d-flex"
                                                 onClick={navigateHandler} >History<BsArrowRightShort /></button>
-                                        </TableCell>
+                                        </TableCell> */}
                                         <TableCell >
                                             <button type="button" class="inline-block px-6 py-2 border-2 
                                   border-gray-800 text-gray-800 font-medium text-xs leading-tight 
@@ -284,9 +284,9 @@ function DoctorConsultation() {
                 <audio src={data} controls preload={'metadata'} />
             </div>
         ))} */}
-                <div className=''>
+                {/* <div className=''>
                     <button className="form-control" onClick={doctorReferChangeHandler}>Refer a doctor</button>
-                </div>
+                </div> */}
             </div>
             <div className="navbar-light  m-5 bg-white shadow-md">
                 <label className="font-bold underline "></label>
