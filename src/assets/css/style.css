@@ -424,6 +424,82 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone > div button:las
   top: 0px !important;
   max-width: 100%;
 }
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit {
+  padding: 0;
+}
+td button {
+  padding: 10px 10px !important;
+  color: #fff !important;
+}
+th {
+  padding: 12px 0px !important;
+}
+.div.w-screen.settings-comp {
+  display: flex;
+  flex-direction: column;
+}
+.heading-settings span {
+  font-size: 20px;
+  font-weight: bold;
+}
+.heading-settings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 4em;
+  padding: 0px 20px;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.shadow-r{
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.add-settings {
+  width: 260px;
+  margin-right: 20px;
+}
+.settings-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.settings-filds.shadow-r {
+  flex: 1;
+}
+.set-label {
+  font-size: 15px;
+  font-weight: 500;
+}
+.icon-set {
+  width: 35px;
+}
+.set-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.settings-m .MuiInputBase-root, .MuiInputBase-root {
+  border: 0px solid #ccc !important;
+  border-bottom: 1px solid #ccc !important;
+  border-radius: 0px !important;
+  padding: 0px 0px !important;
+}
+.w-100.px-custom {
+  padding: 0px 30px;
+}
+.add-button-sec button {
+  width: 160px;
+  margin-bottom: 20px !important;
+}
+.add-button-sec {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+
 
 
 

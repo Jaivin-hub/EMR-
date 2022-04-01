@@ -498,7 +498,7 @@ function Settings() {
         fetchDosageList()
     }, [reload])
     return (
-        <div className="div w-screen h-screen fixed">
+        <div className="div w-screen settings-comp">
             {pathname == '/project/emr/settings/Add-Doctor' ?
                 <DoctorHeader />
                 :
@@ -506,47 +506,46 @@ function Settings() {
             }
             <div className="div" style={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: "60em" }}>
                 <div className="mainContainer" >
-                    <div className="navbar-light  ml-5 mr-5 mt-5 bg-white shadow-md">
+                    <div className='common-content mt-3'>
+                    <div className="navbar-light   bg-white ">
                         <div className="row ">
-                            <div className="col-md-12 h-20">
-                                <div className="row">
-                                    <div className="col-md-3 inline-block align-middle pt-4 pl-4 font-bold text-2xl">
-                                        <span className="inline-block align-middle">Settings</span>
-                                    </div>
+                            <div className="col-md-12">
+                                <div className='heading-settings shadow-r'>
+                                    <span className="inline-block align-middle">Settings</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="navbar-light mt-2 ml-5 mr-5 bg-white shadow-md rounded-md">
-                        <div className="row ">
-                            <hr />
-                            <div className="col-md-12 ">
-                                <div className="row grid grid-cols-2 divide-x">
-                                    <div className="col-md-4">
+                    <div className="navbar-light  bg-white  rounded-md">
+                        <div className="settings-content">
+                            {/* <hr /> */}
+                            {/* <div className="col-md-12 ">
+                                <div className="row grid grid-cols-2 divide-x"> */}
+                                    <div className="add-settings shadow-r">
                                         <div className="col-md-12">
-                                            <div className="row d-flex font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDoctorView(true); setShowDosage(false); setShowMedicineView(false); }}>
-                                                <div className="col-md-1">
+                                            <div className="row d-flex font-bold p-3 text-gray-400 cursor-pointer set-list" onClick={() => { setShowDoctorView(true); setShowDosage(false); setShowMedicineView(false); }}>
+                                                <div className="icon-set">
                                                     <FcBusinessman size={20} />
                                                 </div>
-                                                <div className="col-md-11">
+                                                <div className="set-label">
                                                     ADD DOCTOR
                                                 </div>
                                             </div>
-                                            <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowMedicineView(true); setShowDoctorView(false); setShowDosage(true); }}>
-                                                <div className="col-md-1">
+                                            <div className="row font-bold p-3 text-gray-400 cursor-pointer set-list" onClick={() => { setShowMedicineView(true); setShowDoctorView(false); setShowDosage(true); }}>
+                                                <div className="icon-set">
                                                     <GiMedicines size={20} />
                                                 </div>
-                                                <div className="col-md-11">
+                                                <div className="set-label">
                                                     ADD MEDICINE
                                                 </div>
                                             </div>
                                             {showOptions ?
                                                 <>
-                                                    <div className="row font-bold p-3 text-gray-400 cursor-pointer" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
-                                                        <div className="col-md-1">
+                                                    <div className="row font-bold p-3 text-gray-400 cursor-pointer set-list" onClick={() => { setShowDosage(true); setShowMedicineView(false); setShowDoctorView(false) }}>
+                                                        <div className="icon-set">
                                                             <GiLevelEndFlag size={20} />
                                                         </div>
-                                                        <div className="col-md-11">
+                                                        <div className="set-label">
                                                             ADD DOSAGE
                                                         </div>
                                                     </div>
@@ -570,10 +569,10 @@ function Settings() {
                                             </div> */}
                                         </div>
                                     </div>
-                                    <div className="col-md-8">
+                                    <div className="settings-filds shadow-r">
                                         {showDoctorView ?
-                                            <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
-                                                <div className="row m-3">
+                                            <div className="navbar-light set-main rounded-md">
+                                                <div className="row m-3 settings-m">
                                                     <div className="col-md-4">
                                                         <TextField
                                                             variant="standard"
@@ -606,7 +605,7 @@ function Settings() {
                                                     </div>
                                                     <div className="col-md-4">
                                                         <Select
-                                                            className="primary mt-2 w-48"
+                                                            className="primary "
                                                             name="singleSelect"
                                                             placeholder="Specialization"
                                                             options={Specialization}
@@ -664,24 +663,20 @@ function Settings() {
                                                         <p style={{ color: "red" }}>{passwordErr}</p>
                                                     </div>
                                                 </div>
-                                                <div className="row mt-1 d-flex justify-content-end">
-                                                    <div className="col-md-3 mt-4 mb-3" >
-                                                        <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                                <div className="w-100 px-custom">
+                                                    <div className="add-button-sec mt-4 mb-3" >
+                                                        <button type="button" className="btn main-btn"
                                                             onClick={submitHandler}
                                                         >Add Doctor</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             : showMedicineView ?
-                                                <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
+                                                <div className="navbar-light mt-3   bg-white  rounded-md">
                                                     <div className="row m-3">
                                                         <div className="col-md-4">
                                                             <Select
-                                                                className="primary mt-2 w-48"
+                                                                className="primary mt-2"
                                                                 name="singleSelect"
                                                                 placeholder="Medicine Type"
                                                                 options={medType}
@@ -719,22 +714,18 @@ function Settings() {
                                                             <p className="" style={{ color: "red" }}>{scientificNameErr}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="row mt-1 d-flex justify-content-end">
-                                                        <div className="col-md-3 mt-4 mb-3" >
-                                                            <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                                    <div className="w-100 px-custom">
+                                                        <div className="add-button-sec mt-4 mb-3" >
+                                                            <button type="button" className="btn main-btn"
                                                                 onClick={medicineSubmitHandler}
                                                             >ADD</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 : showDosage ?
-                                                    <div className="navbar-light mt-3 ml-5 mr-5  bg-white shadow md:shadow-lg hover:shadow-lg rounded-md">
+                                                    <div className="navbar-light  bg-white  rounded-md">
                                                         <div className="row m-3">
-                                                            <div className="col-md-6">
+                                                            <div className="col-md-12">
                                                                 <TextField
                                                                     variant="standard"
                                                                     id=""
@@ -751,19 +742,15 @@ function Settings() {
                                                                 {showDosageErr ?
                                                                     <p className=" text-red-700">Already in the list</p>
                                                                     : null}
-                                                                <div className="row mt-1 d-flex justify-content-end">
-                                                                    <div className="col-md-3 mt-4 mb-3" >
-                                                                        <button type="button" className="inline-block px-6 py-2.5 
-                    bg-blue-400 text-white font-medium text-xs leading-tight 
-                    uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg 
-                    focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 
-                    active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                                                                <div className="w-100 ">
+                                                                    <div className="add-button-sec mt-4 mb-3" >
+                                                                        <button type="button" className="btn main-btn"
                                                                             onClick={dosageSubmitHandler}
                                                                         >ADD</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="col-md-6">
+                                                            <div className="col-md-12">
                                                                 <MaterialTable
                                                                     options={{ searchAutoFocus: true, paginationType: 'stepped', exportButton: true, exportAllData: true, exportFileName: "MEDDBOT", actionsColumnIndex: -1 }}
                                                                     className="mt-5" columns={columns} data={selectedDosageList} title=''
@@ -774,9 +761,10 @@ function Settings() {
                                                     </div>
                                                     : null}
                                     </div>
-                                </div>
-                            </div>
+                                {/* </div>
+                            </div> */}
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
